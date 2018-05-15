@@ -10,6 +10,52 @@
 		2EC7B24B20A9DA11004EC0F3 /* CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC7B24120A9DA11004EC0F3 /* CodePush.framework */; };
 		2EC7B25020A9DA11004EC0F3 /* CodePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B24F20A9DA11004EC0F3 /* CodePushTests.swift */; };
 		2EC7B25220A9DA11004EC0F3 /* CodePush.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B24420A9DA11004EC0F3 /* CodePush.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
+		2EC7B26520A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
+		2EC7B26720A9E01F004EC0F3 /* CodePushBaseCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26620A9E01F004EC0F3 /* CodePushBaseCore.swift */; };
+		2EC7B26820A9E01F004EC0F3 /* CodePushBaseCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26620A9E01F004EC0F3 /* CodePushBaseCore.swift */; };
+		2EC7B26A20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26920A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift */; };
+		2EC7B26B20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26920A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift */; };
+		2EC7B26D20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26C20A9E6AC004EC0F3 /* CodePushConfiguration.swift */; };
+		2EC7B26E20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26C20A9E6AC004EC0F3 /* CodePushConfiguration.swift */; };
+		2EC7B27120A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27020A9E7C7004EC0F3 /* CodePushPackage.swift */; };
+		2EC7B27220A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27020A9E7C7004EC0F3 /* CodePushPackage.swift */; };
+		2EC7B27420A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27320A9E8AC004EC0F3 /* CodePushRemotePackage.swift */; };
+		2EC7B27520A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27320A9E8AC004EC0F3 /* CodePushRemotePackage.swift */; };
+		2EC7B27720A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27620A9EC46004EC0F3 /* CodePushLocalPackage.swift */; };
+		2EC7B27820A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27620A9EC46004EC0F3 /* CodePushLocalPackage.swift */; };
+		2EC7B27A20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27920A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift */; };
+		2EC7B27B20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27920A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift */; };
+		2EC7B27D20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27C20AA0C18004EC0F3 /* CodePushUpdateState.swift */; };
+		2EC7B27E20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27C20AA0C18004EC0F3 /* CodePushUpdateState.swift */; };
+		2EC7B28020AA2B6F004EC0F3 /* CodePushConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27F20AA2B6F004EC0F3 /* CodePushConstants.swift */; };
+		2EC7B28120AA2B6F004EC0F3 /* CodePushConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B27F20AA2B6F004EC0F3 /* CodePushConstants.swift */; };
+		2EC7B28320AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28220AA2D2A004EC0F3 /* CodePushUtils.swift */; };
+		2EC7B28420AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28220AA2D2A004EC0F3 /* CodePushUtils.swift */; };
+		2EC7B28620AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28520AA2D63004EC0F3 /* CodePushUpdateUtils.swift */; };
+		2EC7B28720AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28520AA2D63004EC0F3 /* CodePushUpdateUtils.swift */; };
+		2EC7B28920AA2E14004EC0F3 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28820AA2E14004EC0F3 /* FileUtils.swift */; };
+		2EC7B28A20AA2E14004EC0F3 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28820AA2E14004EC0F3 /* FileUtils.swift */; };
+		2EC7B28C20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28B20AA3040004EC0F3 /* CodePushUtilities.swift */; };
+		2EC7B28D20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28B20AA3040004EC0F3 /* CodePushUtilities.swift */; };
+		2EC7B29020AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28F20AA3110004EC0F3 /* ReactPlatformUtils.swift */; };
+		2EC7B29120AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B28F20AA3110004EC0F3 /* ReactPlatformUtils.swift */; };
+		2EC7B29320AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29220AA313F004EC0F3 /* CodePushPlatformUtils.swift */; };
+		2EC7B29420AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29220AA313F004EC0F3 /* CodePushPlatformUtils.swift */; };
+		2EC7B29620AA3323004EC0F3 /* CodePushState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29520AA3323004EC0F3 /* CodePushState.swift */; };
+		2EC7B29720AA3323004EC0F3 /* CodePushState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29520AA3323004EC0F3 /* CodePushState.swift */; };
+		2EC7B29920AA3373004EC0F3 /* CodePushInstallMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29820AA3373004EC0F3 /* CodePushInstallMode.swift */; };
+		2EC7B29A20AA3373004EC0F3 /* CodePushInstallMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29820AA3373004EC0F3 /* CodePushInstallMode.swift */; };
+		2EC7B29C20AA348B004EC0F3 /* CodePushManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29B20AA348B004EC0F3 /* CodePushManagers.swift */; };
+		2EC7B29D20AA348B004EC0F3 /* CodePushManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29B20AA348B004EC0F3 /* CodePushManagers.swift */; };
+		2EC7B29F20AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29E20AA363F004EC0F3 /* CodePushSettingsManager.swift */; };
+		2EC7B2A020AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B29E20AA363F004EC0F3 /* CodePushSettingsManager.swift */; };
+		2EC7B2A220AA3796004EC0F3 /* CodePushPendingUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */; };
+		2EC7B2A320AA3796004EC0F3 /* CodePushPendingUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */; };
+		2EC7B2A520AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */; };
+		2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */; };
+		2EC7B2A820AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
+		2EC7B2A920AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +75,29 @@
 		2EC7B24A20A9DA11004EC0F3 /* CodePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC7B24F20A9DA11004EC0F3 /* CodePushTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushTests.swift; sourceTree = "<group>"; };
 		2EC7B25120A9DA11004EC0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateManager.swift; sourceTree = "<group>"; };
+		2EC7B26620A9E01F004EC0F3 /* CodePushBaseCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushBaseCore.swift; sourceTree = "<group>"; };
+		2EC7B26920A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushAcquisitionManager.swift; sourceTree = "<group>"; };
+		2EC7B26C20A9E6AC004EC0F3 /* CodePushConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushConfiguration.swift; sourceTree = "<group>"; };
+		2EC7B27020A9E7C7004EC0F3 /* CodePushPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPackage.swift; sourceTree = "<group>"; };
+		2EC7B27320A9E8AC004EC0F3 /* CodePushRemotePackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushRemotePackage.swift; sourceTree = "<group>"; };
+		2EC7B27620A9EC46004EC0F3 /* CodePushLocalPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushLocalPackage.swift; sourceTree = "<group>"; };
+		2EC7B27920A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateResponseInfo.swift; sourceTree = "<group>"; };
+		2EC7B27C20AA0C18004EC0F3 /* CodePushUpdateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateState.swift; sourceTree = "<group>"; };
+		2EC7B27F20AA2B6F004EC0F3 /* CodePushConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushConstants.swift; sourceTree = "<group>"; };
+		2EC7B28220AA2D2A004EC0F3 /* CodePushUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUtils.swift; sourceTree = "<group>"; };
+		2EC7B28520AA2D63004EC0F3 /* CodePushUpdateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateUtils.swift; sourceTree = "<group>"; };
+		2EC7B28820AA2E14004EC0F3 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
+		2EC7B28B20AA3040004EC0F3 /* CodePushUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUtilities.swift; sourceTree = "<group>"; };
+		2EC7B28F20AA3110004EC0F3 /* ReactPlatformUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPlatformUtils.swift; sourceTree = "<group>"; };
+		2EC7B29220AA313F004EC0F3 /* CodePushPlatformUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPlatformUtils.swift; sourceTree = "<group>"; };
+		2EC7B29520AA3323004EC0F3 /* CodePushState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushState.swift; sourceTree = "<group>"; };
+		2EC7B29820AA3373004EC0F3 /* CodePushInstallMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushInstallMode.swift; sourceTree = "<group>"; };
+		2EC7B29B20AA348B004EC0F3 /* CodePushManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushManagers.swift; sourceTree = "<group>"; };
+		2EC7B29E20AA363F004EC0F3 /* CodePushSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushSettingsManager.swift; sourceTree = "<group>"; };
+		2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPendingUpdate.swift; sourceTree = "<group>"; };
+		2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateRequest.swift; sourceTree = "<group>"; };
+		2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPackageInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,12 +160,15 @@
 		2EC7B25B20A9DC94004EC0F3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B26F20A9E7A9004EC0F3 /* Datacontracts */,
 				2EC7B26220A9DD7D004EC0F3 /* Enums */,
 				2EC7B26120A9DD2F004EC0F3 /* Errors */,
 				2EC7B26020A9DCDD004EC0F3 /* Utils */,
 				2EC7B25F20A9DCD4004EC0F3 /* Protocols */,
 				2EC7B25E20A9DCC9004EC0F3 /* Core */,
 				2EC7B25D20A9DCC1004EC0F3 /* Managers */,
+				2EC7B26C20A9E6AC004EC0F3 /* CodePushConfiguration.swift */,
+				2EC7B27F20AA2B6F004EC0F3 /* CodePushConstants.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -104,6 +176,7 @@
 		2EC7B25C20A9DCA2004EC0F3 /* React */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B28E20AA30FD004EC0F3 /* Utils */,
 			);
 			path = React;
 			sourceTree = "<group>";
@@ -111,6 +184,9 @@
 		2EC7B25D20A9DCC1004EC0F3 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */,
+				2EC7B26920A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift */,
+				2EC7B29E20AA363F004EC0F3 /* CodePushSettingsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -118,6 +194,10 @@
 		2EC7B25E20A9DCC9004EC0F3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B26620A9E01F004EC0F3 /* CodePushBaseCore.swift */,
+				2EC7B28B20AA3040004EC0F3 /* CodePushUtilities.swift */,
+				2EC7B29520AA3323004EC0F3 /* CodePushState.swift */,
+				2EC7B29B20AA348B004EC0F3 /* CodePushManagers.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -125,6 +205,7 @@
 		2EC7B25F20A9DCD4004EC0F3 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B29220AA313F004EC0F3 /* CodePushPlatformUtils.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -132,6 +213,9 @@
 		2EC7B26020A9DCDD004EC0F3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B28220AA2D2A004EC0F3 /* CodePushUtils.swift */,
+				2EC7B28520AA2D63004EC0F3 /* CodePushUpdateUtils.swift */,
+				2EC7B28820AA2E14004EC0F3 /* FileUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -146,8 +230,32 @@
 		2EC7B26220A9DD7D004EC0F3 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				2EC7B27C20AA0C18004EC0F3 /* CodePushUpdateState.swift */,
+				2EC7B29820AA3373004EC0F3 /* CodePushInstallMode.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		2EC7B26F20A9E7A9004EC0F3 /* Datacontracts */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B27020A9E7C7004EC0F3 /* CodePushPackage.swift */,
+				2EC7B27320A9E8AC004EC0F3 /* CodePushRemotePackage.swift */,
+				2EC7B27620A9EC46004EC0F3 /* CodePushLocalPackage.swift */,
+				2EC7B27920A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift */,
+				2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */,
+				2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */,
+				2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */,
+			);
+			path = Datacontracts;
+			sourceTree = "<group>";
+		};
+		2EC7B28E20AA30FD004EC0F3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B28F20AA3110004EC0F3 /* ReactPlatformUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +320,7 @@
 				TargetAttributes = {
 					2EC7B24020A9DA11004EC0F3 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 0930;
 					};
 					2EC7B24920A9DA11004EC0F3 = {
 						CreatedOnToolsVersion = 9.3.1;
@@ -258,6 +367,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC7B2A820AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */,
+				2EC7B27A20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */,
+				2EC7B27120A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
+				2EC7B27420A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */,
+				2EC7B27D20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */,
+				2EC7B26A20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
+				2EC7B29C20AA348B004EC0F3 /* CodePushManagers.swift in Sources */,
+				2EC7B27720A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,
+				2EC7B26D20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
+				2EC7B29320AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
+				2EC7B28320AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */,
+				2EC7B29020AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */,
+				2EC7B29F20AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */,
+				2EC7B26720A9E01F004EC0F3 /* CodePushBaseCore.swift in Sources */,
+				2EC7B28920AA2E14004EC0F3 /* FileUtils.swift in Sources */,
+				2EC7B28020AA2B6F004EC0F3 /* CodePushConstants.swift in Sources */,
+				2EC7B29920AA3373004EC0F3 /* CodePushInstallMode.swift in Sources */,
+				2EC7B2A220AA3796004EC0F3 /* CodePushPendingUpdate.swift in Sources */,
+				2EC7B2A520AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */,
+				2EC7B28C20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
+				2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */,
+				2EC7B28620AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
+				2EC7B29620AA3323004EC0F3 /* CodePushState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +397,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC7B28D20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
+				2EC7B26E20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
+				2EC7B27220A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
+				2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */,
+				2EC7B26B20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
+				2EC7B28720AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
+				2EC7B27E20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */,
+				2EC7B29720AA3323004EC0F3 /* CodePushState.swift in Sources */,
+				2EC7B28A20AA2E14004EC0F3 /* FileUtils.swift in Sources */,
 				2EC7B25020A9DA11004EC0F3 /* CodePushTests.swift in Sources */,
+				2EC7B29120AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */,
+				2EC7B27B20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */,
+				2EC7B28420AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */,
+				2EC7B27520A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */,
+				2EC7B29A20AA3373004EC0F3 /* CodePushInstallMode.swift in Sources */,
+				2EC7B2A920AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */,
+				2EC7B29D20AA348B004EC0F3 /* CodePushManagers.swift in Sources */,
+				2EC7B26820A9E01F004EC0F3 /* CodePushBaseCore.swift in Sources */,
+				2EC7B26520A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */,
+				2EC7B2A320AA3796004EC0F3 /* CodePushPendingUpdate.swift in Sources */,
+				2EC7B28120AA2B6F004EC0F3 /* CodePushConstants.swift in Sources */,
+				2EC7B2A020AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */,
+				2EC7B29420AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
+				2EC7B27820A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +558,7 @@
 		2EC7B25620A9DA11004EC0F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -419,6 +575,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = MSFT.CodePush;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -427,6 +584,7 @@
 		2EC7B25720A9DA11004EC0F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -451,6 +609,7 @@
 		2EC7B25920A9DA11004EC0F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CodePushTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -468,6 +627,7 @@
 		2EC7B25A20A9DA11004EC0F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CodePushTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

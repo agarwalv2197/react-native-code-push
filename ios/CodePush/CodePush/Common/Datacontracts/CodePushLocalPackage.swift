@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class CodePushLocalPackage: CodePushPackage {
     
     /**
@@ -37,6 +36,23 @@ class CodePushLocalPackage: CodePushPackage {
      */
     var binaryModifiedTime: String?
     
+    private enum CodingKeys: String, CodingKey {
+        case isPending,
+        appEntryPoint,
+        isFirstRun,
+        isDebugOnly,
+        binaryModifiedTime
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.isPending = try container.decode(Bool.self, forKey: .isPending)
+        self.appEntryPoint = try container.decode(String.self, forKey: .appEntryPoint)
+        self.isFirstRun = try container.decode(Bool.self, forKey: .isFirstRun)
+        self.isDebugOnly = try container.decode(Bool.self, forKey: .isDebugOnly)
+        self.binaryModifiedTime = try container.decode(String.self, forKey: .binaryModifiedTime)
+        try super.init(from: decoder)
+    }
     
     static func createLocalPackage(wasFailedInstall failedInstall: Bool, isFirstRun firstRun: Bool,
                                    isPending pending: Bool, withEntryPoint entryPoint: String,
@@ -55,7 +71,7 @@ class CodePushLocalPackage: CodePushPackage {
         return localPackage
     }
     
-    static func createEmptyPackageForUpdateQuery(withVersion appVersion: String) -> CodePushLocalPackage {
+    static func createEmptyPackageForUpdateQuery(withVersion appVersion: String?) -> CodePushLocalPackage {
         let localPackage = CodePushLocalPackage()
         localPackage.appVersion = appVersion
         localPackage.failedInstall = false
@@ -65,5 +81,7 @@ class CodePushLocalPackage: CodePushPackage {
         return localPackage
     }
     
-    override init() {}
+    override init() {
+        super.init()
+    }
 }

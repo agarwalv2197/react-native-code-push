@@ -9,11 +9,27 @@ import Foundation
 
 class CodePushRemotePackage: CodePushPackage {
     
-    var downloadUrl: String?
+    var downloadURL: String?
     var packageSize: Int64?
     var updateAppVersion: Bool?
     
-    override init() {}
+    override init() {
+        super.init()
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case downloadUrl,
+        packageSize,
+        updateAppVersion
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.downloadURL = try container.decode(String.self, forKey: .downloadUrl)
+        self.packageSize = try container.decode(Int64.self, forKey: .packageSize)
+        self.updateAppVersion = try container.decode(Bool.self, forKey: .updateAppVersion)
+        try super.init(from: decoder)
+    }
     
     /**
      * Creates an instance of the class from the basic codepush package.
@@ -26,7 +42,7 @@ class CodePushRemotePackage: CodePushPackage {
      * @return instance of the {@link CodePushRemotePackage}.
      */
     static func createRemotePackage(fromFailedInstall failedInstall: Bool, size packageSize: Int64,
-                                    atUrl downloadUrl: String, updateVersion updateAppVersion: Bool,
+                                    atUrl downloadURL: String, updateVersion updateAppVersion: Bool,
                                     fromPackage package: CodePushPackage) -> CodePushRemotePackage {
         let remotePackage = CodePushRemotePackage()
         remotePackage.appVersion = package.appVersion
@@ -36,7 +52,7 @@ class CodePushRemotePackage: CodePushPackage {
         remotePackage.label = package.label
         remotePackage.packageHash = package.packageHash
         remotePackage.failedInstall = failedInstall
-        remotePackage.downloadUrl = downloadUrl
+        remotePackage.downloadURL = downloadURL
         remotePackage.packageSize = packageSize
         remotePackage.updateAppVersion = updateAppVersion
         return remotePackage
@@ -60,7 +76,7 @@ class CodePushRemotePackage: CodePushPackage {
         remotePackage.label = updateInfo.label
         remotePackage.packageHash = updateInfo.packageHash
         remotePackage.packageSize = updateInfo.packageSize
-        remotePackage.downloadUrl = updateInfo.downloadUrl
+        remotePackage.downloadURL = updateInfo.downloadURL
         remotePackage.updateAppVersion = updateInfo.updateAppVersion
         return remotePackage
     }

@@ -17,7 +17,7 @@ class CodePushState {
     /**
      * Indicates whether there is a need to send rollback report.
      */
-    var NeedToReportRollback: Bool?
+    var needToReportRollback: Bool?
     
     /**
      * Indicates whether current install mode.

@@ -38,7 +38,7 @@ class CodePushUpdateManager {
     /**
      * CodePush configuration for instance.
      */
-    var codePushConfiguration: CodePushConfiguration
+    var codePushConfiguration: CodePushConfiguration?
     
     /**
      * Creates instance of CodePushUpdateManager.
@@ -52,7 +52,7 @@ class CodePushUpdateManager {
      */
     init(_ documentsDirectory: String, _ platformUtils: CodePushPlatformUtils, _ fileUtils: FileUtils,
          _ codePushUtils: CodePushUtils, _ codePushUpdateUtils: CodePushUpdateUtils,
-         _ codePushConfiguration: CodePushConfiguration) {
+         _ codePushConfiguration: CodePushConfiguration?) {
         self.platformUtils = platformUtils
         self.fileUtils = fileUtils
         self.codePushUpdateUtils = codePushUpdateUtils
@@ -77,7 +77,7 @@ class CodePushUpdateManager {
      * @return path to package folder.
      */
     func getPackageFolderPath(withHash packageHash: String) -> String {
-        return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: packageHash);
+        return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: packageHash)
     }
     
     /**
@@ -86,7 +86,7 @@ class CodePushUpdateManager {
      * @return application-specific folder.
      */
     func getCodePushPath() -> String {
-        let codePushPath = fileUtils.appendPathComponent(atBasePath: self.documentsDirectory, withComponent: codePushConfiguration.appName!);
+        let codePushPath = fileUtils.appendPathComponent(atBasePath: self.documentsDirectory, withComponent: (codePushConfiguration?.appName)!)
         return codePushPath
     }
     
@@ -101,7 +101,10 @@ class CodePushUpdateManager {
         if (packageHash == nil) {
             return nil
         } else {
-            return getPackage(withHash: packageHash!);
+            do {
+                let hash = try getPackage(withHash: packageHash!)
+                return hash
+            } catch {fatalError("")}
         }
     }
     
@@ -123,14 +126,13 @@ class CodePushUpdateManager {
      * @return previous installed package json object.
      * @throws CodePushGetPackageException exception occurred when obtaining a package.
      */
-    func getPreviousPackage() -> CodePushLocalPackage? {
+    func getPreviousPackage() throws -> CodePushLocalPackage? {
         let packageHash = getPreviousPackageHash();
 
-        if (packageHash == nil) {
-            return nil
-        } else {
-            return getPackage(withHash: packageHash!)
-        }
+        do {
+            let hash = try getPackage(withHash: packageHash!)
+            return hash
+        } catch {fatalError("")}
     }
     
     /**
@@ -140,15 +142,16 @@ class CodePushUpdateManager {
      * @return package object.
      * @throws CodePushGetPackageException exception occurred when obtaining a package.
      */
-    func getPackage(withHash packageHash: String) -> CodePushLocalPackage {
-        let folderPath = getPackageFolderPath(withHash: packageHash);
+    func getPackage(withHash packageHash: String) throws -> CodePushLocalPackage {
+        let folderPath = getPackageFolderPath(withHash: packageHash)
         let packageFilePath = fileUtils.appendPathComponent(atBasePath: folderPath, withComponent:
-            CodePushConstants.PACKAGE_FILE_NAME);
+            CodePushConstants.PACKAGE_FILE_NAME)
+
         do {
-            return codePushUtils.getObjectFromJsonFile(packageFilePath, CodePushLocalPackage.class);
-        } catch {
-            
-        }
+            var object: CodePushLocalPackage
+            object = try codePushUtils.getObjectFromJsonFile(packageFilePath)
+            return object
+        } catch {fatalError("")}
     }
     
     /**
@@ -159,7 +162,7 @@ class CodePushUpdateManager {
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getCurrentPackageHash() -> String? {
-        let info = getCurrentPackageInfo();
+        let info = getCurrentPackageInfo()
         return info.currentPackage
     }
     
@@ -173,9 +176,57 @@ class CodePushUpdateManager {
     func getCurrentPackageInfo() -> CodePushPackageInfo {
         let statusFilePath = getStatusFilePath();
         if (!fileUtils.fileExists(atPath: statusFilePath)) {
-            return CodePushPackageInfo();
+            return CodePushPackageInfo()
         }
+        do {
+            var object: CodePushPackageInfo
+            object = try codePushUtils.getObjectFromJsonFile(statusFilePath)
+            return object
+        } catch {fatalError("")}
+    }
+    
+    /**
+     * Gets folder for storing current package files.
+     *
+     * @return folder for storing current package files.
+     * @throws IOException                    read/write error occurred while accessing the file system.
+     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     */
+    func getCurrentPackageFolderPath() -> String? {
+        let packageHash = getCurrentPackageHash()
+        if (packageHash == nil) {
+            return nil
+        } else {
+            return getPackageFolderPath(withHash: packageHash!)
+        }
+    }
+    
+    /**
+     * Deletes the current package and installs the previous one.
+     *
+     * @throws CodePushRollbackException exception occurred during package rollback.
+     */
+    func rollbackPackage() {
+        let info = getCurrentPackageInfo()
+        let currentPackageFolderPath = getCurrentPackageFolderPath()
+        do {
+            try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
+        } catch {}
         
-        return codePushUtils.getObjectFromJsonFile(statusFilePath, CodePushPackageInfo.class);
+        info.currentPackage = info.previousPackage
+        info.previousPackage = nil
+        updateCurrentPackageInfo(package: info)
+    }
+    
+    /**
+     * Updates file containing information about the available packages.
+     *
+     * @param packageInfo new information.
+     * @throws IOException read/write error occurred while accessing the file system.
+     */
+    func updateCurrentPackageInfo(package packageInfo: CodePushPackageInfo) {
+        do {
+            try codePushUtils.writeObjectToJsonFile(withObject: packageInfo, atPath: getStatusFilePath());
+        } catch {fatalError("")}
     }
 }

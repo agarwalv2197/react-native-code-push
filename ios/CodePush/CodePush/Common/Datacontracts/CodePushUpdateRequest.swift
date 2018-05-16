@@ -8,7 +8,7 @@
 import Foundation
 
 
-class CodePushUpdateRequest {
+class CodePushUpdateRequest: Codable {
     
     /**
      * Specifies the deployment key you want to query for an update against.

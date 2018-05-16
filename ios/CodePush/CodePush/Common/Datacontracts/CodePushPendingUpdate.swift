@@ -8,7 +8,7 @@
 import Foundation
 
 
-class CodePushPendingUpdate {
+class CodePushPendingUpdate: Codable {
     
     /**
      * Whether the update is loading.

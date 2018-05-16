@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CodePushPackage {
+class CodePushPackage: Codable {
     
     /**
      * The app binary version that this update is dependent on. This is the value that was
@@ -47,6 +47,6 @@ class CodePushPackage {
      */
     var packageHash: String?
     
-    
-    init() {}
+    init() {
+    }
 }

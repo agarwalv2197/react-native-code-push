@@ -47,7 +47,7 @@ class FileUtils {
      * @param content  content to be written to a file.
      * @param filePath path to a file.
      */
-    func writeToFile(withContent content: String, atPath filePath: String) {
+    func writeToFile(withContent content: String, atPath filePath: String) throws {
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(filePath)
         
@@ -65,16 +65,35 @@ class FileUtils {
      * @param filePath path to file to be read.
      * @return string with contents of the file.
      */
-    func readFileToString(atPath filePath: String) -> String {
+    func readFileToString(atPath filePath: String) throws -> String {
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = dir.appendingPathComponent(filePath)
             
-            //reading
             do {
                 let content = try String(contentsOf: fileURL, encoding: .utf8)
                 return content
             }
             catch {/* error handling here */}
+        } else {fatalError("Cannot read file")}
+        
+        return ""
+    }
+    
+    /**
+     * Deletes directory located by the following path.
+     *
+     * @param directoryPath path to directory to be deleted. Can't be <code>null</code>.
+     * @throws IOException read/write error occurred while accessing the file system.
+     */
+    func deleteDirectoryAtPath(path directoryPath: String) throws {
+        if (directoryPath.isEmpty) {
+            return
+        }
+        
+        do {
+            try FileManager.default.removeItem(atPath: directoryPath)
+        } catch {
+        
         }
     }
 }

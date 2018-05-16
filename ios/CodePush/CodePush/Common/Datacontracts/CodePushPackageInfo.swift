@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-class CodePushPackageInfo {
+class CodePushPackageInfo : Codable {
     
     var previousPackage: String?
     var currentPackage: String?

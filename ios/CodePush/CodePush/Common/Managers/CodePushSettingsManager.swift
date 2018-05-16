@@ -18,7 +18,7 @@ class CodePushSettingsManager {
     /**
      * Instance of {@link CodePushConfiguration} to work with.
      */
-    var codePushConfiguration: CodePushConfiguration
+    var codePushConfiguration: CodePushConfiguration?
     
     /**
      * Key for getting/storing info about failed CodePush updates.
@@ -52,9 +52,9 @@ class CodePushSettingsManager {
      * @param codePushUtils      instance of {@link CodePushUtils} to work with.
      * @param codePushConfiguration instance of {@link CodePushConfiguration} to work with.
      */
-    init(_ codePushUtils: CodePushUtils, codePushConfiguration: CodePushConfiguration) {
-        self.codePushUtils = codePushUtils;
-        self.codePushConfiguration = codePushConfiguration;
+    init(_ codePushUtils: CodePushUtils, _ configuration: CodePushConfiguration?) {
+        self.codePushUtils = codePushUtils
+        self.codePushConfiguration = configuration
         self.settings = UserDefaults.standard
     }
     
@@ -65,17 +65,17 @@ class CodePushSettingsManager {
      * @return an array of failed updates.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getFailedUpdates() -> Array<CodePushPackage> {
-    let failedUpdatesString = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
-    if (failedUpdatesString == nil) {
-        return []
-    }
-        
-    return new ArrayList<>(Arrays.asList(codePushUtils.convertStringToObject(failedUpdatesString, CodePushPackage[].class)));
-    
-    var emptyArray = []
-    settings.set(codePushUtils.convertObjectToJsonString(emptyArray), forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
-    }
+//    func getFailedUpdates() -> [CodePushPackage] {
+//        let failedUpdatesString = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+//        if (failedUpdatesString == nil) {
+//            return []
+//        }
+//
+//        return codePushUtils.convertStringToObject(withString: failedUpdatesString)
+//
+//        var emptyArray: [AnyObject]
+//        settings.set(codePushUtils.convertObjectToJsonString(withObject: emptyArray), forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+//    }
     
     /**
      * Gets object with pending update info.
@@ -83,17 +83,18 @@ class CodePushSettingsManager {
      * @return object with pending update info.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getPendingUpdate() -> CodePushPendingUpdate? {
-    let pendingUpdateString = settings.string(forKey: getAppSpecificPrefix() + PENDING_UPDATE_KEY)
-    if (pendingUpdateString == nil) {
-        return nil;
-    }
-   // try {
-    return codePushUtils.convertStringToObject(pendingUpdateString, CodePushPendingUpdate.class);
-//    } catch (JsonSyntaxException e) {
-//    throw new CodePushMalformedDataException("Unable to parse pending update metadata " + pendingUpdateString + " stored in SharedPreferences", e);
+//    func getPendingUpdate() throws -> CodePushPendingUpdate? {
+//        let pendingUpdateString = settings.string(forKey: getAppSpecificPrefix() + PENDING_UPDATE_KEY)
+//        if (pendingUpdateString == nil) {
+//            return nil;
+//        } else {
+//            do {
+//                let update = try codePushUtils.convertStringToObject(withString: pendingUpdateString!)
+//                return update
+//
+//            } catch {fatalError("")}
+//        }
 //    }
-    }
     
     /**
      * Checks whether an update with the following hash has failed.
@@ -102,19 +103,17 @@ class CodePushSettingsManager {
      * @return <code>true</code> if there is a failed update with provided hash, <code>false</code> otherwise.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func existsFailedUpdate(withHash packageHash: String) -> Bool {
-        let failedUpdates = getFailedUpdates()
-        if (packageHash != nil) {
-            for failedPackage in failedUpdates {
-                if (packageHash == failedPackage.packageHash) {
-                    return true
-                }
-            }
-        }
-        return false
-    }
-    
-    
+//    func existsFailedUpdate(withHash packageHash: String) throws -> Bool {
+//        let failedUpdates = getFailedUpdates()
+//        if (!packageHash.isEmpty) {
+//            for failedPackage in failedUpdates {
+//                if (packageHash == failedPackage.packageHash) {
+//                    return true
+//                }
+//            }
+//        }
+//        return false
+//    }
     
     /**
      * Checks whether there is a pending update with the provided hash.
@@ -124,11 +123,11 @@ class CodePushSettingsManager {
      * @return <code>true</code> if there is a pending update with the provided hash.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func isPendingUpdate(withHash packageHash: String) -> Bool {
-        CodePushPendingUpdate pendingUpdate = getPendingUpdate();
-        return isPendingUpdate != nil && !pendingUpdate.isPendingUpdateLoading() &&
-            (packageHash == nil || isPendingUpdate.getPendingUpdateHash() == packageHash)
-    }
+//    func isPendingUpdate(withHash packageHash: String) throws -> Bool {
+//        let pendingUpdate = getPendingUpdate()
+//        return isPendingUpdate != nil && !((pendingUpdate?.pendingUpdateIsLoading)!) &&
+//            (packageHash == nil || pendingUpdate?.pendingUpdateHash == packageHash)
+//    }
     
     /**
      * Removes information about failed updates.
@@ -150,84 +149,89 @@ class CodePushSettingsManager {
      * @param failedPackage instance of failed {@link CodePushRemotePackage}.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func saveFailedUpdate(forPackage failedPackage: CodePushPackage) {
-        var failedUpdates = getFailedUpdates()
-        failedUpdates.append(failedPackage)
-        let failedUpdatesString = codePushUtils.convertObjectToJsonString(failedUpdates);
-        settings.set(failedUpdatesString, getAppSpecificPrefix() + FAILED_UPDATES_KEY)
-    }
+//    func saveFailedUpdate(forPackage failedPackage: CodePushPackage) {
+//        var failedUpdates = getFailedUpdates()
+//        failedUpdates.append(failedPackage)
+//        let failedUpdatesString = codePushUtils.convertObjectToJsonString(withObject: failedUpdates)
+//        settings.set(failedUpdatesString, getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+//    }
     
     /**
      * Saves information about the pending update.
      *
      * @param pendingUpdate instance of the {@link CodePushPendingUpdate}.
      */
-    func savePendingUpdate(forUpdate pendingUpdate: CodePushPendingUpdate) {
-        let pendingUpdateString = codePushUtils.convertObjectToJsonString(pendingUpdate)
-        settings.set(pendingUpdateString, getAppSpecificPrefix() + PENDING_UPDATE_KEY)
-    }
+//    func savePendingUpdate(forUpdate pendingUpdate: CodePushPendingUpdate) {
+//        let pendingUpdateString = codePushUtils.convertObjectToJsonString(withObject: pendingUpdate)
+//        settings.set(pendingUpdateString, getAppSpecificPrefix() + PENDING_UPDATE_KEY)
+//    }
     
-    /**
-     * Gets status report already saved for retry it's sending.
-     *
-     * @return report saved for retry sending.
-     * @throws JSONException if there was error of deserialization of report from json document.
-     */
-    public CodePushDeploymentStatusReport getStatusReportSavedForRetry() throws JSONException {
-    String retryStatusReportString = mSettings.getString(getAppSpecificPrefix() + RETRY_DEPLOYMENT_REPORT_KEY, null);
-    if (retryStatusReportString != null) {
-    JSONObject retryStatusReport = new JSONObject(retryStatusReportString);
-    return mCodePushUtils.convertJsonObjectToObject(retryStatusReport, CodePushDeploymentStatusReport.class);
-    }
-    return null;
-    }
-    
-    /**
-     * Saves status report for further retry os it's sending.
-     *
-     * @param statusReport status report.
-     * @throws JSONException if there was an error during report serialization into json document.
-     */
-    public void saveStatusReportForRetry(CodePushDeploymentStatusReport statusReport) throws JSONException {
-    JSONObject statusReportJSON = mCodePushUtils.convertObjectToJsonObject(statusReport);
-    mSettings.edit().putString(getAppSpecificPrefix() + RETRY_DEPLOYMENT_REPORT_KEY, statusReportJSON.toString()).apply();
-    }
-    
-    /**
-     * Remove status report that was saved for retry of it's sending.
-     */
-    public void removeStatusReportSavedForRetry() {
-    mSettings.edit().remove(getAppSpecificPrefix() + RETRY_DEPLOYMENT_REPORT_KEY).apply();
-    }
-    
-    /**
-     * Gets previously saved status report identifier.
-     *
-     * @return previously saved status report identifier.
-     */
-    public CodePushStatusReportIdentifier getPreviousStatusReportIdentifier() {
-    String identifierString = mSettings.getString(getAppSpecificPrefix() + LAST_DEPLOYMENT_REPORT_KEY, null);
-    if (identifierString != null) {
-    return CodePushStatusReportIdentifier.fromString(identifierString);
-    }
-    return null;
-    }
-    
-    /**
-     * Saves identifier of already sent status report.
-     *
-     * @param identifier identifier of already sent status report.
-     */
-    func saveIdentifierOfReportedStatus(CodePushStatusReportIdentifier identifier) {
-    mSettings.edit().putString(getAppSpecificPrefix() + LAST_DEPLOYMENT_REPORT_KEY, identifier.toString()).apply();
-    }
+//    /**
+//     * Gets status report already saved for retry it's sending.
+//     *
+//     * @return report saved for retry sending.
+//     * @throws JSONException if there was error of deserialization of report from json document.
+//     */
+//    public CodePushDeploymentStatusReport getStatusReportSavedForRetry() throws JSONException {
+//    String retryStatusReportString = mSettings.getString(getAppSpecificPrefix() + RETRY_DEPLOYMENT_REPORT_KEY, null);
+//    if (retryStatusReportString != null) {
+//    JSONObject retryStatusReport = new JSONObject(retryStatusReportString);
+//    return mCodePushUtils.convertJsonObjectToObject(retryStatusReport, CodePushDeploymentStatusReport.class);
+//    }
+//    return null;
+//    }
+//
+//    /**
+//     * Saves status report for further retry os it's sending.
+//     *
+//     * @param statusReport status report.
+//     * @throws JSONException if there was an error during report serialization into json document.
+//     */
+//    public void saveStatusReportForRetry(CodePushDeploymentStatusReport statusReport) throws JSONException {
+//    JSONObject statusReportJSON = mCodePushUtils.convertObjectToJsonObject(statusReport);
+//    mSettings.edit().putString(getAppSpecificPrefix() + RETRY_DEPLOYMENT_REPORT_KEY, statusReportJSON.toString()).apply();
+//    }
+//
+//    /**
+//     * Remove status report that was saved for retry of it's sending.
+//     */
+//    public void removeStatusReportSavedForRetry() {
+//    mSettings.edit().remove(getAppSpecificPrefix() + RETRY_DEPLOYMENT_REPORT_KEY).apply();
+//    }
+//
+//    /**
+//     * Gets previously saved status report identifier.
+//     *
+//     * @return previously saved status report identifier.
+//     */
+//    public CodePushStatusReportIdentifier getPreviousStatusReportIdentifier() {
+//    String identifierString = mSettings.getString(getAppSpecificPrefix() + LAST_DEPLOYMENT_REPORT_KEY, null);
+//    if (identifierString != null) {
+//    return CodePushStatusReportIdentifier.fromString(identifierString);
+//    }
+//    return null;
+//    }
+//
+//    /**
+//     * Saves identifier of already sent status report.
+//     *
+//     * @param identifier identifier of already sent status report.
+//     */
+//    func saveIdentifierOfReportedStatus(CodePushStatusReportIdentifier identifier) {
+//    mSettings.edit().putString(getAppSpecificPrefix() + LAST_DEPLOYMENT_REPORT_KEY, identifier.toString()).apply();
+//    }
     
     /**
      * Returns app-specific prefix for preferences keys.
      *
      * @return preference key prefix to get app specific preferences
      */
-    private func getAppSpecificPrefix() -> String? {
-        return codePushConfiguration.appName != nil ? codePushConfiguration.appName! + "-" : ""
+    private func getAppSpecificPrefix() -> String {
+        
+        guard let appName = codePushConfiguration?.appName else {
+            return ""
+        }
+        
+        return appName + "-"
     }
 }

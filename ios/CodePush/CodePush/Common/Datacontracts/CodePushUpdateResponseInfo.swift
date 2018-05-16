@@ -8,12 +8,12 @@
 import Foundation
 
 
-class CodePushUpdateResponseInfo {
+class CodePushUpdateResponseInfo: Codable {
     
     /**
      * Url to access package on server.
      */
-    var downloadUrl: String?
+    var downloadURL: String?
     
     /**
      * The description of the update.

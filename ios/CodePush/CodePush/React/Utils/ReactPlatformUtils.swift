@@ -15,15 +15,15 @@ class ReactPlatformUtils : CodePushPlatformUtils {
     private init() {}
     
     func isPackageLatest(_ packageMetadata: CodePushLocalPackage, _ currentAppVersion: String) -> Bool {
-        <#code#>
+        return true
     }
     
     func getBinaryResourcesModifiedTime() -> Int64 {
-        <#code#>
+        return 1000
     }
     
     func clearDebugCache() {
-        <#code#>
+        
     }
 
 }

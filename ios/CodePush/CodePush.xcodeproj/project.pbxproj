@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E39E8E620ABB0DD0034376C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEC20ABACCC0025F1D8 /* Result.swift */; };
+		2E39E8E720ABB0E10034376C /* QueryUpdateErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */; };
+		2E39E8E920ABBC150034376C /* CodePushErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8E820ABBC150034376C /* CodePushErrors.swift */; };
+		2E39E8EA20ABBDEE0034376C /* CodePushErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8E820ABBC150034376C /* CodePushErrors.swift */; };
 		2EC7B24B20A9DA11004EC0F3 /* CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC7B24120A9DA11004EC0F3 /* CodePush.framework */; };
-		2EC7B25020A9DA11004EC0F3 /* CodePushTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B24F20A9DA11004EC0F3 /* CodePushTests.swift */; };
 		2EC7B25220A9DA11004EC0F3 /* CodePush.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B24420A9DA11004EC0F3 /* CodePush.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
 		2EC7B26520A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
@@ -56,6 +59,13 @@
 		2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */; };
 		2EC7B2A820AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
 		2EC7B2A920AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
+		2ECD4DEB20ABA5DA0025F1D8 /* QueryUpdateErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */; };
+		2ECD4DED20ABACCC0025F1D8 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEC20ABACCC0025F1D8 /* Result.swift */; };
+		2ED4161320AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */; };
+		2ED4161420AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */; };
+		2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
+		2ED4161720AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
+		2EE7789520AB65B90033593D /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE7789420AB65B90033593D /* CoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,11 +79,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0445AE1497BF19DBEAF99C30 /* Pods-CodePushTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePushTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests.release.xcconfig"; sourceTree = "<group>"; };
+		095E8A26963207B50EABCBCC /* Pods-CodePushTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePushTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2E39E8E820ABBC150034376C /* CodePushErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushErrors.swift; sourceTree = "<group>"; };
 		2EC7B24120A9DA11004EC0F3 /* CodePush.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CodePush.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC7B24420A9DA11004EC0F3 /* CodePush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePush.h; sourceTree = "<group>"; };
 		2EC7B24520A9DA11004EC0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EC7B24A20A9DA11004EC0F3 /* CodePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EC7B24F20A9DA11004EC0F3 /* CodePushTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushTests.swift; sourceTree = "<group>"; };
 		2EC7B25120A9DA11004EC0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateManager.swift; sourceTree = "<group>"; };
 		2EC7B26620A9E01F004EC0F3 /* CodePushBaseCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushBaseCore.swift; sourceTree = "<group>"; };
@@ -98,6 +110,13 @@
 		2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPendingUpdate.swift; sourceTree = "<group>"; };
 		2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateRequest.swift; sourceTree = "<group>"; };
 		2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPackageInfo.swift; sourceTree = "<group>"; };
+		2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryUpdateErrors.swift; sourceTree = "<group>"; };
+		2ECD4DEC20ABACCC0025F1D8 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForUpdateTask.swift; sourceTree = "<group>"; };
+		2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateResponse.swift; sourceTree = "<group>"; };
+		2EE7789420AB65B90033593D /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
+		666BE136BDEDD18E8C3411B6 /* Pods-CodePush.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePush.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodePush/Pods-CodePush.release.xcconfig"; sourceTree = "<group>"; };
+		BC17D7FB6E14F481938E13BE /* Pods-CodePush.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePush.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodePush/Pods-CodePush.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,12 +138,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2418A48BAD70902F2851BE2C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC17D7FB6E14F481938E13BE /* Pods-CodePush.debug.xcconfig */,
+				666BE136BDEDD18E8C3411B6 /* Pods-CodePush.release.xcconfig */,
+				095E8A26963207B50EABCBCC /* Pods-CodePushTests.debug.xcconfig */,
+				0445AE1497BF19DBEAF99C30 /* Pods-CodePushTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2EC7B23720A9DA11004EC0F3 = {
 			isa = PBXGroup;
 			children = (
 				2EC7B24320A9DA11004EC0F3 /* CodePush */,
 				2EC7B24E20A9DA11004EC0F3 /* CodePushTests */,
 				2EC7B24220A9DA11004EC0F3 /* Products */,
+				2418A48BAD70902F2851BE2C /* Pods */,
+				5EBF5F5B070C389B6E68B775 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,8 +183,8 @@
 		2EC7B24E20A9DA11004EC0F3 /* CodePushTests */ = {
 			isa = PBXGroup;
 			children = (
-				2EC7B24F20A9DA11004EC0F3 /* CodePushTests.swift */,
 				2EC7B25120A9DA11004EC0F3 /* Info.plist */,
+				2EE7789420AB65B90033593D /* CoreTests.swift */,
 			);
 			path = CodePushTests;
 			sourceTree = "<group>";
@@ -160,6 +192,7 @@
 		2EC7B25B20A9DC94004EC0F3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				2ED4161120AB3397007B9C6C /* APIRequests */,
 				2EC7B26F20A9E7A9004EC0F3 /* Datacontracts */,
 				2EC7B26220A9DD7D004EC0F3 /* Enums */,
 				2EC7B26120A9DD2F004EC0F3 /* Errors */,
@@ -169,6 +202,7 @@
 				2EC7B25D20A9DCC1004EC0F3 /* Managers */,
 				2EC7B26C20A9E6AC004EC0F3 /* CodePushConfiguration.swift */,
 				2EC7B27F20AA2B6F004EC0F3 /* CodePushConstants.swift */,
+				2ECD4DEC20ABACCC0025F1D8 /* Result.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -223,6 +257,8 @@
 		2EC7B26120A9DD2F004EC0F3 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
+				2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */,
+				2E39E8E820ABBC150034376C /* CodePushErrors.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -246,6 +282,7 @@
 				2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */,
 				2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */,
 				2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */,
+				2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */,
 			);
 			path = Datacontracts;
 			sourceTree = "<group>";
@@ -256,6 +293,21 @@
 				2EC7B28F20AA3110004EC0F3 /* ReactPlatformUtils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		2ED4161120AB3397007B9C6C /* APIRequests */ = {
+			isa = PBXGroup;
+			children = (
+				2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */,
+			);
+			path = APIRequests;
+			sourceTree = "<group>";
+		};
+		5EBF5F5B070C389B6E68B775 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,6 +346,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2EC7B25820A9DA11004EC0F3 /* Build configuration list for PBXNativeTarget "CodePushTests" */;
 			buildPhases = (
+				1D52876944ED84D078015BAE /* [CP] Check Pods Manifest.lock */,
 				2EC7B24620A9DA11004EC0F3 /* Sources */,
 				2EC7B24720A9DA11004EC0F3 /* Frameworks */,
 				2EC7B24820A9DA11004EC0F3 /* Resources */,
@@ -362,12 +415,35 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1D52876944ED84D078015BAE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CodePushTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2EC7B23C20A9DA11004EC0F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2ECD4DED20ABACCC0025F1D8 /* Result.swift in Sources */,
 				2EC7B2A820AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */,
+				2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */,
 				2EC7B27A20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */,
 				2EC7B27120A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
 				2EC7B27420A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */,
@@ -378,6 +454,7 @@
 				2EC7B26D20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
 				2EC7B29320AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
 				2EC7B28320AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */,
+				2ECD4DEB20ABA5DA0025F1D8 /* QueryUpdateErrors.swift in Sources */,
 				2EC7B29020AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */,
 				2EC7B29F20AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */,
 				2EC7B26720A9E01F004EC0F3 /* CodePushBaseCore.swift in Sources */,
@@ -387,8 +464,10 @@
 				2EC7B2A220AA3796004EC0F3 /* CodePushPendingUpdate.swift in Sources */,
 				2EC7B2A520AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */,
 				2EC7B28C20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
+				2E39E8E920ABBC150034376C /* CodePushErrors.swift in Sources */,
 				2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */,
 				2EC7B28620AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
+				2ED4161320AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */,
 				2EC7B29620AA3323004EC0F3 /* CodePushState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,17 +476,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E39E8EA20ABBDEE0034376C /* CodePushErrors.swift in Sources */,
+				2E39E8E720ABB0E10034376C /* QueryUpdateErrors.swift in Sources */,
+				2E39E8E620ABB0DD0034376C /* Result.swift in Sources */,
 				2EC7B28D20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
 				2EC7B26E20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
 				2EC7B27220A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
 				2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */,
+				2ED4161420AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */,
 				2EC7B26B20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
 				2EC7B28720AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
 				2EC7B27E20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */,
 				2EC7B29720AA3323004EC0F3 /* CodePushState.swift in Sources */,
 				2EC7B28A20AA2E14004EC0F3 /* FileUtils.swift in Sources */,
-				2EC7B25020A9DA11004EC0F3 /* CodePushTests.swift in Sources */,
+				2EE7789520AB65B90033593D /* CoreTests.swift in Sources */,
 				2EC7B29120AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */,
+				2ED4161720AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */,
 				2EC7B27B20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */,
 				2EC7B28420AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */,
 				2EC7B27520A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */,
@@ -557,6 +641,7 @@
 		};
 		2EC7B25620A9DA11004EC0F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC17D7FB6E14F481938E13BE /* Pods-CodePush.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -583,6 +668,7 @@
 		};
 		2EC7B25720A9DA11004EC0F3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 666BE136BDEDD18E8C3411B6 /* Pods-CodePush.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -608,6 +694,7 @@
 		};
 		2EC7B25920A9DA11004EC0F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 095E8A26963207B50EABCBCC /* Pods-CodePushTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -626,6 +713,7 @@
 		};
 		2EC7B25A20A9DA11004EC0F3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0445AE1497BF19DBEAF99C30 /* Pods-CodePushTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

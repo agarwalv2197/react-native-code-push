@@ -18,17 +18,22 @@ class CodePushAcquisitionManager {
     /**
      * Endpoint for sending {@link CodePushDeploymentStatusReport}.
      */
-    private static let REPORT_DEPLOYMENT_STATUS_ENDPOINT = "reportStatus/deploy";
+    private static let REPORT_DEPLOYMENT_STATUS_ENDPOINT = "reportStatus/deploy"
     
     /**
      * Query updates string pattern.
      */
-    private static let UPDATE_CHECK_ENDPOINT = "updateCheck?%s";
+    private static let UPDATE_CHECK_ENDPOINT = "/updateCheck"
+    
+    /**
+     * Protocol
+     */
+    private static let SCHEME = "https"
     
     /**
      * Instance of {@link CodePushUtils} to work with.
      */
-    private var codePushUtils: CodePushUtils;
+    private var codePushUtils: CodePushUtils
     
     /**
      * Instance of {@link FileUtils} to work with.
@@ -40,13 +45,6 @@ class CodePushAcquisitionManager {
         self.fileUtils = fileUtils
     }
     
-    private func fixServerUrl(withUrl serverUrl: String) -> String {
-        if (serverUrl.last != "/") {
-            return serverUrl + "/"
-        }
-        return serverUrl
-    }
-    
     /**
      * Sends a request to server for updates of the current package.
      *
@@ -56,37 +54,33 @@ class CodePushAcquisitionManager {
      * @throws CodePushQueryUpdateException exception occurred during querying for update.
      */
     func queryUpdate(withConfig configuration: CodePushConfiguration,
-                                       withPackage currentPackage: CodePushLocalPackage) -> CodePushRemotePackage? {
-//    if (currentPackage.appVersion == nil) {
-//        throw new CodePushQueryUpdateException("Calling common acquisition SDK with incorrect package");
-//    }
-    
-        /* Extract parameters from configuration */
-        let serverUrl = fixServerUrl(withUrl: configuration.serverUrl!)
-        let deploymentKey = configuration.deploymentKey
-        let clientUniqueId = configuration.clientUniqueId
+                     withPackage currentPackage: CodePushLocalPackage,
+                     callback completion: @escaping (Result<CodePushRemotePackage>) -> Void) {
         
-        let updateRequest = CodePushUpdateRequest.createUpdateRequest(withKey: deploymentKey!, withLocalPackage: currentPackage, withClientUniqueId: clientUniqueId!)
+        guard currentPackage.appVersion != nil else { completion(Result { throw CodePushErrors.InvalidParam }); return }
         
-        let requestUrl = serverUrl + String.format(Locale.getDefault(), UPDATE_CHECK_ENDPOINT, codePushUtils.getQueryStringFromObject(updateRequest, "UTF-8"))
+        let updateRequest = CodePushUpdateRequest.createUpdateRequest(withKey: configuration.deploymentKey!, withLocalPackage: currentPackage, withClientUniqueId: configuration.clientUniqueId!)
         
-    CheckForUpdateTask checkForUpdateTask = new CheckForUpdateTask(mFileUtils, mCodePushUtils, requestUrl);
-    ApiHttpRequest<CodePushUpdateResponse> checkForUpdateRequest = new ApiHttpRequest<>(checkForUpdateTask);
-    try {
-            let codePushUpdateResponse = checkForUpdateRequest.makeRequest();
-        let updateInfo = codePushUpdateResponse.getUpdateInfo();
-    if (updateInfo.isUpdateAppVersion()) {
-    return CodePushRemotePackage.createDefaultRemotePackage(updateInfo.getAppVersion(), updateInfo.isUpdateAppVersion());
-    } else if (!updateInfo.isAvailable()) {
-    return null;
+        var urlComponents = URLComponents()
+        urlComponents.scheme = CodePushAcquisitionManager.SCHEME
+        urlComponents.host = configuration.serverUrl
+        urlComponents.path = CodePushAcquisitionManager.UPDATE_CHECK_ENDPOINT
+        urlComponents.queryItems = codePushUtils.getQueryItems(fromObject: updateRequest)
+        
+        guard let url = urlComponents.url else { completion(Result { throw QueryUpdateErrors.FailedToConstructUrl }); return }
+        
+        CheckForUpdateTask.checkForUpdate(atUrl: url, completion: { result in
+            completion( Result {
+                let json = try result.resolve()
+                let result: CodePushUpdateResponse = try self.codePushUtils.convertStringToObject(withString: json)
+                let updateInfo = result.updateInfo
+                if (updateInfo.updateAppVersion)! {
+                    return CodePushRemotePackage.createDefaultRemotePackage(withVersion: updateInfo.appVersion!, updateVersion: updateInfo.updateAppVersion!)
+                } else if (!updateInfo.isAvailable!) {
+                    throw QueryUpdateErrors.NoData
+                }
+                return CodePushRemotePackage.createRemotePackage(withDeploymentKey: configuration.deploymentKey!, fromUpdateInfo: updateInfo)
+            })
+        })
     }
-    return CodePushRemotePackage.createRemotePackageFromUpdateInfo(deploymentKey, updateInfo);
-    } catch (CodePushApiHttpRequestException e) {
-    throw new CodePushQueryUpdateException(e, currentPackage.getPackageHash());
-    }
-    } catch (CodePushMalformedDataException | CodePushIllegalArgumentException e) {
-    throw new CodePushQueryUpdateException(e, currentPackage.getPackageHash());
-    }
-    }
-
 }

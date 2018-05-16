@@ -85,7 +85,7 @@ class CodePushUpdateManager {
      *
      * @return application-specific folder.
      */
-    func getCodePushPath() -> String {
+    private func getCodePushPath() -> String {
         let codePushPath = fileUtils.appendPathComponent(atBasePath: self.documentsDirectory, withComponent: (codePushConfiguration?.appName)!)
         return codePushPath
     }
@@ -164,6 +164,26 @@ class CodePushUpdateManager {
     func getCurrentPackageHash() -> String? {
         let info = getCurrentPackageInfo()
         return info.currentPackage
+    }
+    
+    /**
+     * Gets file for package download.
+     *
+     * @return file for package download.
+     * @throws IOException if read/write error occurred while accessing the file system.
+     */
+    func getPackageDownloadFile() throws -> String {
+
+        if (!FileManager.default.fileExists(atPath: getCodePushPath())) {
+            do {
+                try FileManager.default.createDirectory(atPath: getCodePushPath(), withIntermediateDirectories: false, attributes: nil)
+            } catch {
+                throw error
+            }
+        }
+        let filePath = fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.DOWNLOAD_FILE_NAME)
+        FileManager.default.createFile(atPath: filePath, contents: nil)
+        return filePath
     }
     
     /**

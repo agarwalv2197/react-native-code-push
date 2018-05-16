@@ -7,12 +7,20 @@
 
 import Foundation
 
-class CheckForUpdateTask {
+class ApiRequest {
     
-    static func checkForUpdate(atUrl url: URL, completion: @escaping (Result<String>) -> Void) {
-        var request = URLRequest(url: url)
+    private let URL: URL
+    private let httpMethod: String
+    var task: task_t?
+    
+    init(_ url: URL, _ httpMethod: String) {
+        self.URL = url
+        self.httpMethod = httpMethod
+    }
+    
+    func checkForUpdate(completion: @escaping (Result<String>) -> Void) {
+        var request = URLRequest(url: URL)
         request.httpMethod = "GET"
-
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         

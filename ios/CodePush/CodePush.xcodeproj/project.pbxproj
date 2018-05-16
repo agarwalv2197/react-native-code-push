@@ -11,6 +11,9 @@
 		2E39E8E720ABB0E10034376C /* QueryUpdateErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */; };
 		2E39E8E920ABBC150034376C /* CodePushErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8E820ABBC150034376C /* CodePushErrors.swift */; };
 		2E39E8EA20ABBDEE0034376C /* CodePushErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8E820ABBC150034376C /* CodePushErrors.swift */; };
+		2E39E8EC20ABC3120034376C /* CodePushSyncOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */; };
+		2E39E8EE20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */; };
+		2E39E8EF20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */; };
 		2EC7B24B20A9DA11004EC0F3 /* CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC7B24120A9DA11004EC0F3 /* CodePush.framework */; };
 		2EC7B25220A9DA11004EC0F3 /* CodePush.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B24420A9DA11004EC0F3 /* CodePush.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
@@ -61,11 +64,13 @@
 		2EC7B2A920AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
 		2ECD4DEB20ABA5DA0025F1D8 /* QueryUpdateErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */; };
 		2ECD4DED20ABACCC0025F1D8 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEC20ABACCC0025F1D8 /* Result.swift */; };
-		2ED4161320AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */; };
-		2ED4161420AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */; };
+		2ED4161320AB33B9007B9C6C /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* ApiRequest.swift */; };
+		2ED4161420AB33B9007B9C6C /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* ApiRequest.swift */; };
 		2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
 		2ED4161720AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
 		2EE7789520AB65B90033593D /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE7789420AB65B90033593D /* CoreTests.swift */; };
+		74E338E0C07DC9E474012753 /* Pods_CodePushTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4144E183B5AAEA07F10B6083 /* Pods_CodePushTests.framework */; };
+		B310D8796858B6C355BD6567 /* Pods_CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E07C3E2665A0D98358C722 /* Pods_CodePush.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,9 +84,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03E07C3E2665A0D98358C722 /* Pods_CodePush.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodePush.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0445AE1497BF19DBEAF99C30 /* Pods-CodePushTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePushTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests.release.xcconfig"; sourceTree = "<group>"; };
 		095E8A26963207B50EABCBCC /* Pods-CodePushTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePushTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2E39E8E820ABBC150034376C /* CodePushErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushErrors.swift; sourceTree = "<group>"; };
+		2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushSyncOptions.swift; sourceTree = "<group>"; };
+		2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushCheckFrequency.swift; sourceTree = "<group>"; };
 		2EC7B24120A9DA11004EC0F3 /* CodePush.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CodePush.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC7B24420A9DA11004EC0F3 /* CodePush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePush.h; sourceTree = "<group>"; };
 		2EC7B24520A9DA11004EC0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,9 +120,10 @@
 		2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPackageInfo.swift; sourceTree = "<group>"; };
 		2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryUpdateErrors.swift; sourceTree = "<group>"; };
 		2ECD4DEC20ABACCC0025F1D8 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForUpdateTask.swift; sourceTree = "<group>"; };
+		2ED4161220AB33B9007B9C6C /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateResponse.swift; sourceTree = "<group>"; };
 		2EE7789420AB65B90033593D /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
+		4144E183B5AAEA07F10B6083 /* Pods_CodePushTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodePushTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		666BE136BDEDD18E8C3411B6 /* Pods-CodePush.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePush.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodePush/Pods-CodePush.release.xcconfig"; sourceTree = "<group>"; };
 		BC17D7FB6E14F481938E13BE /* Pods-CodePush.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePush.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodePush/Pods-CodePush.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B310D8796858B6C355BD6567 /* Pods_CodePush.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EC7B24B20A9DA11004EC0F3 /* CodePush.framework in Frameworks */,
+				74E338E0C07DC9E474012753 /* Pods_CodePushTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +279,7 @@
 			children = (
 				2EC7B27C20AA0C18004EC0F3 /* CodePushUpdateState.swift */,
 				2EC7B29820AA3373004EC0F3 /* CodePushInstallMode.swift */,
+				2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -283,6 +295,7 @@
 				2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */,
 				2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */,
 				2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */,
+				2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */,
 			);
 			path = Datacontracts;
 			sourceTree = "<group>";
@@ -298,7 +311,7 @@
 		2ED4161120AB3397007B9C6C /* APIRequests */ = {
 			isa = PBXGroup;
 			children = (
-				2ED4161220AB33B9007B9C6C /* CheckForUpdateTask.swift */,
+				2ED4161220AB33B9007B9C6C /* ApiRequest.swift */,
 			);
 			path = APIRequests;
 			sourceTree = "<group>";
@@ -306,6 +319,8 @@
 		5EBF5F5B070C389B6E68B775 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03E07C3E2665A0D98358C722 /* Pods_CodePush.framework */,
+				4144E183B5AAEA07F10B6083 /* Pods_CodePushTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -328,6 +343,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2EC7B25520A9DA11004EC0F3 /* Build configuration list for PBXNativeTarget "CodePush" */;
 			buildPhases = (
+				A24C54956027CA888012E6F3 /* [CP] Check Pods Manifest.lock */,
 				2EC7B23C20A9DA11004EC0F3 /* Sources */,
 				2EC7B23D20A9DA11004EC0F3 /* Frameworks */,
 				2EC7B23E20A9DA11004EC0F3 /* Headers */,
@@ -350,6 +366,7 @@
 				2EC7B24620A9DA11004EC0F3 /* Sources */,
 				2EC7B24720A9DA11004EC0F3 /* Frameworks */,
 				2EC7B24820A9DA11004EC0F3 /* Resources */,
+				184C8151E9EBC9788023CDF5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -416,6 +433,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		184C8151E9EBC9788023CDF5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1D52876944ED84D078015BAE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -434,6 +469,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A24C54956027CA888012E6F3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CodePush-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -446,8 +499,10 @@
 				2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */,
 				2EC7B27A20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */,
 				2EC7B27120A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
+				2E39E8EC20ABC3120034376C /* CodePushSyncOptions.swift in Sources */,
 				2EC7B27420A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */,
 				2EC7B27D20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */,
+				2E39E8EE20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */,
 				2EC7B26A20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
 				2EC7B29C20AA348B004EC0F3 /* CodePushManagers.swift in Sources */,
 				2EC7B27720A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,
@@ -467,7 +522,7 @@
 				2E39E8E920ABBC150034376C /* CodePushErrors.swift in Sources */,
 				2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */,
 				2EC7B28620AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
-				2ED4161320AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */,
+				2ED4161320AB33B9007B9C6C /* ApiRequest.swift in Sources */,
 				2EC7B29620AA3323004EC0F3 /* CodePushState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,7 +538,8 @@
 				2EC7B26E20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
 				2EC7B27220A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
 				2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */,
-				2ED4161420AB33B9007B9C6C /* CheckForUpdateTask.swift in Sources */,
+				2ED4161420AB33B9007B9C6C /* ApiRequest.swift in Sources */,
+				2E39E8EF20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */,
 				2EC7B26B20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
 				2EC7B28720AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
 				2EC7B27E20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */,

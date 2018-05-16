@@ -100,7 +100,7 @@ public class CodePushBaseCore {
         
         /* Initialize managers. */
         let configuration = getNativeConfiguration()
-
+        
         managers.updateManager.codePushConfiguration = configuration
         managers.settingsManager.codePushConfiguration = configuration
         /* Initializes listeners */
@@ -230,9 +230,201 @@ public class CodePushBaseCore {
         //        if (localPackage == nil) {
         let queryPackage = CodePushLocalPackage.createEmptyPackageForUpdateQuery(withVersion: config.appVersion)
         CodePushAcquisitionManager(utilities.utils, utilities.fileUtils).queryUpdate(withConfig: config, withPackage: queryPackage,
-                                                                                                callback: completion)
+                                                                                     callback: completion)
     }
     
+    /**
+     * Synchronizes your app assets with the latest release to the configured deployment.
+     *
+     * @param synchronizationOptions sync options.
+     * @throws CodePushNativeApiCallException if error occurred during the execution of operation.
+     */
+    func sync(withOptions syncOptions: CodePushSyncOptions) {
+//        if (state.syncInProgress) {
+//            notifyAboutSyncStatusChange(SYNC_IN_PROGRESS);
+//            AppCenterLog.info(CodePush.LOG_TAG, "Sync already in progress.");
+//            return;
+//        }
+
+        if (syncOptions.deploymentKey.isEmpty) {
+            syncOptions.deploymentKey = deploymentKey
+        }
+        if (syncOptions.installMode == nil) {
+            syncOptions.installMode = CodePushInstallMode.ON_NEXT_RESTART
+        }
+        if (syncOptions.mandatoryInstallMode == nil) {
+            syncOptions.mandatoryInstallMode = CodePushInstallMode.IMMEDIATE
+        }
+
+        /* minimumBackgroundDuration, ignoreFailedUpdates are primitives and always have default value */
+        if (syncOptions.checkFrequency == nil) {
+            syncOptions.checkFrequency = CodePushCheckFrequency.ON_APP_START
+        }
+        let configuration = getNativeConfiguration()
+
+        if (!syncOptions.deploymentKey.isEmpty) {
+            configuration.deploymentKey = syncOptions.deploymentKey
+        }
+       // state.syncInProgress = true
+    //    try {
+        //notifyAboutSyncStatusChange(CHECKING_FOR_UPDATE);
+        checkForUpdate(withKey: syncOptions.deploymentKey, callback: { result in
+            do {
+                let remotePackage = try result.resolve()
+                try self.doDownloadAndInstall(package: remotePackage, withOptions: syncOptions, withConfig: configuration)
+            } catch {
+                print(error)
+            }
+        });
+//        final boolean updateShouldBeIgnored =
+//        remotePackage != null && (remotePackage.isFailedInstall() && syncOptions.getIgnoreFailedUpdates());
+//        if (remotePackage == null || updateShouldBeIgnored) {
+//        if (updateShouldBeIgnored) {
+//        AppCenterLog.info(CodePush.LOG_TAG, "An update is available, but it is being ignored due to having been previously rolled back.");
+//        }
+//        CodePushLocalPackage currentPackage = getCurrentPackage();
+//        if (currentPackage != null && currentPackage.isPending()) {
+//        notifyAboutSyncStatusChange(UPDATE_INSTALLED);
+//        } else {
+//        notifyAboutSyncStatusChange(UP_TO_DATE);
+//        }
+//        mState.mSyncInProgress = false;
+//        } else if (syncOptions.getUpdateDialog() != null) {
+//        final CodePushUpdateDialog updateDialogOptions = syncOptions.getUpdateDialog();
+//        String message;
+//        final String acceptButtonText;
+//        final String declineButtonText = updateDialogOptions.getOptionalIgnoreButtonLabel();
+//        if (remotePackage.isMandatory()) {
+//        message = updateDialogOptions.getMandatoryUpdateMessage();
+//        acceptButtonText = updateDialogOptions.getMandatoryContinueButtonLabel();
+//        } else {
+//        message = updateDialogOptions.getOptionalUpdateMessage();
+//        acceptButtonText = updateDialogOptions.getOptionalInstallButtonLabel();
+//        }
+//        if (updateDialogOptions.getAppendReleaseDescription() && !isEmpty(remotePackage.getDescription())) {
+//        message = updateDialogOptions.getDescriptionPrefix() + " " + remotePackage.getDescription();
+//        }
+        
+        /* Ask user whether he want to install update or ignore it. */
+//        notifyAboutSyncStatusChange(AWAITING_USER_ACTION);
+//        final String finalMessage = message;
+//        new Handler(Looper.getMainLooper()).post(new Runnable() {
+//        @Override
+//        public void run() {
+//        mConfirmationDialog.shouldInstallUpdate(updateDialogOptions.getTitle(), finalMessage, acceptButtonText, declineButtonText, new CodePushConfirmationCallback() {
+//
+//        @Override
+//        public void onResult(boolean userAcceptsProposal) {
+//        if (userAcceptsProposal) {
+//        try {
+ //           doDownloadAndInstall(remotePackage, syncOptions, configuration)
+       // state.syncInProgress = false
+//        } catch (Exception e) {
+//        notifyAboutSyncStatusChange(UNKNOWN_ERROR);
+//        mState.mSyncInProgress = false;
+//        CodePushLogUtils.trackException(new CodePushNativeApiCallException(e));
+//        }
+//        } else {
+//        notifyAboutSyncStatusChange(UPDATE_IGNORED);
+//        mState.mSyncInProgress = false;
+//        }
+//        }
+        
+     //   @Override
+//        public void throwError(CodePushGeneralException e) {
+//        notifyAboutSyncStatusChange(UNKNOWN_ERROR)
+//        state.syncInProgress = false
+//        CodePushLogUtils.trackException(new CodePushNativeApiCallException(e));
+//        }
+//        });
+//        }
+//        });
+//        } else {
+//        doDownloadAndInstall(remotePackage, syncOptions, configuration);
+//        mState.mSyncInProgress = false;
+//        }
+//        } catch (Exception e) {
+//        notifyAboutSyncStatusChange(UNKNOWN_ERROR);
+//        mState.mSyncInProgress = false;
+//        throw new CodePushNativeApiCallException(e);
+//        }
+    }
+
+/**
+ * Downloads and installs update.
+ *
+ * @param remotePackage update to use.
+ * @param syncOptions   sync options.
+ * @param configuration configuration to use.
+ * @throws CodePushNativeApiCallException if error occurred during the execution of operation.
+ */
+func doDownloadAndInstall(package remotePackage: CodePushRemotePackage, withOptions syncOptions: CodePushSyncOptions, withConfig configuration: CodePushConfiguration) throws {
+   // notifyAboutSyncStatusChange(DOWNLOADING_PACKAGE)
+    let updateResult = downloadUpdate(package: remotePackage)
+    
+    do {
+        let localPackage = try updateResult.resolve()
+    }
+//    try {
+//        mManagers.mAcquisitionManager.reportStatusDownload(configuration, localPackage);
+//    } catch (CodePushReportStatusException e) {
+//        CodePushLogUtils.trackException(e);
+//    }
+//    let resolvedInstallMode = localPackage.isMandatory ? syncOptions.mandatoryInstallMode : syncOptions.installMode
+//    state.currentInstallModeInProgress = resolvedInstallMode;
+//    notifyAboutSyncStatusChange(CodePushSyncStatus.INSTALLING_UPDATE);
+//    installUpdate(localPackage, resolvedInstallMode, syncOptions.getMinimumBackgroundDuration());
+//    notifyAboutSyncStatusChange(UPDATE_INSTALLED);
+//    mState.mSyncInProgress = false;
+//    if (resolvedInstallMode == IMMEDIATE) {
+//        try {
+//        mManagers.mRestartManager.restartApp(false);
+//        } catch (CodePushMalformedDataException e) {
+//        throw new CodePushNativeApiCallException(e);
+//        }
+//    } else {
+//        mManagers.mRestartManager.clearPendingRestart();
+//    }
+}
+
+    /**
+     * Downloads update.
+     *
+     * @param updatePackage update to download.
+     * @return resulted local package.
+     * @throws CodePushNativeApiCallException if error occurred during the execution of operation.
+     */
+    func downloadUpdate(package updatePackage: CodePushRemotePackage) -> Result<CodePushLocalPackage> {
+        do {
+            return Result {
+                //let binaryModifiedTime = "" + utilities.platformUtils.getBinaryResourcesModifiedTime(mContext)
+                
+//                var appEntryPoint: String
+//                let downloadUrl = updatePackage.downloadURL
+//                let downloadFile = try managers.updateManager.getPackageDownloadFile()
+//                let downloadTask = DownloadPackageTask(utilities.fileUtils, downloadUrl, downloadFile, getDownloadProgressCallbackForUpdateDownload())
+//                ApiHttpRequest<CodePushDownloadPackageResult> downloadRequest = new ApiHttpRequest<>(downloadTask)
+//                let downloadPackageResult = managers.updateManager.downloadPackage(updatePackage.packageHash, downloadRequest)
+//                let isZip = downloadPackageResult.isZip
+//                let newUpdateFolderPath = managers.updateManager.getPackageFolderPath(withHash: updatePackage.packageHash)
+//                let newUpdateMetadataPath = utilities.fileUtils.appendPathComponent(newUpdateFolderPath, CodePushConstants.PACKAGE_FILE_NAME)
+//                if (isZip) {
+//                    managers.updateManager.unzipPackage(downloadFile)
+//                    appEntryPoint = managers.updateManager.mergeDiff(newUpdateFolderPath, newUpdateMetadataPath, updatePackage.packageHash, publicKey, appEntryPoint)
+//                } else {
+//                    utilities.fileUtils.moveFile(downloadFile, File(newUpdateFolderPath), appEntryPoint)
+//                }
+//                let newPackage = createLocalPackage(false, false, true, false, appEntryPoint, updatePackage)
+//                newPackage.binaryModifiedTime = binaryModifiedTime
+//                utilities.utils.writeObjectToJsonFile(newPackage, newUpdateMetadataPath)
+//                try managers.settingsManager.saveFailedUpdate(updatePackage)
+//                return newPackage
+                
+                return CodePushLocalPackage()
+            }
+        }
+    }
+
     /**
      * Initializes update after app restart.
      *

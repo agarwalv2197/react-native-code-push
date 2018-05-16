@@ -8,7 +8,8 @@
 import Foundation
 
 
-enum CodePushInstallMode {
+enum CodePushInstallMode: Int, Codable {
+    
     /**
      * Indicates that you want to install the update and restart the app immediately.
      */

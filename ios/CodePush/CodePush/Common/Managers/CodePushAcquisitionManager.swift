@@ -38,7 +38,7 @@ class CodePushAcquisitionManager {
     /**
      * Instance of {@link FileUtils} to work with.
      */
-    private var fileUtils: FileUtils;
+    private var fileUtils: FileUtils
     
     init(_ codePushUtils: CodePushUtils, _ fileUtils: FileUtils) {
         self.codePushUtils = codePushUtils
@@ -69,7 +69,9 @@ class CodePushAcquisitionManager {
         
         guard let url = urlComponents.url else { completion(Result { throw QueryUpdateErrors.FailedToConstructUrl }); return }
         
-        CheckForUpdateTask.checkForUpdate(atUrl: url, completion: { result in
+        let checkTask = ApiRequest(url, "GET")
+        
+        checkTask.checkForUpdate(completion: { result in
             completion( Result {
                 let json = try result.resolve()
                 let result: CodePushUpdateResponse = try self.codePushUtils.convertStringToObject(withString: json)

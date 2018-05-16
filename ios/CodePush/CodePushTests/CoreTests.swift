@@ -28,8 +28,9 @@ class CoreTests: XCTestCase {
         codePush.checkForUpdate(callback: { result in
             do {
                 let remote = try result.resolve()
-                
-            } catch {}
+            } catch {
+                print(error)
+            }
         })
         sleep(4)
     }

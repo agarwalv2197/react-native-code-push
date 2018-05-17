@@ -69,9 +69,9 @@ class CodePushAcquisitionManager {
         
         guard let url = urlComponents.url else { completion(Result { throw QueryUpdateErrors.FailedToConstructUrl }); return }
         
-        let checkTask = ApiRequest(url, "GET")
+        let api = ApiRequest(url)
         
-        checkTask.checkForUpdate(completion: { result in
+        api.checkForUpdate(completion: { result in
             completion( Result {
                 let json = try result.resolve()
                 let result: CodePushUpdateResponse = try self.codePushUtils.convertStringToObject(withString: json)

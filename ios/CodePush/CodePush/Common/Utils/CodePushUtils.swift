@@ -18,34 +18,6 @@ class CodePushUtils {
     }
     
     /**
-     * Gets the string content from instance of {@link InputStream}.
-     *
-     * @param inputStream InputStream instance.
-     * @return string content.
-     * @throws IOException read/write error occurred while accessing the file system.
-     */
-//    func getStringFromInputStream(InputStream inputStream) -> String {
-//    BufferedReader bufferedReader = null;
-//    try {
-//    StringBuilder buffer = new StringBuilder();
-//    bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//    String line;
-//    while ((line = bufferedReader.readLine()) != null) {
-//    buffer.append(line);
-//    buffer.append("\n");
-//    }
-//    return buffer.toString().trim();
-//    } finally {
-//    IOException e = mFileUtils.finalizeResources(
-//    Arrays.asList(bufferedReader, inputStream),
-//    null);
-//    if (e != null) {
-//    throw new CodePushFinalizeException(e);
-//    }
-//    }
-//    }
-    
-    /**
      * Parses {@link JSONObject} from file.
      *
      * @param filePath path to file.
@@ -53,10 +25,8 @@ class CodePushUtils {
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getJsonObjectFromFile(atPath filePath: String) throws -> Data {
-        do {
-            let contents = try fileUtils.readFileToString(atPath: filePath)
-            return contents.data(using: .utf8)!
-        } catch {fatalError("error")}
+        let contents = try fileUtils.readFileToString(atPath: filePath)
+        return contents.data(using: .utf8)!
     }
     
     /**
@@ -65,12 +35,11 @@ class CodePushUtils {
      * @param object {@link JSONObject} instance.
      * @return the json string.
      */
-    func convertObjectToJsonString<T>(withObject object: T) -> String where T: Codable  {
+    func convertObjectToJsonString<T>(withObject object: T) throws -> String where T: Codable  {
         let encoder = JSONEncoder()
-        do {
-            let data = try encoder.encode(object)
-            return String(data: data, encoding: .utf8)!
-        } catch {fatalError("")}
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(object)
+        return String(data: data, encoding: .utf8)!
     }
     
     /**
@@ -83,13 +52,10 @@ class CodePushUtils {
      * @throws CodePushMalformedDataException exception during parsing data.
      */
     func getObjectFromJsonFile<T>(_ filePath: String) throws -> T where T: Codable {
-        
-        do {
-            let json = try getJsonObjectFromFile(atPath: filePath)
-            let decoder = JSONDecoder()
-            let object = try decoder.decode(T.self, from: json)
-            return object
-        } catch {fatalError("")}
+        let json = try getJsonObjectFromFile(atPath: filePath)
+        let decoder = JSONDecoder()
+        let object = try decoder.decode(T.self, from: json)
+        return object
     }
     
     /**
@@ -101,10 +67,8 @@ class CodePushUtils {
      * @throws IOException read/write error occurred while accessing the system.
      */
     func writeObjectToJsonFile<T>(withObject object: T, atPath filePath: String) throws where T: Codable {
-        do {
-            let jsonString = try convertObjectToJsonString(withObject: object)
-            try fileUtils.writeToFile(withContent: jsonString, atPath: filePath)
-        } catch {}
+        let jsonString = try convertObjectToJsonString(withObject: object)
+        try fileUtils.writeToFile(withContent: jsonString, atPath: filePath)
     }
     
     /**
@@ -116,9 +80,7 @@ class CodePushUtils {
      */
     func writeJsonToFile(withJson json: Data, atPath filePath: String) throws {
         let jsonString = String(data: json, encoding: .utf8)
-        do {
-            try fileUtils.writeToFile(withContent: jsonString!, atPath: filePath)
-        } catch {}
+        try fileUtils.writeToFile(withContent: jsonString!, atPath: filePath)
     }
     
     /**
@@ -130,14 +92,12 @@ class CodePushUtils {
      */
     func convertObjectToJsonObject<T>(withObject object: T) throws -> Data where T: Codable {
         let encoder = JSONEncoder()
-        
-        do {
-            let data = try encoder.encode(object)
-            return data
-        } catch {fatalError("")}
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(object)
+        return data
     }
     
-
+    
     /**
      * Converts json string to specified class.
      *
@@ -149,10 +109,8 @@ class CodePushUtils {
     func convertStringToObject<T>(withString json: String) throws -> T where T: Codable {
         let data = json.data(using: .utf8)
         let decoder = JSONDecoder()
-        do {
-            let object = try decoder.decode(T.self, from: data!)
-            return object
-        } catch {fatalError("")}
+        let object = try decoder.decode(T.self, from: data!)
+        return object
     }
     
     /**
@@ -171,17 +129,17 @@ class CodePushUtils {
      */
     func getQueryItems(fromObject object: CodePushUpdateRequest) -> [URLQueryItem] {
         
-//        let mirror = Mirror(reflecting: object)
-//        var items = [URLQueryItem]()
-//
-//        for (_, attr) in mirror.children.enumerated() {
-//            if (attr.value != nil) {
-//                items.append(URLQueryItem(name: attr.label!, value: attr.value as? String))
-//            }
-//        }
+        //        let mirror = Mirror(reflecting: object)
+        //        var items = [URLQueryItem]()
+        //
+        //        for (_, attr) in mirror.children.enumerated() {
+        //            if (attr.value != nil) {
+        //                items.append(URLQueryItem(name: attr.label!, value: attr.value as? String))
+        //            }
+        //        }
         
         var items = [URLQueryItem]()
-
+        
         items.append(URLQueryItem(name: "appVersion", value: object.appVersion))
         items.append(URLQueryItem(name: "clientUniqueId", value: object.clientUniqueId))
         items.append(URLQueryItem(name: "deploymentKey", value: object.deploymentKey))

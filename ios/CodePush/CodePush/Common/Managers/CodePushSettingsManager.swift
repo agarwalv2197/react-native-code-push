@@ -65,16 +65,19 @@ class CodePushSettingsManager {
      * @return an array of failed updates.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-//    func getFailedUpdates() -> [CodePushPackage] {
-//        let failedUpdatesString = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
-//        if (failedUpdatesString == nil) {
+//    func getFailedUpdates() throws -> [CodePushPackage] {
+//        let failedUpdatesString: String = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)!
+//        if (failedUpdatesString.isEmpty) {
 //            return []
 //        }
 //
-//        return codePushUtils.convertStringToObject(withString: failedUpdatesString)
-//
-//        var emptyArray: [AnyObject]
-//        settings.set(codePushUtils.convertObjectToJsonString(withObject: emptyArray), forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+//        do {
+//            let failedUpdateObject: CodePushPackage = try codePushUtils.convertStringToObject(withString: failedUpdatesString)
+//        } catch {
+//            let emptyArray = [AnyObject]()
+//            let failedString: String = try codePushUtils.convertObjectToJsonString(withObject: emptyArray)
+//            settings.set(failedString, forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+//        }
 //    }
     
     /**
@@ -149,11 +152,11 @@ class CodePushSettingsManager {
      * @param failedPackage instance of failed {@link CodePushRemotePackage}.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-//    func saveFailedUpdate(forPackage failedPackage: CodePushPackage) {
-//        var failedUpdates = getFailedUpdates()
+//    func saveFailedUpdate(forPackage failedPackage: CodePushPackage) throws {
+//        var failedUpdates = try getFailedUpdates()
 //        failedUpdates.append(failedPackage)
-//        let failedUpdatesString = codePushUtils.convertObjectToJsonString(withObject: failedUpdates)
-//        settings.set(failedUpdatesString, getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+//        let failedUpdatesString: String = try codePushUtils.convertObjectToJsonString(withObject: failedUpdates)
+//        settings.set(failedUpdatesString, forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
 //    }
     
     /**

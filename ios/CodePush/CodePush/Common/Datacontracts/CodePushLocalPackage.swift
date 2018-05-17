@@ -46,16 +46,28 @@ class CodePushLocalPackage: CodePushPackage {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let superdecoder = try container.superDecoder()
+        try super.init(from: superdecoder)
+        
         self.isPending = try container.decode(Bool.self, forKey: .isPending)
         self.appEntryPoint = try container.decode(String.self, forKey: .appEntryPoint)
         self.isFirstRun = try container.decode(Bool.self, forKey: .isFirstRun)
         self.isDebugOnly = try container.decode(Bool.self, forKey: .isDebugOnly)
         self.binaryModifiedTime = try container.decode(String.self, forKey: .binaryModifiedTime)
-        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(isPending, forKey: .isPending)
+        try container.encode(appEntryPoint, forKey: .appEntryPoint)
+        try container.encode(isFirstRun, forKey: .isFirstRun)
+        try container.encode(isDebugOnly, forKey: .isDebugOnly)
+        let superdecoder = container.superEncoder()
+        try super.encode(to: superdecoder)
     }
     
     static func createLocalPackage(wasFailedInstall failedInstall: Bool, isFirstRun firstRun: Bool,
-                                   isPending pending: Bool, withEntryPoint entryPoint: String,
+                                   isPending pending: Bool, isDebugOnly isDebug: Bool, withEntryPoint entryPoint: String,
                                    fromPackage package: CodePushPackage) -> CodePushLocalPackage {
         let localPackage = CodePushLocalPackage()
         localPackage.appVersion = package.appVersion
@@ -63,6 +75,7 @@ class CodePushLocalPackage: CodePushPackage {
         localPackage.description = package.description
         localPackage.failedInstall = failedInstall
         localPackage.isMandatory = package.isMandatory
+        localPackage.isDebugOnly = isDebug
         localPackage.label = package.label
         localPackage.packageHash = package.packageHash
         localPackage.isPending = pending

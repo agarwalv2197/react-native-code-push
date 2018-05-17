@@ -23,9 +23,7 @@ struct CodePushConstants {
      */
     static let PACKAGE_FILE_NAME = "app.json"
     
-    /**
-     * Default file name for downloading CodePush updates.
-     */
-    static let DOWNLOAD_FILE_NAME = "download.zip";
+    // TODO: MOVE THIS ELSEWHERE
+    static let DEFAULT_JS_BUNDLE_NAME = "index.android.bundle"
     
 }

@@ -104,7 +104,9 @@ class CodePushUpdateManager {
             do {
                 let hash = try getPackage(withHash: packageHash!)
                 return hash
-            } catch {fatalError("")}
+            } catch {
+                return nil
+            }
         }
     }
     
@@ -128,7 +130,7 @@ class CodePushUpdateManager {
      */
     func getPreviousPackage() throws -> CodePushLocalPackage? {
         let packageHash = getPreviousPackageHash();
-
+        
         do {
             let hash = try getPackage(withHash: packageHash!)
             return hash
@@ -146,7 +148,7 @@ class CodePushUpdateManager {
         let folderPath = getPackageFolderPath(withHash: packageHash)
         let packageFilePath = fileUtils.appendPathComponent(atBasePath: folderPath, withComponent:
             CodePushConstants.PACKAGE_FILE_NAME)
-
+        
         do {
             var object: CodePushLocalPackage
             object = try codePushUtils.getObjectFromJsonFile(packageFilePath)
@@ -172,19 +174,18 @@ class CodePushUpdateManager {
      * @return file for package download.
      * @throws IOException if read/write error occurred while accessing the file system.
      */
-    func getPackageDownloadFile() throws -> String {
-
-        if (!FileManager.default.fileExists(atPath: getCodePushPath())) {
-            do {
-                try FileManager.default.createDirectory(atPath: getCodePushPath(), withIntermediateDirectories: false, attributes: nil)
-            } catch {
-                throw error
-            }
-        }
-        let filePath = fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.DOWNLOAD_FILE_NAME)
-        FileManager.default.createFile(atPath: filePath, contents: nil)
-        return filePath
-    }
+//    func getPackageDownloadPath() throws -> String {
+//
+//        let filePath = getCodePushPath()
+//        let downloadPath = fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.DOWNLOAD_FILE_NAME)
+//        if (!FileManager.default.fileExists(atPath: filePath)) {
+//            try FileManager.default.createDirectory(atPath: filePath, withIntermediateDirectories: false, attributes: nil)
+//        } else if (FileManager.default.fileExists(atPath: downloadPath)) {
+//            try fileUtils.deleteDirectoryAtPath(path: downloadPath)
+//        }
+//
+//        return downloadPath
+//    }
     
     /**
      * Gets metadata about the current update.
@@ -248,5 +249,37 @@ class CodePushUpdateManager {
         do {
             try codePushUtils.writeObjectToJsonFile(withObject: packageInfo, atPath: getStatusFilePath());
         } catch {fatalError("")}
+    }
+    
+    /**
+     * Downloads the update package.
+     *
+     * @param packageHash            update package hash.
+     * @param downloadPackageRequest instance of {@link ApiHttpRequest} to download the update.
+     * @return downloaded package.
+     * @throws CodePushDownloadPackageException an exception occurred during package downloading.
+     */
+    func downloadPackage(withHash packageHash: String, atUrl url: String,
+                         callback completion: @escaping (Result<CodePushDownloadPackageResult>) -> Void) {
+        let newUpdateFolderPath = getPackageFolderPath(withHash: packageHash)
+        if (fileUtils.fileExists(atPath: newUpdateFolderPath)) {
+            
+            /* This removes any stale data in <code>newPackageFolderPath</code> that could have been left
+             * uncleared due to a crash or error during the download or install process. */
+            do {
+                try fileUtils.deleteDirectoryAtPath(path: newUpdateFolderPath)
+            } catch {
+                completion(Result { throw CodePushErrors.IOErrors })
+                return
+            }
+        }
+        let resolvedUrl = URL(string: url)
+        let api = ApiRequest(resolvedUrl!)
+        api.downloadUpdate(completion: { result in
+            completion( Result {
+                let temporaryPath = try result.resolve()
+                return CodePushDownloadPackageResult(temporaryPath, false)
+            })
+        })
     }
 }

@@ -10,4 +10,5 @@ import Foundation
 
 enum CodePushErrors : Error {
     case InvalidParam
+    case IOErrors
 }

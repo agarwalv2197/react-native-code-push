@@ -18,17 +18,30 @@ class CodePushRemotePackage: CodePushPackage {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case downloadUrl,
+        case downloadURL,
         packageSize,
         updateAppVersion
     }
     
     required init(from decoder: Decoder) throws {
+
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.downloadURL = try container.decode(String.self, forKey: .downloadUrl)
+        let superdecoder = try container.superDecoder()
+        try super.init(from: superdecoder)
+        
+        self.downloadURL = try container.decode(String.self, forKey: .downloadURL)
         self.packageSize = try container.decode(Int64.self, forKey: .packageSize)
         self.updateAppVersion = try container.decode(Bool.self, forKey: .updateAppVersion)
-        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(downloadURL, forKey: .downloadURL)
+        try container.encode(packageSize, forKey: .packageSize)
+        try container.encode(updateAppVersion, forKey: .updateAppVersion)
+        let superdecoder = container.superEncoder()
+        try super.encode(to: superdecoder)
     }
     
     /**

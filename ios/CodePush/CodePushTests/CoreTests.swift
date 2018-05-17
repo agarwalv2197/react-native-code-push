@@ -20,7 +20,7 @@ class CoreTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testCheckForUpdate() {
         let codePush = CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
                                         "", true, "", "", "", "1",
                                         ReactPlatformUtils.sharedInstance)
@@ -28,11 +28,22 @@ class CoreTests: XCTestCase {
         codePush.checkForUpdate(callback: { result in
             do {
                 let remote = try result.resolve()
+                print(remote)
             } catch {
                 print(error)
             }
         })
         sleep(4)
+    }
+    
+    func testDownloadUpdate() {
+        let codePush = CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
+                                        "", true, "", "", "", "1",
+                                        ReactPlatformUtils.sharedInstance)
+        
+        let options = CodePushSyncOptions()
+        codePush.sync(withOptions: options)
+        sleep(30)
     }
     
 }

@@ -69,6 +69,11 @@
 		2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
 		2ED4161720AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
 		2EE7789520AB65B90033593D /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE7789420AB65B90033593D /* CoreTests.swift */; };
+		2EEDDE6220AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEDDE6120AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift */; };
+		2EEDDE6320AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEDDE6120AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift */; };
+		2EEDDE6520AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEDDE6420AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift */; };
+		2EEDDE6620AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEDDE6420AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift */; };
+		2EEDDE6720ACA0050009CE5A /* CodePushSyncOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */; };
 		74E338E0C07DC9E474012753 /* Pods_CodePushTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4144E183B5AAEA07F10B6083 /* Pods_CodePushTests.framework */; };
 		B310D8796858B6C355BD6567 /* Pods_CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E07C3E2665A0D98358C722 /* Pods_CodePush.framework */; };
 /* End PBXBuildFile section */
@@ -123,6 +128,8 @@
 		2ED4161220AB33B9007B9C6C /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateResponse.swift; sourceTree = "<group>"; };
 		2EE7789420AB65B90033593D /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
+		2EEDDE6120AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushDownloadPackageRequest.swift; sourceTree = "<group>"; };
+		2EEDDE6420AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushDownloadPackageResult.swift; sourceTree = "<group>"; };
 		4144E183B5AAEA07F10B6083 /* Pods_CodePushTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodePushTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		666BE136BDEDD18E8C3411B6 /* Pods-CodePush.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePush.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodePush/Pods-CodePush.release.xcconfig"; sourceTree = "<group>"; };
 		BC17D7FB6E14F481938E13BE /* Pods-CodePush.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodePush.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodePush/Pods-CodePush.debug.xcconfig"; sourceTree = "<group>"; };
@@ -296,6 +303,8 @@
 				2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */,
 				2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */,
 				2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */,
+				2EEDDE6120AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift */,
+				2EEDDE6420AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift */,
 			);
 			path = Datacontracts;
 			sourceTree = "<group>";
@@ -441,10 +450,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -496,6 +507,7 @@
 			files = (
 				2ECD4DED20ABACCC0025F1D8 /* Result.swift in Sources */,
 				2EC7B2A820AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */,
+				2EEDDE6220AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift in Sources */,
 				2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */,
 				2EC7B27A20A9F7CE004EC0F3 /* CodePushUpdateResponseInfo.swift in Sources */,
 				2EC7B27120A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
@@ -521,6 +533,7 @@
 				2EC7B28C20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
 				2E39E8E920ABBC150034376C /* CodePushErrors.swift in Sources */,
 				2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */,
+				2EEDDE6520AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift in Sources */,
 				2EC7B28620AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
 				2ED4161320AB33B9007B9C6C /* ApiRequest.swift in Sources */,
 				2EC7B29620AA3323004EC0F3 /* CodePushState.swift in Sources */,
@@ -531,8 +544,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EEDDE6720ACA0050009CE5A /* CodePushSyncOptions.swift in Sources */,
 				2E39E8EA20ABBDEE0034376C /* CodePushErrors.swift in Sources */,
 				2E39E8E720ABB0E10034376C /* QueryUpdateErrors.swift in Sources */,
+				2EEDDE6320AC8C2F0009CE5A /* CodePushDownloadPackageRequest.swift in Sources */,
 				2E39E8E620ABB0DD0034376C /* Result.swift in Sources */,
 				2EC7B28D20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
 				2EC7B26E20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
@@ -558,6 +573,7 @@
 				2EC7B26520A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */,
 				2EC7B2A320AA3796004EC0F3 /* CodePushPendingUpdate.swift in Sources */,
 				2EC7B28120AA2B6F004EC0F3 /* CodePushConstants.swift in Sources */,
+				2EEDDE6620AC8CAF0009CE5A /* CodePushDownloadPackageResult.swift in Sources */,
 				2EC7B2A020AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */,
 				2EC7B29420AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
 				2EC7B27820A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,

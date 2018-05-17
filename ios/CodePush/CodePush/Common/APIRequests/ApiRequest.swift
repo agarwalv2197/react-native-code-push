@@ -10,19 +10,14 @@ import Foundation
 class ApiRequest {
     
     private let URL: URL
-    private let httpMethod: String
-    var task: task_t?
     
-    init(_ url: URL, _ httpMethod: String) {
+    init(_ url: URL) {
         self.URL = url
-        self.httpMethod = httpMethod
     }
     
     func checkForUpdate(completion: @escaping (Result<String>) -> Void) {
-        var request = URLRequest(url: URL)
-        request.httpMethod = "GET"
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
+        let session = createSession()
+        let request = getRequest()
         
         let task = session.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
@@ -36,5 +31,36 @@ class ApiRequest {
         }
         
         task.resume()
+    }
+    
+    func downloadUpdate(completion: @escaping (Result<String>) -> Void) {
+        let session = createSession()
+        let request = getRequest()
+        
+        let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
+            completion (Result {
+                if let tempLocalUrl = tempLocalUrl, error == nil {
+                    if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                        print("Success: \(statusCode)")
+                    }
+                    return tempLocalUrl.absoluteString
+                } else {
+                    throw error!
+                }
+            })
+        }
+        
+        task.resume()
+    }
+    
+    private func createSession() -> URLSession {
+        let sessionConfig = URLSessionConfiguration.default
+        return URLSession(configuration: sessionConfig)
+    }
+    
+    private func getRequest() -> URLRequest {
+        var request = URLRequest(url: URL)
+        request.httpMethod = "GET"
+        return request
     }
 }

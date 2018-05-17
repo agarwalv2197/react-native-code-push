@@ -6,6 +6,8 @@ target 'CodePush' do
   use_frameworks!
 
   # Pods for CodePush
+	pod "RxSwift"
+    pod 'SSZipArchive'
 
   target 'CodePushTests' do
     inherit! :search_paths

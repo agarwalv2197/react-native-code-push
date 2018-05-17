@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SSZipArchive
 
 class FileUtils {
     
@@ -29,6 +29,17 @@ class FileUtils {
     }
     
     /**
+     * Gets files from archive.
+     *
+     * @param zipFile           path to zip-archive.
+     * @param destinationFolder path for the unzipped files to be saved.
+     * @throws IOException read/write error occurred while accessing the file system.
+     */
+    func unzipFile(withZip zip: String, toDestination destination: String) throws {
+        SSZipArchive.unzipFile(atPath: zip, toDestination: destination)
+    }
+    
+    /**
      * Appends file path with one more component.
      *
      * @param basePath            path to be appended.
@@ -48,15 +59,7 @@ class FileUtils {
      * @param filePath path to a file.
      */
     func writeToFile(withContent content: String, atPath filePath: String) throws {
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(filePath)
-        
-            //writing
-            do {
-                try content.write(to: fileURL, atomically: false, encoding: .utf8)
-            }
-            catch {/* error handling here */}
-        }
+        try content.write(to: URL(fileURLWithPath: filePath), atomically: false, encoding: .utf8)
     }
     
     /**
@@ -66,17 +69,24 @@ class FileUtils {
      * @return string with contents of the file.
      */
     func readFileToString(atPath filePath: String) throws -> String {
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = dir.appendingPathComponent(filePath)
-            
-            do {
-                let content = try String(contentsOf: fileURL, encoding: .utf8)
-                return content
-            }
-            catch {/* error handling here */}
-        } else {fatalError("Cannot read file")}
-        
-        return ""
+        return try String(contentsOf: URL(string: filePath)!, encoding: .utf8)
+    }
+    
+    func moveFile(file origin: String, toDestination destination: String) throws {
+        try FileManager.default.moveItem(at: URL(string: origin)!, to: URL(fileURLWithPath: destination))
+    }
+    
+    /**
+     * Creates a new directory if it doesn't already exist
+     *
+     * @param filePath of directory
+     * @return true if the directory was created, false if not.
+     * @throws
+     */
+    func createDirectoryIfNotExists(path url: String) throws {
+        if (!fileExists(atPath: url)) {
+            try FileManager.default.createDirectory(at: URL(fileURLWithPath: url), withIntermediateDirectories: true, attributes: nil)
+        }
     }
     
     /**
@@ -87,13 +97,9 @@ class FileUtils {
      */
     func deleteDirectoryAtPath(path directoryPath: String) throws {
         if (directoryPath.isEmpty) {
-            return
-        }
-        
-        do {
+            throw CodePushErrors.IOErrors
+        } else {
             try FileManager.default.removeItem(atPath: directoryPath)
-        } catch {
-        
         }
     }
 }

@@ -23,7 +23,4 @@ struct CodePushConstants {
      */
     static let PACKAGE_FILE_NAME = "app.json"
     
-    // TODO: MOVE THIS ELSEWHERE
-    static let DEFAULT_JS_BUNDLE_NAME = "index.android.bundle"
-    
 }

@@ -1,20 +1,3 @@
-PODS:
-  - RxSwift (4.1.2)
-  - SSZipArchive (2.1.2)
-
-DEPENDENCIES:
-  - RxSwift
-  - SSZipArchive
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - RxSwift
-    - SSZipArchive
-
-SPEC CHECKSUMS:
-  RxSwift: e49536837d9901277638493ea537394d4b55f570
-  SSZipArchive: d4009d2ce5520a421f231fd97028cc0e2667eed8
-
-PODFILE CHECKSUM: 1fb516836da3033058f0bc2d5e64fbd54e5435dc
+PODFILE CHECKSUM: b3d530493012c3c3a0d800cb1557934ad1daec2c
 
 COCOAPODS: 1.5.2

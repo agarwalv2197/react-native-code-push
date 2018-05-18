@@ -31,17 +31,12 @@ class CodePushLocalPackage: CodePushPackage {
      */
     var isDebugOnly: Bool?
     
-    /**
-     *
-     */
-    var binaryModifiedTime: String?
     
     private enum CodingKeys: String, CodingKey {
         case isPending,
         appEntryPoint,
         isFirstRun,
-        isDebugOnly,
-        binaryModifiedTime
+        isDebugOnly
     }
     
     required init(from decoder: Decoder) throws {
@@ -53,7 +48,6 @@ class CodePushLocalPackage: CodePushPackage {
         self.appEntryPoint = try container.decode(String.self, forKey: .appEntryPoint)
         self.isFirstRun = try container.decode(Bool.self, forKey: .isFirstRun)
         self.isDebugOnly = try container.decode(Bool.self, forKey: .isDebugOnly)
-        self.binaryModifiedTime = try container.decode(String.self, forKey: .binaryModifiedTime)
     }
     
     override func encode(to encoder: Encoder) throws {

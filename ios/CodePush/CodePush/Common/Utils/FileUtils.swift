@@ -6,17 +6,11 @@
 //
 
 import Foundation
-import SSZipArchive
 
 class FileUtils {
     
     static let sharedInstance = FileUtils()
     private init() {}
-    
-    /**
-     * Size of the buffer used when writing to files.
-     */
-    private let WRITE_BUFFER_SIZE = 1024 * 8
     
     /**
      * Checks whether a file by the following path exists.
@@ -26,17 +20,6 @@ class FileUtils {
      */
     func fileExists(atPath filePath: String) -> Bool {
         return FileManager.default.fileExists(atPath: filePath)
-    }
-    
-    /**
-     * Gets files from archive.
-     *
-     * @param zipFile           path to zip-archive.
-     * @param destinationFolder path for the unzipped files to be saved.
-     * @throws IOException read/write error occurred while accessing the file system.
-     */
-    func unzipFile(withZip zip: String, toDestination destination: String) throws {
-        SSZipArchive.unzipFile(atPath: zip, toDestination: destination)
     }
     
     /**
@@ -69,7 +52,7 @@ class FileUtils {
      * @return string with contents of the file.
      */
     func readFileToString(atPath filePath: String) throws -> String {
-        return try String(contentsOf: URL(string: filePath)!, encoding: .utf8)
+        return try String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8)
     }
     
     func moveFile(file origin: String, toDestination destination: String) throws {

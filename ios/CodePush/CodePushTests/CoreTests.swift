@@ -21,29 +21,42 @@ class CoreTests: XCTestCase {
     }
     
     func testCheckForUpdate() {
-        let codePush = CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
-                                        "", true, "", "", "", "1",
-                                        ReactPlatformUtils.sharedInstance)
         
-        codePush.checkForUpdate(callback: { result in
-            do {
-                let remote = try result.resolve()
-                print(remote)
-            } catch {
-                print(error)
-            }
-        })
-        sleep(4)
+        var codePush: CodePushBaseCore
+        do {
+            codePush = try CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
+                                            "", true, "", "", "helloworld", "1",
+                                            CodePushReactAppEntryPointProvider(CodePushReactNativeCore.DEFAULT_JS_BUNDLE_NAME),
+                                            ReactPlatformUtils.sharedInstance)
+            
+            codePush.checkForUpdate(callback: { result in
+                do {
+                    let remote = try result.resolve()
+                    print(remote)
+                } catch {
+                    print(error)
+                }
+            })
+            sleep(4)
+        } catch {}
+        
     }
     
     func testDownloadUpdate() {
-        let codePush = CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
-                                        "", true, "", "", "", "1",
+
+        var codePush: CodePushBaseCore
+        do {
+            codePush = try CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
+                                        "", true, "", "", "helloworld", "1",
+                                        CodePushReactAppEntryPointProvider(CodePushReactNativeCore.DEFAULT_JS_BUNDLE_NAME),
                                         ReactPlatformUtils.sharedInstance)
+            
+            let options = CodePushSyncOptions()
+            codePush.sync(withOptions: options)
+            sleep(30)
+        } catch {}
         
-        let options = CodePushSyncOptions()
-        codePush.sync(withOptions: options)
-        sleep(30)
+        
     }
     
 }

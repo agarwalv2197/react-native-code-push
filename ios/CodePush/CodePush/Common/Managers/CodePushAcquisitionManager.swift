@@ -21,7 +21,7 @@ class CodePushAcquisitionManager {
     private static let REPORT_DEPLOYMENT_STATUS_ENDPOINT = "reportStatus/deploy"
     
     /**
-     * Query updates string pattern.
+     * Query updates endpoint.
      */
     private static let UPDATE_CHECK_ENDPOINT = "/updateCheck"
     
@@ -55,7 +55,7 @@ class CodePushAcquisitionManager {
      */
     func queryUpdate(withConfig configuration: CodePushConfiguration,
                      withPackage currentPackage: CodePushLocalPackage,
-                     callback completion: @escaping (Result<CodePushRemotePackage>) -> Void) {
+                     callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         
         guard currentPackage.appVersion != nil else { completion(Result { throw CodePushErrors.InvalidParam }); return }
         
@@ -69,9 +69,9 @@ class CodePushAcquisitionManager {
         
         guard let url = urlComponents.url else { completion(Result { throw QueryUpdateErrors.FailedToConstructUrl }); return }
         
-        let api = ApiRequest(url)
+        let query = ApiRequest(url)
         
-        api.checkForUpdate(completion: { result in
+        query.checkForUpdate(completion: { result in
             completion( Result {
                 let json = try result.resolve()
                 let result: CodePushUpdateResponse = try self.codePushUtils.convertStringToObject(withString: json)
@@ -79,7 +79,7 @@ class CodePushAcquisitionManager {
                 if (updateInfo.updateAppVersion)! {
                     return CodePushRemotePackage.createDefaultRemotePackage(withVersion: updateInfo.appVersion!, updateVersion: updateInfo.updateAppVersion!)
                 } else if (!updateInfo.isAvailable!) {
-                    throw QueryUpdateErrors.NoData
+                    return nil
                 }
                 return CodePushRemotePackage.createRemotePackage(withDeploymentKey: configuration.deploymentKey!, fromUpdateInfo: updateInfo)
             })

@@ -22,13 +22,13 @@ class CodePushSyncOptions: Codable {
      * Specifies when you would like to install optional updates (i.e. those that aren't marked as mandatory).
      * Defaults to {@link CodePushInstallMode#ON_NEXT_RESTART}.
      */
-    var installMode: CodePushInstallMode
+    var installMode: CodePushInstallMode?
     
     /**
      * Specifies when you would like to install updates which are marked as mandatory.
      * Defaults to {@link CodePushInstallMode#IMMEDIATE}.
      */
-    var mandatoryInstallMode: CodePushInstallMode;
+    var mandatoryInstallMode: CodePushInstallMode?
     
     /**
      * Specifies the minimum number of seconds that the app needs to have been in the background before restarting the app.
@@ -37,13 +37,13 @@ class CodePushSyncOptions: Codable {
      * Defaults to `0`, which has the effect of applying the update immediately after a resume, regardless
      * how long it was in the background.
      */
-    var minimumBackgroundDuration: Int
+    var minimumBackgroundDuration: Int?
     
     /**
      * Specifies whether to ignore failed updates.
      * Defaults to <code>true</code>.
      */
-    var ignoreFailedUpdates: Bool = true
+    var ignoreFailedUpdates: Bool? = true
     
     /**
      * An "options" object used to determine whether a confirmation dialog should be displayed to the end user when an update is available,
@@ -57,7 +57,7 @@ class CodePushSyncOptions: Codable {
      * Specifies when you would like to synchronize updates with the CodePush server.
      * Defaults to {@link CodePushCheckFrequency#ON_APP_START}.
      */
-     var checkFrequency: CodePushCheckFrequency
+     var checkFrequency: CodePushCheckFrequency?
     
     /**
      * Creates default instance of sync options.
@@ -66,11 +66,11 @@ class CodePushSyncOptions: Codable {
      */
     init(_ deploymentKey: String) {
         self.deploymentKey = deploymentKey
-        self.installMode = CodePushInstallMode.ON_NEXT_RESTART
-        self.mandatoryInstallMode = CodePushInstallMode.IMMEDIATE
+        self.installMode = .ON_NEXT_RESTART
+        self.mandatoryInstallMode = .IMMEDIATE
         self.minimumBackgroundDuration = 0
         self.ignoreFailedUpdates = true
-        self.checkFrequency = CodePushCheckFrequency.ON_APP_START
+        self.checkFrequency = .ON_APP_START
     }
     
     convenience init() {

@@ -47,6 +47,5 @@ class CodePushPackage: Codable {
      */
     var packageHash: String?
     
-    init() {
-    }
+    init() {}
 }

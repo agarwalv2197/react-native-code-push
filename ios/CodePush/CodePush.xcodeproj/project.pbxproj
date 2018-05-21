@@ -72,6 +72,10 @@
 		2ECEC23820AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC23620AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift */; };
 		2ECEC23A20AE3A7400715406 /* CodePushReactNativeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC23920AE3A7400715406 /* CodePushReactNativeCore.swift */; };
 		2ECEC23B20AE3A7400715406 /* CodePushReactNativeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC23920AE3A7400715406 /* CodePushReactNativeCore.swift */; };
+		2ECEC24020AF442C00715406 /* CodePushBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC23F20AF442C00715406 /* CodePushBuilder.swift */; };
+		2ECEC24120AF442C00715406 /* CodePushBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC23F20AF442C00715406 /* CodePushBuilder.swift */; };
+		2ECEC24320AF794300715406 /* CodePushBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC24220AF794300715406 /* CodePushBuildable.swift */; };
+		2ECEC24420AF794300715406 /* CodePushBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC24220AF794300715406 /* CodePushBuildable.swift */; };
 		2ED4161320AB33B9007B9C6C /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* ApiRequest.swift */; };
 		2ED4161420AB33B9007B9C6C /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161220AB33B9007B9C6C /* ApiRequest.swift */; };
 		2ED4161620AB364D007B9C6C /* CodePushUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */; };
@@ -135,6 +139,8 @@
 		2ECEC23320AE38C400715406 /* CodePushAppEntryPointProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushAppEntryPointProvider.swift; sourceTree = "<group>"; };
 		2ECEC23620AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushReactAppEntryPointProvider.swift; sourceTree = "<group>"; };
 		2ECEC23920AE3A7400715406 /* CodePushReactNativeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushReactNativeCore.swift; sourceTree = "<group>"; };
+		2ECEC23F20AF442C00715406 /* CodePushBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushBuilder.swift; sourceTree = "<group>"; };
+		2ECEC24220AF794300715406 /* CodePushBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushBuildable.swift; sourceTree = "<group>"; };
 		2ED4161220AB33B9007B9C6C /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		2ED4161520AB364D007B9C6C /* CodePushUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateResponse.swift; sourceTree = "<group>"; };
 		2EE7789420AB65B90033593D /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
@@ -237,6 +243,8 @@
 		2EC7B25C20A9DCA2004EC0F3 /* React */ = {
 			isa = PBXGroup;
 			children = (
+				2ECEC24220AF794300715406 /* CodePushBuildable.swift */,
+				2ECEC23F20AF442C00715406 /* CodePushBuilder.swift */,
 				2EC7B28E20AA30FD004EC0F3 /* Utils */,
 				2ECEC23620AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift */,
 				2ECEC23920AE3A7400715406 /* CodePushReactNativeCore.swift */,
@@ -508,6 +516,8 @@
 				2EC7B26A20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
 				2ECEC23720AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift in Sources */,
 				2EC7B29C20AA348B004EC0F3 /* CodePushManagers.swift in Sources */,
+				2ECEC24020AF442C00715406 /* CodePushBuilder.swift in Sources */,
+				2ECEC24320AF794300715406 /* CodePushBuildable.swift in Sources */,
 				2EC7B27720A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,
 				2EC7B26D20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
 				2EC7B29320AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
@@ -550,6 +560,7 @@
 				2E39E8EF20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */,
 				2EC7B26B20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
 				2ECEC23520AE38C400715406 /* CodePushAppEntryPointProvider.swift in Sources */,
+				2ECEC24120AF442C00715406 /* CodePushBuilder.swift in Sources */,
 				2EC7B28720AA2D63004EC0F3 /* CodePushUpdateUtils.swift in Sources */,
 				2EC7B27E20AA0C18004EC0F3 /* CodePushUpdateState.swift in Sources */,
 				2EC7B29720AA3323004EC0F3 /* CodePushState.swift in Sources */,
@@ -562,6 +573,7 @@
 				2EC7B28420AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */,
 				2EC7B27520A9E8AC004EC0F3 /* CodePushRemotePackage.swift in Sources */,
 				2EC7B29A20AA3373004EC0F3 /* CodePushInstallMode.swift in Sources */,
+				2ECEC24420AF794300715406 /* CodePushBuildable.swift in Sources */,
 				2ECEC23820AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift in Sources */,
 				2EC7B2A920AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */,
 				2EC7B29D20AA348B004EC0F3 /* CodePushManagers.swift in Sources */,

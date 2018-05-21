@@ -67,7 +67,7 @@ class CodePushUpdateManager {
      * @return path to json file containing information about the available packages.
      */
     func getStatusFilePath() -> String {
-        return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.STATUS_FILE_NAME)
+        return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.StatusFileName)
     }
     
     /**
@@ -148,7 +148,7 @@ class CodePushUpdateManager {
     func getPackage(withHash packageHash: String) throws -> CodePushLocalPackage {
         let folderPath = getPackageFolderPath(withHash: packageHash)
         let packageFilePath = fileUtils.appendPathComponent(atBasePath: folderPath, withComponent:
-            CodePushConstants.PACKAGE_FILE_NAME)
+            CodePushConstants.PackageFileName)
         
         var localPackage: CodePushLocalPackage
         localPackage = try codePushUtils.getObjectFromJsonFile(packageFilePath)

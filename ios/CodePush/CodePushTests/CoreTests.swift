@@ -2,7 +2,6 @@
 //  CoreTests.swift
 //  CodePushTests
 //
-//  Created by Chris Moulds on 5/15/18.
 //  Copyright © 2018 MSFT. All rights reserved.
 //
 
@@ -22,41 +21,57 @@ class CoreTests: XCTestCase {
     
     func testCheckForUpdate() {
         
-        var codePush: CodePushBaseCore
-        do {
-            codePush = try CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
-                                            "", true, "", "", "helloworld", "1",
-                                            CodePushReactAppEntryPointProvider(CodePushReactNativeCore.DEFAULT_JS_BUNDLE_NAME),
-                                            ReactPlatformUtils.sharedInstance)
-            
-            codePush.checkForUpdate(callback: { result in
+        let codePushBuilder = CodePushBuilder()
+        codePushBuilder.setDeploymentKey(key: "i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf")
+        codePushBuilder.setAppName(name: "helloworld")
+        codePushBuilder.setAppVersion(version: "1.0")
+        let codePush = codePushBuilder.result()
+        
+        if (codePush != nil) {
+            codePush!.checkForUpdate(callback: { result in
                 do {
                     let remote = try result.resolve()
-                    print(remote)
+                    print(remote?.downloadURL)
                 } catch {
                     print(error)
                 }
             })
-            sleep(4)
-        } catch {}
+            
+            sleep(10)
+        }
+//
+//        do {
+//            codePush = try CodePushBaseCore(,
+//                                            "", true, "", "", "helloworld", "1",
+//                                            CodePushReactAppEntryPointProvider(CodePushReactNativeCore.DEFAULT_JS_BUNDLE_NAME),
+//                                            ReactPlatformUtils.sharedInstance)
+//
+//            codePush.checkForUpdate(callback: { result in
+//
+//            })
+//
+//        } catch {}
         
     }
     
     func testDownloadUpdate() {
-
-        var codePush: CodePushBaseCore
-        do {
-            codePush = try CodePushBaseCore("i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf",
-                                        "", true, "", "", "helloworld", "1",
-                                        CodePushReactAppEntryPointProvider(CodePushReactNativeCore.DEFAULT_JS_BUNDLE_NAME),
-                                        ReactPlatformUtils.sharedInstance)
-            
-            let options = CodePushSyncOptions()
-            codePush.sync(withOptions: options)
-            sleep(30)
-        } catch {}
+        let codePushBuilder = CodePushBuilder()
+        codePushBuilder.setDeploymentKey(key: "i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf")
+        codePushBuilder.setAppName(name: "helloworld")
+        codePushBuilder.setAppVersion(version: "1.0")
+        let codePush = codePushBuilder.result()
         
-        
-    }
+        if (codePush != nil) {
+            codePush!.sync(callback: { result in
+                do {
+                    let didSync = try result.resolve()
+                    print(didSync)
+                } catch {
+                    print(error)
+                }
+            })
     
+            sleep(30)
+        }
+    }
 }

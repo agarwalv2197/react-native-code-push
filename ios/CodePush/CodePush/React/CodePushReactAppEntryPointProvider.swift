@@ -17,6 +17,6 @@ class CodePushReactAppEntryPointProvider : CodePushAppEntryPointProvider {
     }
     
     func getAppEntryPoint() throws -> String {
-        return appEntryPoint
+        return !appEntryPoint.isEmpty ? appEntryPoint : CodePushReactNativeCore.DEFAULT_JS_BUNDLE_NAME
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 
-class CodePushBuilder: CodePushBuildable {
+public class CodePushBuilder: CodePushBuildable {
     
     private var deploymentKey: String = ""
     private var serverUrl: String = ""
@@ -16,9 +16,9 @@ class CodePushBuilder: CodePushBuildable {
     private var appSecret: String = ""
     private var appName: String = ""
     private var appVersion: String = ""
-    private var baseDirectory: String = ""
+    private var baseDirectory: URL?
     
-    func result() -> CodePush? {
+    public func result() -> CodePush? {
         if isValid {
             do {
                 let codePush = try CodePush(self.deploymentKey,
@@ -42,48 +42,50 @@ class CodePushBuilder: CodePushBuildable {
         return !deploymentKey.isEmpty
     }
     
-    func setDeploymentKey(key deploymentKey: String) {
+    public func setDeploymentKey(key deploymentKey: String) {
         self.deploymentKey = deploymentKey
     }
     
-    func setServerUrl(url serverUrl: String) {
+    public func setServerUrl(url serverUrl: String) {
         self.serverUrl = serverUrl
     }
     
-    func setAppEntryPoint(entryPoint appEntryPoint: String) {
+    public func setAppEntryPoint(entryPoint appEntryPoint: String) {
         self.appEntryPoint = appEntryPoint
     }
     
-    func setAppSecret(secret appSecret: String) {
+    public func setAppSecret(secret appSecret: String) {
         self.appSecret = appSecret
     }
     
-    func setAppName(name appName: String) {
+    public func setAppName(name appName: String) {
         self.appName = appName
     }
     
-    func setAppVersion(version appVersion: String) {
+    public func setAppVersion(version appVersion: String) {
         self.appVersion = appVersion
     }
     
-    func setBaseDirectory(directory baseDirectory: String) {
+    public func setBaseDirectory(directory baseDirectory: URL) {
         self.baseDirectory = baseDirectory
     }
+    
+    public init() {}
 }
 
-struct CodePush {
+public struct CodePush {
     var deploymentKey: String
     var serverUrl: String?
     var appEntryPoint: String?
     var appSecret: String?
     var appName: String?
     var appVersion: String?
-    var baseDirectory: String?
+    var baseDirectory: URL?
     var reactCore: CodePushReactNativeCore
     
     init(_ deploymentKey: String, _ serverUrl: String, _ appEntryPoint: String,
          _ appSecret: String, _ appName: String, _ appVersion: String,
-         _ baseDirectory: String) throws {
+         _ baseDirectory: URL?) throws {
         
         self.deploymentKey = deploymentKey
         self.serverUrl = serverUrl
@@ -101,7 +103,7 @@ struct CodePush {
      *
      * @return native CodePush configuration.
      */
-    func getConfiguration() throws -> CodePushConfiguration? {
+    public func getConfiguration() throws -> CodePushConfiguration? {
         return try self.reactCore.getNativeConfiguration()
     }
     
@@ -111,7 +113,7 @@ struct CodePush {
      *
      * @return remote package info if there is an update, <code>null</code> otherwise.
      */
-    func checkForUpdate(callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
+    public func checkForUpdate(callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         reactCore.checkForUpdate(callback: completion)
     }
     
@@ -122,7 +124,7 @@ struct CodePush {
      * @param deploymentKey deployment key to use.
      * @return remote package info if there is an update, <code>null</code> otherwise.
      */
-    func checkForUpdate(withKey deploymentKey: String,
+    public func checkForUpdate(withKey deploymentKey: String,
                         callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         reactCore.checkForUpdate(withKey: deploymentKey, callback: completion)
     }
@@ -134,14 +136,14 @@ struct CodePush {
      * @param updateState current update state.
      * @return installed update metadata.
      */
-    func getUpdateMetadata(inUpdateState updateState: CodePushUpdateState) throws -> CodePushLocalPackage? {
+    public func getUpdateMetadata(inUpdateState updateState: CodePushUpdateState) throws -> CodePushLocalPackage? {
         return try reactCore.getUpdateMetadata(inUpdateState: updateState)
     }
     
     /**
      * Synchronizes your app assets with the latest release to the configured deployment using default sync options.
      */
-    func sync(callback completion: @escaping (Result<Bool>) -> Void) {
+    public func sync(callback completion: @escaping (Result<Bool>) -> Void) {
         reactCore.sync(callback: completion)
     }
     
@@ -150,7 +152,7 @@ struct CodePush {
      *
      * @param syncOptions sync options.
      */
-    func sync(withOptions syncOptions: CodePushSyncOptions,
+    public func sync(withOptions syncOptions: CodePushSyncOptions,
               callback completion: @escaping (Result<Bool>) -> Void){
         reactCore.sync(withOptions: syncOptions, callback: completion)
     }

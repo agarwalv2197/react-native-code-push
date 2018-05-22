@@ -20,7 +20,7 @@ class CodePushReactNativeCore: CodePushBaseCore {
          _ appSecret: String,
          _ appName: String,
          _ appVersion: String,
-         _ baseDirectory: String,
+         _ baseDirectory: URL?,
          _ appEntryPointProvider: CodePushReactAppEntryPointProvider,
          _ platformUtils: ReactPlatformUtils) throws {
         try super.init(deploymentKey,

@@ -24,7 +24,7 @@ class CodePushUtils {
      * @return parsed {@link JSONObject} instance.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getJsonObjectFromFile(atPath filePath: String) throws -> Data {
+    func getJsonObjectFromFile(atPath filePath: URL) throws -> Data {
         let contents = try fileUtils.readFileToString(atPath: filePath)
         return contents.data(using: .utf8)!
     }
@@ -51,7 +51,7 @@ class CodePushUtils {
      * @return object of type T.
      * @throws CodePushMalformedDataException exception during parsing data.
      */
-    func getObjectFromJsonFile<T>(_ filePath: String) throws -> T where T: Codable {
+    func getObjectFromJsonFile<T>(_ filePath: URL) throws -> T where T: Codable {
         let json = try getJsonObjectFromFile(atPath: filePath)
         let decoder = JSONDecoder()
         let object = try decoder.decode(T.self, from: json)
@@ -66,7 +66,7 @@ class CodePushUtils {
      * @param <T>      the type of the desired object.
      * @throws IOException read/write error occurred while accessing the system.
      */
-    func writeObjectToJsonFile<T>(withObject object: T, atPath filePath: String) throws where T: Codable {
+    func writeObjectToJsonFile<T>(withObject object: T, atPath filePath: URL) throws where T: Codable {
         let jsonString = try convertObjectToJsonString(withObject: object)
         try fileUtils.writeToFile(withContent: jsonString, atPath: filePath)
     }
@@ -78,7 +78,7 @@ class CodePushUtils {
      * @param filePath path to file.
      * @throws IOException read/write error occurred while accessing the file system.
      */
-    func writeJsonToFile(withJson json: Data, atPath filePath: String) throws {
+    func writeJsonToFile(withJson json: Data, atPath filePath: URL) throws {
         let jsonString = String(data: json, encoding: .utf8)
         try fileUtils.writeToFile(withContent: jsonString!, atPath: filePath)
     }
@@ -116,8 +116,8 @@ class CodePushUtils {
     /**
      * Converts object to query string using the following scheme: <br/>
      * <ul>
-     * <li>object converts to {@link JSONObject};</li>
-     * <li>{@link JSONObject} instance converts to {@link Map}&lt;String, Object&gt;
+     * <li>object converts to JSON</li>
+     * <li>JSON instance converts to {@link Map}&lt;String, Object&gt;
      * using field names as keys for Map and its values as values for Map;</li>
      * <li>iterates through {@link Map}&lt;String, Object&gt; instance and builds query string.</li>
      * </ul>
@@ -144,6 +144,7 @@ class CodePushUtils {
         items.append(URLQueryItem(name: "clientUniqueId", value: object.clientUniqueId))
         items.append(URLQueryItem(name: "deploymentKey", value: object.deploymentKey))
         items.append(URLQueryItem(name: "packageHash", value: object.packageHash))
+        items.append(URLQueryItem(name: "label", value: object.label))
         
         return items
     }

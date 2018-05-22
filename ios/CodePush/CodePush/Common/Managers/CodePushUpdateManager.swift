@@ -33,7 +33,7 @@ class CodePushUpdateManager {
     /**
      * General path for storing files.
      */
-    var documentsDirectory: String
+    var documentsDirectory: URL
     
     /**
      * CodePush configuration for instance.
@@ -50,7 +50,7 @@ class CodePushUpdateManager {
      * @param codePushUpdateUtils instance of {@link CodePushUpdateUtils} to work with.
      * @param codePushConfiguration instance of {@link CodePushConfiguration} to work with.
      */
-    init(_ documentsDirectory: String, _ platformUtils: CodePushPlatformUtils, _ fileUtils: FileUtils,
+    init(_ documentsDirectory: URL, _ platformUtils: CodePushPlatformUtils, _ fileUtils: FileUtils,
          _ codePushUtils: CodePushUtils, _ codePushUpdateUtils: CodePushUpdateUtils,
          _ codePushConfiguration: CodePushConfiguration?) {
         self.platformUtils = platformUtils
@@ -66,7 +66,7 @@ class CodePushUpdateManager {
      *
      * @return path to json file containing information about the available packages.
      */
-    func getStatusFilePath() -> String {
+    func getStatusFilePath() -> URL {
         return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.StatusFileName)
     }
     
@@ -76,7 +76,7 @@ class CodePushUpdateManager {
      * @param packageHash current package identifier (hash).
      * @return path to package folder.
      */
-    func getPackageFolderPath(withHash packageHash: String) -> String {
+    func getPackageFolderPath(withHash packageHash: String) -> URL {
         return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: packageHash)
     }
     
@@ -85,9 +85,8 @@ class CodePushUpdateManager {
      *
      * @return application-specific folder.
      */
-    private func getCodePushPath() -> String {
-        let codePushPath = fileUtils.appendPathComponent(atBasePath: self.documentsDirectory, withComponent: (codePushConfiguration?.appName)!)
-        return codePushPath
+    private func getCodePushPath() -> URL {
+        return fileUtils.appendPathComponent(atBasePath: self.documentsDirectory, withComponent: (codePushConfiguration?.appName)!)
     }
     
     /**
@@ -175,7 +174,7 @@ class CodePushUpdateManager {
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getCurrentPackageInfo() throws -> CodePushPackageInfo {
-        let statusFilePath = getStatusFilePath();
+        let statusFilePath = getStatusFilePath()
         if (!fileUtils.fileExists(atPath: statusFilePath)) {
             return CodePushPackageInfo()
         }
@@ -192,7 +191,7 @@ class CodePushUpdateManager {
      * @throws IOException                    read/write error occurred while accessing the file system.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getCurrentPackageFolderPath() throws -> String? {
+    func getCurrentPackageFolderPath() throws -> URL? {
         let packageHash = try getCurrentPackageHash()
         if (packageHash == nil) {
             return nil
@@ -229,7 +228,7 @@ class CodePushUpdateManager {
      * @throws IOException read/write error occurred while accessing the file system.
      */
     func updateCurrentPackageInfo(package packageInfo: CodePushPackageInfo) throws {
-        try codePushUtils.writeObjectToJsonFile(withObject: packageInfo, atPath: getStatusFilePath());
+        try codePushUtils.writeObjectToJsonFile(withObject: packageInfo, atPath: getStatusFilePath())
     }
     
     /**
@@ -272,7 +271,7 @@ class CodePushUpdateManager {
      * @param removePendingUpdate whether to remove pending updates data.
      * @throws CodePushInstallException exception occurred during package installation.
      */
-    func installPackage(packageHashToInstall packageHash: String?) throws {
+    func installPackage(packageHashToInstall packageHash: String?, removeCurrentUpdate removeCurrent: Bool) throws {
         do {
             let info = try getCurrentPackageInfo()
             let currentPackageHash = try getCurrentPackageHash()
@@ -280,18 +279,18 @@ class CodePushUpdateManager {
                 /* The current package is already the one being installed, so we should no-op. */
                 return
             }
-            //        if (removePendingUpdate) {
-            //            let currentPackageFolderPath = getCurrentPackageFolderPath()
-            //            if (currentPackageFolderPath != nil) {
-            //                try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
-            //            }
-            //        } else {
-            let previousPackageHash = try getPreviousPackageHash()
-            if (previousPackageHash != nil && previousPackageHash != packageHash) {
-                try fileUtils.deleteDirectoryAtPath(path: getPackageFolderPath(withHash: previousPackageHash!))
+            if (removeCurrent) {
+                let currentPackageFolderPath = try getCurrentPackageFolderPath()
+                if (currentPackageFolderPath != nil) {
+                    try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
+                }
+            } else {
+                let previousPackageHash = try getPreviousPackageHash()
+                if (previousPackageHash != nil && previousPackageHash != packageHash) {
+                    try fileUtils.deleteDirectoryAtPath(path: getPackageFolderPath(withHash: previousPackageHash!))
+                }
+                info.previousPackage = info.currentPackage
             }
-            info.previousPackage = info.currentPackage
-            //  }
             info.currentPackage = packageHash
             try updateCurrentPackageInfo(package: info)
         } catch {

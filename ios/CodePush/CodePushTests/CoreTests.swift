@@ -24,14 +24,18 @@ class CoreTests: XCTestCase {
         let codePushBuilder = CodePushBuilder()
         codePushBuilder.setDeploymentKey(key: "i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf")
         codePushBuilder.setAppName(name: "helloworld")
-        codePushBuilder.setAppVersion(version: "1.0")
+        codePushBuilder.setAppVersion(version: "1.0.0")
         let codePush = codePushBuilder.result()
         
         if (codePush != nil) {
             codePush!.checkForUpdate(callback: { result in
                 do {
                     let remote = try result.resolve()
-                    print(remote?.downloadURL)
+                    if (remote == nil) {
+                        print("No Package Available")
+                    } else {
+                        print(remote?.downloadURL)
+                    }
                 } catch {
                     print(error)
                 }
@@ -57,8 +61,8 @@ class CoreTests: XCTestCase {
     func testDownloadUpdate() {
         let codePushBuilder = CodePushBuilder()
         codePushBuilder.setDeploymentKey(key: "i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf")
-        codePushBuilder.setAppName(name: "helloworld")
-        codePushBuilder.setAppVersion(version: "1.0")
+        codePushBuilder.setAppName(name: "testapp")
+        codePushBuilder.setAppVersion(version: "1.0.0")
         let codePush = codePushBuilder.result()
         
         if (codePush != nil) {

@@ -28,7 +28,7 @@ class CodePushUpdateRequest: Codable {
     /**
      * Whether to ignore the application version.
      */
-    var isCompanion: Bool?
+    var isCompanion: Bool = false
     
     /**
      * Specifies the current package label.

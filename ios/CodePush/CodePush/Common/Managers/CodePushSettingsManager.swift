@@ -65,19 +65,19 @@ class CodePushSettingsManager {
      * @return an array of failed updates.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getFailedUpdates() throws -> [CodePushPackage]? {
-        let failedUpdatesString: String = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)!
-        if (failedUpdatesString.isEmpty) {
+    func getFailedUpdates() throws -> [CodePushPackage] {
+        let failedUpdatesString: String? = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
+        if (failedUpdatesString == nil || failedUpdatesString!.isEmpty) {
             return []
         }
         do {
-            let failedUpdates: [CodePushPackage] = try codePushUtils.convertStringToObject(withString: failedUpdatesString)
+            let failedUpdates: [CodePushPackage] = try codePushUtils.convertStringToObject(withString: failedUpdatesString!)
             return failedUpdates
         } catch {
             let emptyArray = [CodePushPackage]()
             let failedString: String = try codePushUtils.convertObjectToJsonString(withObject: emptyArray)
             settings.set(failedString, forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
-            return nil
+            return []
         }
     }
     
@@ -87,20 +87,14 @@ class CodePushSettingsManager {
      * @return object with pending update info.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getPendingUpdate() -> CodePushPendingUpdate? {
-        let pendingUpdateString = settings.string(forKey: getAppSpecificPrefix() + PENDING_UPDATE_KEY)
-        if (pendingUpdateString == nil) {
-            return nil;
+    func getPendingUpdate() throws -> CodePushPendingUpdate? {
+        let pendingUpdateString: String? = settings.string(forKey: getAppSpecificPrefix() + PENDING_UPDATE_KEY)
+        if (pendingUpdateString == nil || pendingUpdateString!.isEmpty) {
+            return nil
         } else {
-            do {
                 var update: CodePushPendingUpdate
                 update = try codePushUtils.convertStringToObject(withString: pendingUpdateString!)
                 return update
-
-            } catch {
-                print(error)
-                return nil
-            }
         }
     }
     
@@ -113,8 +107,8 @@ class CodePushSettingsManager {
      */
     func existsFailedUpdate(withHash packageHash: String) throws -> Bool {
         let failedUpdates = try getFailedUpdates()
-        if (!packageHash.isEmpty && failedUpdates != nil) {
-            for failedPackage in failedUpdates! {
+        if (!packageHash.isEmpty && !failedUpdates.isEmpty) {
+            for failedPackage in failedUpdates {
                 if (packageHash == failedPackage.packageHash) {
                     return true
                 }
@@ -131,10 +125,10 @@ class CodePushSettingsManager {
      * @return <code>true</code> if there is a pending update with the provided hash.
      * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func isPendingUpdate(withHash packageHash: String) throws -> Bool {
-        let pendingUpdate = getPendingUpdate()
+    func isPendingUpdate(withHash packageHash: String?) throws -> Bool {
+        let pendingUpdate = try getPendingUpdate()
         return pendingUpdate != nil && !((pendingUpdate?.pendingUpdateIsLoading)!) &&
-            (packageHash.isEmpty || pendingUpdate?.pendingUpdateHash == packageHash)
+            (packageHash != nil && pendingUpdate?.pendingUpdateHash == packageHash)
     }
     
     /**
@@ -159,7 +153,7 @@ class CodePushSettingsManager {
      */
     func saveFailedUpdate(forPackage failedPackage: CodePushPackage) throws {
         var failedUpdates = try getFailedUpdates()
-        failedUpdates?.append(failedPackage)
+        failedUpdates.append(failedPackage)
         let failedUpdatesString: String = try codePushUtils.convertObjectToJsonString(withObject: failedUpdates)
         settings.set(failedUpdatesString, forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
     }

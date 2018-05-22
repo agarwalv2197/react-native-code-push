@@ -21,5 +21,4 @@ class CodePushPendingUpdate: Codable {
     var pendingUpdateHash: String?
     
     init() {}
-    
 }

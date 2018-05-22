@@ -7,11 +7,11 @@
 
 import Foundation
 
-class CodePushRemotePackage: CodePushPackage {
+public class CodePushRemotePackage: CodePushPackage {
     
-    var downloadURL: String?
-    var packageSize: Int64?
-    var updateAppVersion: Bool?
+    public var downloadURL: String?
+    public var packageSize: Int64?
+    public var updateAppVersion: Bool?
     
     override init() {
         super.init()
@@ -23,7 +23,7 @@ class CodePushRemotePackage: CodePushPackage {
         updateAppVersion
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let superdecoder = try container.superDecoder()
@@ -34,7 +34,7 @@ class CodePushRemotePackage: CodePushPackage {
         self.updateAppVersion = try container.decode(Bool.self, forKey: .updateAppVersion)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(downloadURL, forKey: .downloadURL)

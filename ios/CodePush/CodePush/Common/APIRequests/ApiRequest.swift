@@ -16,46 +16,40 @@ class ApiRequest {
     }
     
     func checkForUpdate(completion: @escaping (Result<String>) -> Void) {
-        let session = createSession()
+        let session = URLSession.shared
         let request = getRequest()
         
         let task = session.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                completion(Result {
-                    if let error = error { throw error }
-                    guard let data = data else { throw QueryUpdateErrors.NoData }
-                    guard let json = String(data: data, encoding: .utf8) else { throw QueryUpdateErrors.FailedJsonConversion }
-                    return json
-                })
-            }
+            session.invalidateAndCancel()
+            completion(Result {
+                if let error = error { throw error }
+                guard let data = data else { throw QueryUpdateErrors.NoData }
+                guard let json = String(data: data, encoding: .utf8) else { throw QueryUpdateErrors.FailedJsonConversion }
+                return json
+            })
+            
         }
         
         task.resume()
     }
     
     func downloadUpdate(completion: @escaping (Result<String>) -> Void) {
-        let session = createSession()
+        let session = URLSession.shared
         let request = getRequest()
         
         let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
+            session.invalidateAndCancel()
             completion (Result {
                 if let tempLocalUrl = tempLocalUrl, error == nil {
-                    if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                        print("Success: \(statusCode)")
-                    }
                     return tempLocalUrl.absoluteString
                 } else {
                     throw error!
                 }
             })
+            
         }
         
         task.resume()
-    }
-    
-    private func createSession() -> URLSession {
-        let sessionConfig = URLSessionConfiguration.default
-        return URLSession(configuration: sessionConfig)
     }
     
     private func getRequest() -> URLRequest {

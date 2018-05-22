@@ -46,7 +46,7 @@ protocol CodePushBuildable {
      * Base directory for CodePush files.
      * If not provided, defaults to /data/data/<package>/files.
      */
-    func setBaseDirectory(directory baseDirectory: String)
+    func setBaseDirectory(directory baseDirectory: URL)
     
     /**
     * Return the CodePush instance if possible

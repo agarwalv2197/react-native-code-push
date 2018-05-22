@@ -7,29 +7,29 @@
 
 import Foundation
 
-class CodePushLocalPackage: CodePushPackage {
+public class CodePushLocalPackage: CodePushPackage {
     
     /**
      * Indicates whether this update is in a "pending" state.
      * When <code>true</code>, that means the update has been downloaded and installed, but the app restart
      * needed to apply it hasn't occurred yet, and therefore, its changes aren't currently visible to the end-user.
      */
-    var isPending: Bool?
+    public var isPending: Bool?
     
     /**
      * The path to the application entry point (e.g. android.js.bundle for RN, index.html for Cordova).
      */
-    var appEntryPoint: String?
+    public var appEntryPoint: String?
     
     /**
      * Indicates whether this is the first time the update has been run after being installed.
      */
-    var isFirstRun: Bool?
+    public var isFirstRun: Bool?
     
     /**
      * Whether this package is intended for debug mode.
      */
-    var isDebugOnly: Bool?
+    public var isDebugOnly: Bool?
     
     
     private enum CodingKeys: String, CodingKey {
@@ -39,7 +39,7 @@ class CodePushLocalPackage: CodePushPackage {
         isDebugOnly
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let superdecoder = try container.superDecoder()
         try super.init(from: superdecoder)
@@ -50,7 +50,7 @@ class CodePushLocalPackage: CodePushPackage {
         self.isDebugOnly = try container.decode(Bool.self, forKey: .isDebugOnly)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(isPending, forKey: .isPending)
         try container.encode(appEntryPoint, forKey: .appEntryPoint)

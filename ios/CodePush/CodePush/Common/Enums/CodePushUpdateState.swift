@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CodePushUpdateState {
+public enum CodePushUpdateState {
     /**
      * Indicates that an update represents the
      * version of the app that is currently running.

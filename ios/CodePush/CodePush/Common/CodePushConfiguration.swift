@@ -8,7 +8,7 @@
 import Foundation
 
 
-class CodePushConfiguration {
+public class CodePushConfiguration {
     
     /**
      * Application name, if provided.
@@ -33,7 +33,7 @@ class CodePushConfiguration {
     /**
      * CodePush base directory, if provided.
      */
-    var baseDirectory: String?
+    var baseDirectory: URL?
     
     /**
      * CodePush acquisition server URL.

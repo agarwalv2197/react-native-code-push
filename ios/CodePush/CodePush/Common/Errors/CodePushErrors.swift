@@ -9,6 +9,7 @@ import Foundation
 
 
 enum CodePushErrors : Error {
+    case CodePushAPI(cause: Error)
     case InvalidParam
     case IOErrors
     case NoHashValue

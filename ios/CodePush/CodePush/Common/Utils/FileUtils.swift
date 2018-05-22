@@ -18,8 +18,8 @@ class FileUtils {
      * @param filePath path to be checked.
      * @return <code>true</code> if exists, <code>false</code> otherwise.
      */
-    func fileExists(atPath filePath: String) -> Bool {
-        return FileManager.default.fileExists(atPath: filePath)
+    func fileExists(atPath filePath: URL) -> Bool {
+        return FileManager.default.fileExists(atPath: filePath.relativePath)
     }
     
     /**
@@ -29,10 +29,8 @@ class FileUtils {
      * @param appendPathComponent path component to be appended to the base path.
      * @return new path.
      */
-    func appendPathComponent(atBasePath basePath: String, withComponent appendPathComponent: String) -> String {
-        let url = NSURL(string: basePath)
-        let newUrl = url?.appendingPathComponent(appendPathComponent)
-        return (newUrl?.absoluteString)!
+    func appendPathComponent(atBasePath basePath: URL, withComponent appendPathComponent: String) -> URL {
+        return basePath.appendingPathComponent(appendPathComponent)
     }
     
     /**
@@ -41,8 +39,8 @@ class FileUtils {
      * @param content  content to be written to a file.
      * @param filePath path to a file.
      */
-    func writeToFile(withContent content: String, atPath filePath: String) throws {
-        try content.write(to: URL(fileURLWithPath: filePath), atomically: false, encoding: .utf8)
+    func writeToFile(withContent content: String, atPath filePath: URL) throws {
+        try content.write(to: filePath, atomically: false, encoding: .utf8)
     }
     
     /**
@@ -51,12 +49,19 @@ class FileUtils {
      * @param filePath path to file to be read.
      * @return string with contents of the file.
      */
-    func readFileToString(atPath filePath: String) throws -> String {
-        return try String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8)
+    func readFileToString(atPath filePath: URL) throws -> String {
+        return try String(contentsOf: filePath, encoding: .utf8)
     }
     
-    func moveFile(file origin: String, toDestination destination: String) throws {
-        try FileManager.default.moveItem(at: URL(string: origin)!, to: URL(fileURLWithPath: destination))
+    /**
+     * Move a file to a destination
+     *
+     * @param origin the original location of the file
+     * @param destination path of the file
+     * @throws if the file already exists at the destination or due to IO errors.
+     */
+    func moveFile(file origin: URL, toDestination destination: URL) throws {
+        try FileManager.default.moveItem(at: origin, to: destination)
     }
     
     /**
@@ -66,9 +71,9 @@ class FileUtils {
      * @return true if the directory was created, false if not.
      * @throws
      */
-    func createDirectoryIfNotExists(path url: String) throws {
+    func createDirectoryIfNotExists(path url: URL) throws {
         if (!fileExists(atPath: url)) {
-            try FileManager.default.createDirectory(at: URL(fileURLWithPath: url), withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
         }
     }
     
@@ -78,11 +83,11 @@ class FileUtils {
      * @param directoryPath path to directory to be deleted. Can't be <code>null</code>.
      * @throws IOException read/write error occurred while accessing the file system.
      */
-    func deleteDirectoryAtPath(path directoryPath: String) throws {
-        if (directoryPath.isEmpty) {
+    func deleteDirectoryAtPath(path directoryPath: URL?) throws {
+        if (directoryPath == nil) {
             throw CodePushErrors.IOErrors
         } else {
-            try FileManager.default.removeItem(atPath: directoryPath)
+            try FileManager.default.removeItem(atPath: directoryPath!.path)
         }
     }
 }

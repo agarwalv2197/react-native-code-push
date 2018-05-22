@@ -8,7 +8,7 @@
 import Foundation
 
 
-class CodePushSyncOptions: Codable {
+public class CodePushSyncOptions: Codable {
     
     /**
      * Specifies the deployment key you want to query for an update against.
@@ -44,14 +44,6 @@ class CodePushSyncOptions: Codable {
      * Defaults to <code>true</code>.
      */
     var ignoreFailedUpdates: Bool? = true
-    
-    /**
-     * An "options" object used to determine whether a confirmation dialog should be displayed to the end user when an update is available,
-     * and if so, what strings to use. Defaults to null, which has the effect of disabling the dialog completely.
-     * Setting this to any truthy value will enable the dialog with the default strings, and passing an object to this parameter allows
-     * enabling the dialog as well as overriding one or more of the default strings.
-     */
-   // private CodePushUpdateDialog updateDialog;
     
     /**
      * Specifies when you would like to synchronize updates with the CodePush server.

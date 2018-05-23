@@ -11,22 +11,22 @@ import Foundation
 class CodePushUtilities {
 
     /**
-     * Instance of {@link CodePushUtils}.
+     * Instance of ```CodePushUtils```.
      */
     var utils: CodePushUtils
     
     /**
-     * Instance of {@link FileUtils}.
+     * Instance of ```FileUtils.
      */
     var fileUtils: FileUtils
     
     /**
-     * Instance of {@link CodePushUpdateUtils}.
+     * Instance of ```CodePushUpdateUtils```.
      */
     var updateUtils: CodePushUpdateUtils
     
     /**
-     * Instance of {@link CodePushPlatformUtils}.
+     * Instance of ```CodePushPlatformUtils```.
      */
     var platformUtils: CodePushPlatformUtils
     

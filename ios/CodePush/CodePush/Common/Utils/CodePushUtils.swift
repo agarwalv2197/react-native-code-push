@@ -13,16 +13,22 @@ class CodePushUtils {
     
     var fileUtils: FileUtils
     
+    var encoder: JSONEncoder
+    var decoder: JSONDecoder
+    
     private init() {
         self.fileUtils = FileUtils.sharedInstance
+        self.encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        self.decoder = JSONDecoder()
     }
     
     /**
-     * Parses {@link JSONObject} from file.
+     * Parses JSON from file.
      *
      * Parameter filePath path to file.
-     * Returns: parsed {@link JSONObject} instance.
-     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: parsed JSON instance.
+     * Throws: Error if fails to read from the file system
      */
     func getJsonObjectFromFile(atPath filePath: URL) throws -> Data {
         let contents = try fileUtils.readFileToString(atPath: filePath)
@@ -30,14 +36,13 @@ class CodePushUtils {
     }
     
     /**
-     * Converts {@link Object} instance to json string.
+     * Converts Object instance to JSON string.
      *
-     * Parameter object {@link JSONObject} instance.
+     * Parameter object instance.
      * Returns: the json string.
+     * Throws: Error if the encoder fails to encode the object
      */
     func convertObjectToJsonString<T>(withObject object: T) throws -> String where T: Codable  {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
         let data = try encoder.encode(object)
         return String(data: data, encoding: .utf8)!
     }
@@ -46,13 +51,12 @@ class CodePushUtils {
      * Gets information from json file and converts it to an object of specified type.
      *
      * Parameter filePath path to file with json contents.
-     * Parameter <T>      the type of the desired object.
      * Returns: object of type T.
-     * Throws: CodePushMalformedDataException exception during parsing data.
+     * Throws: Error if fails to read the object from the file,
+     * or if the decoder fails to decode the object
      */
     func getObjectFromJsonFile<T>(_ filePath: URL) throws -> T where T: Codable {
         let json = try getJsonObjectFromFile(atPath: filePath)
-        let decoder = JSONDecoder()
         let object = try decoder.decode(T.self, from: json)
         return object
     }
@@ -63,7 +67,7 @@ class CodePushUtils {
      * Parameter object   object to be saved.
      * Parameter filePath path to file.
      * Parameter <T>      the type of the desired object.
-     * Throws: IOException read/write error occurred while accessing the system.
+     * Throws: Error if fails to encode the object, or write the object to the file system.
      */
     func writeObjectToJsonFile<T>(withObject object: T, atPath filePath: URL) throws where T: Codable {
         let jsonString = try convertObjectToJsonString(withObject: object)
@@ -71,11 +75,11 @@ class CodePushUtils {
     }
     
     /**
-     * Writes {@link JSONObject} to file.
+     * Writes JSON to file.
      *
-     * Parameter json     {@link JSONObject} instance.
+     * Parameter json     JSON object instance.
      * Parameter filePath path to file.
-     * Throws: IOException read/write error occurred while accessing the file system.
+     * Throws: Error if fails to write to the file system.
      */
     func writeJsonToFile(withJson json: Data, atPath filePath: URL) throws {
         let jsonString = String(data: json, encoding: .utf8)
@@ -83,15 +87,13 @@ class CodePushUtils {
     }
     
     /**
-     * Converts {@link Object} instance to {@link JSONObject}.
+     * Converts Object instance to JSON.
      *
-     * Parameter object {@link JSONObject} instance.
-     * Returns: {@link JSONObject} instance.
-     * Throws: JSONException error occurred during parsing a json object.
+     * Parameter object JSON instance.
+     * Returns: JSON instance.
+     * Throws: Error if the encoder fails to encode the object.
      */
     func convertObjectToJsonObject<T>(withObject object: T) throws -> Data where T: Codable {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
         let data = try encoder.encode(object)
         return data
     }
@@ -99,50 +101,41 @@ class CodePushUtils {
     /**
      * Converts json string to specified class.
      *
-     * Parameter stringObject json string.
-     * Parameter classOfT     the class of T.
-     * Parameter <T>          the type of the desired object.
+     * Parameter stringObject JSON string.
      * Returns: instance of T.
+     * Throws: error if decoder fails to decode the JSON.
      */
     func convertStringToObject<T>(withString json: String) throws -> T where T: Codable {
         let data = json.data(using: .utf8)
-        let decoder = JSONDecoder()
         let object = try decoder.decode(T.self, from: data!)
         return object
     }
     
     /**
-     * Converts object to query string using the following scheme: <br/>
-     * <ul>
-     * <li>object converts to JSON</li>
-     * <li>JSON instance converts to {@link Map}&lt;String, Object&gt;
-     * using field names as keys for Map and its values as values for Map;</li>
-     * <li>iterates through {@link Map}&lt;String, Object&gt; instance and builds query string.</li>
-     * </ul>
+     * Converts object to an array of query items
      *
      * Parameter object      object.
      * Returns: an array of query items
-     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getQueryItems(fromObject object: CodePushUpdateRequest) -> [URLQueryItem] {
+    func getQueryItems(fromObject object: AnyObject) -> [URLQueryItem] {
+        let mirror = Mirror(reflecting: object)
+        return mirror.children.filter { field in
+            print(field.value)
+            return field.value != nil
+            guard let _: Any = field.value else {
+                return false
+            }
+            return true
+            }.map { child -> URLQueryItem in
+                return URLQueryItem(name: child.label!, value: child.value as? String)
+            }
         
-        //        let mirror = Mirror(reflecting: object)
         //        var items = [URLQueryItem]()
         //
-        //        for (_, attr) in mirror.children.enumerated() {
-        //            if (attr.value != nil) {
-        //                items.append(URLQueryItem(name: attr.label!, value: attr.value as? String))
-        //            }
-        //        }
-        
-        var items = [URLQueryItem]()
-        
-        items.append(URLQueryItem(name: "appVersion", value: object.appVersion))
-        items.append(URLQueryItem(name: "clientUniqueId", value: object.clientUniqueId))
-        items.append(URLQueryItem(name: "deploymentKey", value: object.deploymentKey))
-        items.append(URLQueryItem(name: "packageHash", value: object.packageHash))
-        items.append(URLQueryItem(name: "label", value: object.label))
-        
-        return items
+        //        items.append(URLQueryItem(name: "appVersion", value: object.appVersion))
+        //        items.append(URLQueryItem(name: "clientUniqueId", value: object.clientUniqueId))
+        //        items.append(URLQueryItem(name: "deploymentKey", value: object.deploymentKey))
+        //        items.append(URLQueryItem(name: "packageHash", value: object.packageHash))
+        //        items.append(URLQueryItem(name: "label", value: object.label))
     }
 }

@@ -6,6 +6,8 @@ target 'CodePush' do
   use_frameworks!
 
   # Pods for CodePush
+  source 'https://github.com/CocoaPods/Specs.git'
+  pod 'Zip', '~> 1.1'
 
   target 'CodePushTests' do
     inherit! :search_paths

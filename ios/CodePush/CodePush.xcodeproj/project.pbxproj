@@ -14,6 +14,8 @@
 		2E39E8EC20ABC3120034376C /* CodePushSyncOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */; };
 		2E39E8EE20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */; };
 		2E39E8EF20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */; };
+		2E958E9520B5ECB200D5AF01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2E958E9420B5ECB200D5AF01 /* README.md */; };
+		2E958E9620B5ECB200D5AF01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2E958E9420B5ECB200D5AF01 /* README.md */; };
 		2EC7B24B20A9DA11004EC0F3 /* CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC7B24120A9DA11004EC0F3 /* CodePush.framework */; };
 		2EC7B25220A9DA11004EC0F3 /* CodePush.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B24420A9DA11004EC0F3 /* CodePush.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
@@ -62,8 +64,6 @@
 		2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */; };
 		2EC7B2A820AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
 		2EC7B2A920AA440D004EC0F3 /* CodePushPackageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */; };
-		2ECBF81C20B50665004B5BFA /* DataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBF81B20B50665004B5BFA /* DataCompression.swift */; };
-		2ECBF81D20B50665004B5BFA /* DataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECBF81B20B50665004B5BFA /* DataCompression.swift */; };
 		2ECD4DEB20ABA5DA0025F1D8 /* QueryUpdateErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */; };
 		2ECD4DED20ABACCC0025F1D8 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD4DEC20ABACCC0025F1D8 /* Result.swift */; };
 		2ECEC23120AE27BC00715406 /* CodePushPackageErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC23020AE27BC00715406 /* CodePushPackageErrors.swift */; };
@@ -107,6 +107,7 @@
 		2E39E8E820ABBC150034376C /* CodePushErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushErrors.swift; sourceTree = "<group>"; };
 		2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushSyncOptions.swift; sourceTree = "<group>"; };
 		2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushCheckFrequency.swift; sourceTree = "<group>"; };
+		2E958E9420B5ECB200D5AF01 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2EC7B24120A9DA11004EC0F3 /* CodePush.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CodePush.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC7B24420A9DA11004EC0F3 /* CodePush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePush.h; sourceTree = "<group>"; };
 		2EC7B24520A9DA11004EC0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,7 +136,6 @@
 		2EC7B2A120AA3796004EC0F3 /* CodePushPendingUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPendingUpdate.swift; sourceTree = "<group>"; };
 		2EC7B2A420AA3B4B004EC0F3 /* CodePushUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushUpdateRequest.swift; sourceTree = "<group>"; };
 		2EC7B2A720AA440D004EC0F3 /* CodePushPackageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPackageInfo.swift; sourceTree = "<group>"; };
-		2ECBF81B20B50665004B5BFA /* DataCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCompression.swift; sourceTree = "<group>"; };
 		2ECD4DEA20ABA5DA0025F1D8 /* QueryUpdateErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryUpdateErrors.swift; sourceTree = "<group>"; };
 		2ECD4DEC20ABACCC0025F1D8 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		2ECEC23020AE27BC00715406 /* CodePushPackageErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushPackageErrors.swift; sourceTree = "<group>"; };
@@ -212,6 +212,7 @@
 				2EC7B25B20A9DC94004EC0F3 /* Common */,
 				2EC7B24420A9DA11004EC0F3 /* CodePush.h */,
 				2EC7B24520A9DA11004EC0F3 /* Info.plist */,
+				2E958E9420B5ECB200D5AF01 /* README.md */,
 			);
 			path = CodePush;
 			sourceTree = "<group>";
@@ -291,7 +292,6 @@
 				2EC7B28220AA2D2A004EC0F3 /* CodePushUtils.swift */,
 				2EC7B28520AA2D63004EC0F3 /* CodePushUpdateUtils.swift */,
 				2EC7B28820AA2E14004EC0F3 /* FileUtils.swift */,
-				2ECBF81B20B50665004B5BFA /* DataCompression.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -399,6 +399,7 @@
 				2EC7B24620A9DA11004EC0F3 /* Sources */,
 				2EC7B24720A9DA11004EC0F3 /* Frameworks */,
 				2EC7B24820A9DA11004EC0F3 /* Resources */,
+				EA8266939A6FACBAB4791D0A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -452,6 +453,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E958E9520B5ECB200D5AF01 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +461,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E958E9620B5ECB200D5AF01 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +504,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EA8266939A6FACBAB4791D0A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -526,7 +547,6 @@
 				2EC7B26D20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
 				2EC7B29320AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
 				2EC7B28320AA2D2B004EC0F3 /* CodePushUtils.swift in Sources */,
-				2ECBF81C20B50665004B5BFA /* DataCompression.swift in Sources */,
 				2ECD4DEB20ABA5DA0025F1D8 /* QueryUpdateErrors.swift in Sources */,
 				2EC7B29020AA3110004EC0F3 /* ReactPlatformUtils.swift in Sources */,
 				2EC7B29F20AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */,
@@ -590,7 +610,6 @@
 				2EC7B2A020AA363F004EC0F3 /* CodePushSettingsManager.swift in Sources */,
 				2EC7B29420AA313F004EC0F3 /* CodePushPlatformUtils.swift in Sources */,
 				2EC7B27820A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,
-				2ECBF81D20B50665004B5BFA /* DataCompression.swift in Sources */,
 				2ECEC23B20AE3A7400715406 /* CodePushReactNativeCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

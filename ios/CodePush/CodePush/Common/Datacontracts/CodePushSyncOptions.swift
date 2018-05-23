@@ -12,27 +12,24 @@ public class CodePushSyncOptions: Codable {
     
     /**
      * Specifies the deployment key you want to query for an update against.
-     * By default, this value is derived from the MainActivity.java file (Android),
-     * but this option allows you to override it from the script-side if you need to
-     * dynamically use a different deployment for a specific call to sync.
      */
     var deploymentKey: String
     
     /**
      * Specifies when you would like to install optional updates (i.e. those that aren't marked as mandatory).
-     * Defaults to {@link CodePushInstallMode#ON_NEXT_RESTART}.
+     * Defaults to ```CodePushInstallMode.OnNextRestart```
      */
     var installMode: CodePushInstallMode?
     
     /**
      * Specifies when you would like to install updates which are marked as mandatory.
-     * Defaults to {@link CodePushInstallMode#IMMEDIATE}.
+     * Defaults to ```CodePushInstallMode.Immediate```.
      */
     var mandatoryInstallMode: CodePushInstallMode?
     
     /**
      * Specifies the minimum number of seconds that the app needs to have been in the background before restarting the app.
-     * This property only applies to updates which are installed using {@link CodePushInstallMode#ON_NEXT_RESUME},
+     * This property only applies to updates which are installed using ```CodePushInstallMode.OnNextResume```,
      * and can be useful for getting your update in front of end users sooner, without being too obtrusive.
      * Defaults to `0`, which has the effect of applying the update immediately after a resume, regardless
      * how long it was in the background.
@@ -47,7 +44,7 @@ public class CodePushSyncOptions: Codable {
     
     /**
      * Specifies when you would like to synchronize updates with the CodePush server.
-     * Defaults to {@link CodePushCheckFrequency#ON_APP_START}.
+     * Defaults to ```CodePushCheckFrequency.OnAppStart```
      */
      var checkFrequency: CodePushCheckFrequency?
     
@@ -58,11 +55,11 @@ public class CodePushSyncOptions: Codable {
      */
     init(_ deploymentKey: String) {
         self.deploymentKey = deploymentKey
-        self.installMode = .ON_NEXT_RESTART
-        self.mandatoryInstallMode = .IMMEDIATE
+        self.installMode = .OnNextRestart
+        self.mandatoryInstallMode = .Immediate
         self.minimumBackgroundDuration = 0
         self.ignoreFailedUpdates = true
-        self.checkFrequency = .ON_APP_START
+        self.checkFrequency = .OnAppStart
     }
     
     convenience init() {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Zip
 
 class FileUtils {
     
@@ -38,6 +39,7 @@ class FileUtils {
      *
      * Parameter content  content to be written to a file.
      * Parameter filePath path to a file.
+     * Throws: IO Error
      */
     func writeToFile(withContent content: String, atPath filePath: URL) throws {
         try content.write(to: filePath, atomically: false, encoding: .utf8)
@@ -48,6 +50,7 @@ class FileUtils {
      *
      * Parameter filePath path to file to be read.
      * Returns: string with contents of the file.
+     * Throws: IO Error
      */
     func readFileToString(atPath filePath: URL) throws -> String {
         return try String(contentsOf: filePath, encoding: .utf8)
@@ -69,35 +72,35 @@ class FileUtils {
      *
      * Parameter filePath of directory
      * Returns: true if the directory was created, false if not.
-     * Throws:
+     * Throws: IO Errors
      */
     func createDirectoryIfNotExists(path url: URL) throws {
         if (!fileExists(atPath: url)) {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true,
+                                                    attributes: nil)
         }
     }
     
     /**
      * Deletes directory located by the following path.
      *
-     * Parameter directoryPath path to directory to be deleted. Can't be ```null```.
+     * Parameter directoryPath path to directory to be deleted. Can't be ```nil```.
      * Throws: IOException read/write error occurred while accessing the file system.
      */
-    func deleteDirectoryAtPath(path directoryPath: URL?) throws {
-        if (directoryPath == nil) {
-            throw CodePushErrors.IOErrors
-        } else {
-            try FileManager.default.removeItem(atPath: directoryPath!.path)
-        }
+    func deleteDirectoryAtPath(path directoryPath: URL) throws {
+        try FileManager.default.removeItem(atPath: directoryPath.path)
     }
     
+    /**
+     * Unzips the directory to the specified path,
+     * and deletes the original archive.
+     *
+     * Parameter sourcePath: the path to the zipped.
+     * Parameter destPath:  the parent directory where the unzipped folder will reside
+     * Throws: Error if any IO fails
+     */
     func unzipDirectory(source sourcePath: URL, destination destPath: URL) throws {
-        
-//        let sourceData = try Data(contentsOf: sourcePath)
-//        let unzipped = sourceData.unzip()
-//        try unzipped?.write(to: destPath)
-        
-       // try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
-        //SSZipArchive.unzipFile(atPath: sourcePath.absoluteString, toDestination: destPath.absoluteString)
+        try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
+        try deleteDirectoryAtPath(path: sourcePath)
     }
 }

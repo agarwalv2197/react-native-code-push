@@ -52,7 +52,7 @@ public class CodePushRemotePackage: CodePushPackage {
      * Parameter downloadUrl      url to access package on server.
      * Parameter updateAppVersion whether the client should trigger a store update.
      * Parameter codePushPackage  basic package containing the information.
-     * Returns: instance of the {@link CodePushRemotePackage}.
+     * Returns: instance of the ```CodePushRemotePackage```
      */
     static func createRemotePackage(fromFailedInstall failedInstall: Bool, size packageSize: Int64,
                                     atUrl downloadURL: URL, updateVersion updateAppVersion: Bool,
@@ -76,7 +76,7 @@ public class CodePushRemotePackage: CodePushPackage {
      *
      * Parameter deploymentKey the deployment key that was used to originally download this update.
      * Parameter updateInfo    update info response from server.
-     * Returns: instance of the {@link CodePushRemotePackage}.
+     * Returns: instance of the ```CodePushRemotePackage```
      */
     static func createRemotePackage(withDeploymentKey deploymentKey: String,
                                     fromUpdateInfo updateInfo: CodePushUpdateResponseInfo) -> CodePushRemotePackage{
@@ -99,7 +99,7 @@ public class CodePushRemotePackage: CodePushPackage {
      *
      * Parameter appVersion       current app version.
      * Parameter updateAppVersion whether the client should trigger a store update.
-     * Returns: instance of the {@link CodePushRemotePackage}.
+     * Returns: instance of the ```CodePushRemotePackage```
      */
     static func createDefaultRemotePackage(withVersion appVersion: String,
                                            updateVersion updateAppVersion: Bool) -> CodePushRemotePackage {

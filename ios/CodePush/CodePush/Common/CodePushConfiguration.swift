@@ -42,7 +42,7 @@ public class CodePushConfiguration {
     
     /**
      * Package hash of currently running CodePush update.
-     * See {@link com.microsoft.codepush.common.enums.CodePushUpdateState} for details.
+     * See ```CodePushUpdateState``` for details.
      */
     var packageHash: String?
     

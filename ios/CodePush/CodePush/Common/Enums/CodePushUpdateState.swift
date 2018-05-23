@@ -12,17 +12,17 @@ public enum CodePushUpdateState {
      * Indicates that an update represents the
      * version of the app that is currently running.
      */
-    case RUNNING,
+    case Running,
     
     /**
      * Indicates than an update has been installed, but the
      * app hasn't been restarted yet in order to apply it.
      */
-    PENDING,
+    Pending,
     
     /**
      * Indicates than an update represents the latest available
      * release, and can be either currently running or pending.
      */
-    LATEST
+    Latest
 }

@@ -20,21 +20,19 @@ class CodePushBaseCore {
     var appEntryPoint: String
     
     /**
-     * Creates instance of {@link CodePushBaseCore}. Default constructor.
-     * We pass {@link Application} and app secret here, too, because we can't initialize AppCenter in another constructor and then call this.
-     * However, AppCenter must be initialized before creating anything else.
+     * Creates instance of ```CodePushBaseCore```. Default constructor.
      *
      * Parameter deploymentKey         deployment key.
-     * Parameter appSecret             the value of app secret from AppCenter portal to configure {@link Crashes} sdk.
-     *                                 Pass ```nil``` if you don't need {@link Crashes} integration for tracking exceptions.
+     * Parameter appSecret             the value of app secret from AppCenter portal to configure Crashes sdk.
+     *                                 Pass ```nil``` if you don't need Crashes integration for tracking exceptions.
      * Parameter isDebugMode           indicates whether application is running in debug mode.
      * Parameter baseDirectory         Base directory for CodePush files.
      * Parameter serverUrl             CodePush server url.
      * Parameter appName               application name.
      * Parameter appVersion            application version.
-     * Parameter appEntryPointProvider instance of {@link CodePushAppEntryPointProvider}.
-     * Parameter platformUtils         instance of {@link CodePushPlatformUtils}.
-     * Throws: CodePushInitializeException error occurred during the initialization.
+     * Parameter appEntryPointProvider instance of ```CodePushAppEntryPointProvider```.
+     * Parameter platformUtils         instance of ```CodePushPlatformUtils```.
+     * Throws: CodePushInitializeError if error occurred during the initialization.
      */
     init(_ deploymentKey: String,
          _ appSecret: String,
@@ -58,8 +56,7 @@ class CodePushBaseCore {
         do {
             self.appEntryPoint = try appEntryPointProvider.getAppEntryPoint()
         } catch {
-            print(error)
-            throw CodePushErrors.InitializationError
+            throw CodePushErrors.InitializationError(cause: "Failed to retrieve the app entry point")
         }
         
         /* Initialize utilities. */
@@ -90,7 +87,7 @@ class CodePushBaseCore {
      * Initializes update after app restart.
      *
      * Throws: CodePushGetPackageException    if error occurred during the getting current package.
-     * Throws: CodePushPlatformUtilsException if error occurred during usage of {@link CodePushPlatformUtils}.
+     * Throws: CodePushPlatformUtilsException if error occurred during usage of ```CodePushPlatformUtils```.
      * Throws: CodePushRollbackException      if error occurred during rolling back of package.
      */
     func initializeUpdateAfterRestart() throws {
@@ -99,7 +96,7 @@ class CodePushBaseCore {
         state.didUpdate = false
         let pendingUpdate = try managers.settingsManager.getPendingUpdate()
         if (pendingUpdate != nil) {
-            let packageMetadata = managers.updateManager.getCurrentPackage()
+            let packageMetadata = try managers.updateManager.getCurrentPackage()
             if (packageMetadata == nil || !utilities.platformUtils.isPackageLatest(packageMetadata!, appVersion) &&
                 appVersion == packageMetadata?.appVersion) {
                 return
@@ -124,12 +121,20 @@ class CodePushBaseCore {
         }
     }
     
+    /**
+     * Asks the CodePush service whether the configured app deployment has an update available
+     * using the configured deployment key.
+     *
+     * Parameter completion - completion handler.
+     * Returns: ```CodePushRemotePackage``` if there is an update, ```nil``` otherwise.
+     * Throws: Result will throw an exception if an error occurred at any point during the update check.
+     */
     func checkForUpdate(callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         var configuration: CodePushConfiguration
         do {
             configuration = try getNativeConfiguration()
         } catch {
-            completion(Result{throw error})
+            completion(Result{ throw error })
             return
         }
         checkForUpdate(withKey: configuration.deploymentKey!, callback: completion)
@@ -149,6 +154,7 @@ class CodePushBaseCore {
      * Gets native CodePush configuration.
      *
      * Returns: native CodePush configuration.
+     * Throws: Initialization error if error occurs during version retrieval
      */
     func getNativeConfiguration() throws -> CodePushConfiguration {
         let config = CodePushConfiguration()
@@ -163,7 +169,7 @@ class CodePushBaseCore {
     
     private func getAppVersion() throws -> String {
         guard let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-            else { throw CodePushErrors.InitializationError }
+            else { throw CodePushErrors.InitializationError(cause: "Failed to retrieve version from Bundle") }
         return version
     }
     
@@ -171,9 +177,9 @@ class CodePushBaseCore {
      * Asks the CodePush service whether the configured app deployment has an update available
      * using specified deployment key.
      *
-     * Parameter deploymentKey deployment key to use.
+     * Parameter deploymentKey - deployment key to use.
+     * Parameter completion - completion handler
      * Returns: remote package info if there is an update, ```nil``` otherwise.
-     * Throws: CodePushNativeApiCallException if error occurred during the execution of operation.
      */
     func checkForUpdate(withKey deploymentKey: String,
                         callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
@@ -182,13 +188,13 @@ class CodePushBaseCore {
         do {
             configuration = try getNativeConfiguration()
         } catch {
-            completion(Result{throw error})
+            completion(Result{ throw error })
             return
         }
         
         configuration.deploymentKey = !deploymentKey.isEmpty ? deploymentKey : configuration.deploymentKey
         do {
-            let localPackage = try getUpdateMetadata(inUpdateState: .LATEST)
+            let localPackage = try getUpdateMetadata(inUpdateState: .Latest)
             let queryPackage = localPackage != nil ? localPackage :
                 CodePushLocalPackage.createEmptyPackageForUpdateQuery(withVersion: configuration.appVersion)
             CodePushAcquisitionManager(utilities.utils, utilities.fileUtils)
@@ -211,7 +217,7 @@ class CodePushBaseCore {
     /**
      * Synchronizes your app assets with the latest release to the configured deployment.
      *
-     * Throws: CodePushNativeApiCallException if error occurred during the execution of operation.
+     * Returns: ```Result``` - ```true``` if sync succeeded. ```false``` if there was nothing to sync
      */
     func sync(callback completion: @escaping (Result<Bool>) -> Void) {
         self.sync(withOptions: CodePushSyncOptions(), callback: completion)
@@ -221,7 +227,7 @@ class CodePushBaseCore {
      * Synchronizes your app assets with the latest release to the configured deployment.
      *
      * Parameter synchronizationOptions sync options.
-     * Throws: CodePushNativeApiCallException if error occurred during the execution of operation.
+     * Returns: ```true``` if sync succeeded. ```false``` if there was nothing to sync
      */
     func sync(withOptions syncOptions: CodePushSyncOptions,
               callback completion: @escaping (Result<Bool>) -> Void) {
@@ -229,20 +235,20 @@ class CodePushBaseCore {
             syncOptions.deploymentKey = deploymentKey
         }
         if (syncOptions.installMode == nil) {
-            syncOptions.installMode = .ON_NEXT_RESTART
+            syncOptions.installMode = .OnNextRestart
         }
         if (syncOptions.mandatoryInstallMode == nil) {
-            syncOptions.mandatoryInstallMode = .IMMEDIATE
+            syncOptions.mandatoryInstallMode = .Immediate
         }
         if (syncOptions.checkFrequency == nil) {
-            syncOptions.checkFrequency = .ON_APP_START
+            syncOptions.checkFrequency = .OnAppStart
         }
         
         var configuration: CodePushConfiguration
         do {
             configuration = try getNativeConfiguration()
         } catch {
-            completion(Result{throw error})
+            completion(Result { throw error } )
             return
         }
         
@@ -257,38 +263,13 @@ class CodePushBaseCore {
                     completion(Result { return false })
                 } else {
                     self.doDownloadAndInstall(package: remotePackage!, withOptions: syncOptions, withConfig: configuration, callback: { result in
-                        completion(Result{ return try result.resolve() })
+                        completion(Result { return try result.resolve() } )
                     })
                 }
             } catch {
                 completion(Result { throw error })
             }
         })
-        
-        //                let basePackage = CodePushPackage()
-        //                basePackage.deploymentKey = "i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf"
-        //                basePackage.packageHash = "12f376f76b1bfd68103aaa1db84ba5ea7284951e0af02aff33bf7aa880d9ec51"
-        //                basePackage.label = "v14"
-        //                basePackage.isMandatory = false
-        //                basePackage.failedInstall = false
-        //                basePackage.description = "version 1.0.8 working"
-        //                basePackage.appVersion = "1.0.0"
-        //                let remotePackage = CodePushRemotePackage.createRemotePackage(fromFailedInstall: false, size: 186598, atUrl: "https://codepush.blob.core.windows.net/storagev2/0GqmGWPkR6xVG8SvaF8QN3wLmbWE12058267-11c6-40ff-b975-6397a0cb8e3e", updateVersion: false, fromPackage: basePackage)
-        
-        //        let basePackage = CodePushPackage()
-        //        basePackage.deploymentKey = "i4veHSlIOuyvuFKmGOD-Jcyp1uSXHkoQ4e-Tf"
-        //        basePackage.packageHash = "fc1a577f0f197592cd1fd56f59870b0fb7a6d825154e2a2f2b07730bbaa1fc5e"
-        //        basePackage.label = "v15"
-        //        basePackage.isMandatory = false
-        //        basePackage.failedInstall = false
-        //        basePackage.description = "version 1.0.8 working"
-        //        basePackage.appVersion = "1.0.0"
-        //        let remotePackage = CodePushRemotePackage.createRemotePackage(fromFailedInstall: false, size: 186668, atUrl: "https://codepush.blob.core.windows.net/storagev2/Y7LDcrLVt9vRMNNx9CT56S2SC-cM12058267-11c6-40ff-b975-6397a0cb8e3e", updateVersion: false, fromPackage: basePackage)
-        //
-        //                self.doDownloadAndInstall(package: remotePackage, withOptions: syncOptions, withConfig: configuration, callback: { result in
-        //                    completion(Result {return try result.resolve()})
-        //                })
-        
     }
     
     /**
@@ -297,8 +278,7 @@ class CodePushBaseCore {
      * Parameter remotePackage update to use.
      * Parameter syncOptions   sync options.
      * Parameter configuration configuration to use.
-     * Parameter callback delegate to return to
-     * Throws: CodePushNativeApiCallException if error occurred during the execution of operation.
+     * Parameter completion completion handler
      */
     func doDownloadAndInstall(package remotePackage: CodePushRemotePackage,
                               withOptions syncOptions: CodePushSyncOptions,
@@ -316,7 +296,7 @@ class CodePushBaseCore {
      * Downloads update.
      *
      * Parameter updatePackage update to download.
-     * Parameter callback delegate to return to
+     * Parameter completion - completion handler
      * Returns: resulted local package or error
      */
     func downloadUpdate(package updatePackage: CodePushRemotePackage,
@@ -340,19 +320,27 @@ class CodePushBaseCore {
                                                                                                                  withComponent: CodePushConstants.PackageFileName)
                                         if (downloadResult.isZip) {
                                             
+                                            // The download is a zip, move the archive to our app working directory and unzip it.
                                             let zipLocation = self.utilities.fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath,
                                                                                                  withComponent: CodePushConstants.ZipFileName)
                                             try self.utilities.fileUtils.moveFile(file: downloadResult.downloadFile, toDestination: zipLocation)
+                                            try self.utilities.fileUtils.unzipDirectory(source: zipLocation, destination: newUpdateFolderPath)
                                             
-                                            let newUpdateDirectoryPath = self.utilities.fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath,
-                                                                                                                 withComponent: self.appName)
-                                            try self.utilities.fileUtils.unzipDirectory(source: zipLocation,
-                                                                                        destination: newUpdateDirectoryPath)
+                                            // Locate the newly unzipped folder and rename it
+                                            let unzippedFolder = try FileManager.default.contentsOfDirectory(atPath: newUpdateFolderPath.path)[0]
+                                            var resourceValues = URLResourceValues()
+                                            resourceValues.name = try self.getNativeConfiguration().appName
+                                    
+                                            var renamedDirectory = self.utilities.fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath, withComponent: unzippedFolder)
+                                            try renamedDirectory.setResourceValues(resourceValues)
+                                            
                                         } else {
                                             let newUpdateFilePath = self.utilities.fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath,
                                                                                                                  withComponent: self.appEntryPoint)
                                             try self.utilities.fileUtils.moveFile(file: downloadResult.downloadFile, toDestination: newUpdateFilePath)
                                         }
+                                        
+                                        // Create the localpackage and write the metadata to app.json
                                         let newPackage = CodePushLocalPackage.createLocalPackage(wasFailedInstall: false, isFirstRun: false, isPending: true,
                                                                                                  isDebugOnly: false, withEntryPoint: self.appEntryPoint,
                                                                                                  fromPackage: updatePackage)
@@ -369,46 +357,18 @@ class CodePushBaseCore {
     }
     
     /**
-     * Unzips the following package file.
-     *
-     * Parameter downloadFile package file.
-     * Throws: CodePushUnzipException an exception occurred during unzipping.
-     */
-    func unzipPackage(downloadFile: URL) throws {
-        
-        
-//        let unzippedFolderPath = getUnzippedFolderPath()
-//        do {
-//        let unzippedFolder = new File(unzippedFolderPath);
-//        utilites.fileUtils.unzipFile(downloadFile, unzippedFolder);
-//        utilities.fileUtils.deleteFileOrFolderSilently(downloadFile);
-//
-//        // Rename app package directory to match configured app name
-//        for (var file : unzippedFolder.listFiles()) {
-//        if (file.isDirectory()) {
-//            if (!file.renameTo(new File(unzippedFolder, mCodePushConfiguration.getAppName()))) {
-//                throw new IOException("Unable to rename package file.");
-//        }
-//        return
-//        }
-//        }
-//        } catch (IOException e) {
-//        throw new CodePushUnzipException(e);
-//        }
-    }
-    
-    /**
      * Installs update.
      *
      * Parameter updatePackage             update to install.
-     * Throws: CodePushNativeApiCallException if error occurred during the execution of operation.
+     * Throws: Install error if error occurs during installation of package
      */
     func installUpdate(withPackage updatePackage: CodePushLocalPackage) throws -> Bool {
-        try managers.updateManager.installPackage(packageHashToInstall: updatePackage.packageHash, removeCurrentUpdate: managers.settingsManager.isPendingUpdate(withHash: nil))
+        try managers.updateManager.installPackage(packageHashToInstall: updatePackage.packageHash,
+                                                  removeCurrentUpdate: managers.settingsManager.isPendingUpdate(withHash: nil))
         
         let pendingHash = updatePackage.packageHash
         if (pendingHash?.isEmpty)! {
-            throw CodePushErrors.NoHashValue
+            throw CodePushErrors.NoHashValue(cause: "Update to install has no hash value")
         } else {
             let pendingUpdate = CodePushPendingUpdate()
             pendingUpdate.pendingUpdateHash =  pendingHash
@@ -423,32 +383,36 @@ class CodePushBaseCore {
      * whose state matches the specified ```updateState``` parameter.
      *
      * Parameter updateState current update state.
-     * Returns: installed update metadata.
-     * Throws: CodePushNativeApiCallException if error occurred during the operation.
+     * Returns: installed update metadata or ```nil```
+     * Throws: Error if fails to retrieve the metadata associated with the desired state
      */
     public func getUpdateMetadata(inUpdateState updateState: CodePushUpdateState) throws -> CodePushLocalPackage? {
-        guard let currentPackage = managers.updateManager.getCurrentPackage() else { return nil }
+        let currentPackage = try managers.updateManager.getCurrentPackage()
+        
+        if (currentPackage == nil) {
+            return nil
+        }
         
         var currentUpdateIsPending = false
-        if (!(currentPackage.packageHash?.isEmpty)!) {
-            let currentHash = currentPackage.packageHash
+        if (!(currentPackage!.packageHash?.isEmpty)!) {
+            let currentHash = currentPackage!.packageHash
             currentUpdateIsPending = try managers.settingsManager.isPendingUpdate(withHash: currentHash!)
         }
-        if (updateState == .PENDING && !currentUpdateIsPending) {
+        if (updateState == .Pending && !currentUpdateIsPending) {
             
             /* The caller wanted a pending update but there isn't currently one. */
             return nil
-        } else if (updateState == .RUNNING && currentUpdateIsPending) {
+        } else if (updateState == .Running && currentUpdateIsPending) {
             
             /* The caller wants the running update, but the current one is pending, so we need to grab the previous. */
-            let previousPackage = managers.updateManager.getPreviousPackage()
+            let previousPackage = try managers.updateManager.getPreviousPackage()
             return previousPackage
         } else {
             /* Enable differentiating pending vs. non-pending updates */
-            let packageHash = currentPackage.packageHash
-            currentPackage.failedInstall = try managers.settingsManager.existsFailedUpdate(withHash: packageHash!)
-            currentPackage.isFirstRun = try isFirstRun(withHash: packageHash!)
-            currentPackage.isPending = currentUpdateIsPending
+            let packageHash = currentPackage!.packageHash
+            currentPackage!.failedInstall = try managers.settingsManager.existsFailedUpdate(withHash: packageHash!)
+            currentPackage!.isFirstRun = try isFirstRun(withHash: packageHash!)
+            currentPackage!.isPending = currentUpdateIsPending
             return currentPackage
         }
     }
@@ -458,7 +422,7 @@ class CodePushBaseCore {
      *
      * Parameter packageHash package hash for check.
      * Returns: ```true```, if application is running for the first time, ```false``` otherwise.
-     * Throws: CodePushNativeApiCallException if error occurred during the operation.
+     * Throws: Error if fails to resolve the current package
      */
     func isFirstRun(withHash packageHash: String) throws -> Bool {
         let currentPackageHash = try managers.updateManager.getCurrentPackageHash()
@@ -470,12 +434,10 @@ class CodePushBaseCore {
     /**
      * Rolls back package.
      *
-     * Throws: CodePushGetPackageException if error occurred during getting current update.
-     * Throws: CodePushRollbackException   if error occurred during rolling back of package.
-     * Throws: CodePushMalformedDataException
+     * Throws: Error if fails to resolve the currentPackage
      */
     func rollbackPackage() throws {
-        let failedPackage = managers.updateManager.getCurrentPackage()
+        let failedPackage = try managers.updateManager.getCurrentPackage()
         if (failedPackage != nil) {
             try managers.settingsManager.saveFailedUpdate(forPackage: failedPackage!)
             try managers.updateManager.rollbackPackage()

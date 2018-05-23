@@ -101,7 +101,7 @@ public struct CodePush {
     /**
      * Gets native CodePush configuration.
      *
-     * @return native CodePush configuration.
+     * Returns: native CodePush configuration.
      */
     public func getConfiguration() throws -> CodePushConfiguration? {
         return try self.reactCore.getNativeConfiguration()
@@ -111,7 +111,7 @@ public struct CodePush {
      * Asks the CodePush service whether the configured app deployment has an update available
      * using deploymentKey already set in constructor.
      *
-     * @return remote package info if there is an update, <code>null</code> otherwise.
+     * Returns: remote package info if there is an update, ```nil``` otherwise.
      */
     public func checkForUpdate(callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         reactCore.checkForUpdate(callback: completion)
@@ -121,8 +121,8 @@ public struct CodePush {
      * Asks the CodePush service whether the configured app deployment has an update available
      * using specified deployment key.
      *
-     * @param deploymentKey deployment key to use.
-     * @return remote package info if there is an update, <code>null</code> otherwise.
+     * Parameter deploymentKey deployment key to use.
+     * Returns: remote package info if there is an update, ```nil``` otherwise.
      */
     public func checkForUpdate(withKey deploymentKey: String,
                         callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
@@ -131,10 +131,10 @@ public struct CodePush {
     
     /**
      * Retrieves the metadata for an installed update (e.g. description, mandatory)
-     * whose state matches the specified <code>updateState</code> parameter.
+     * whose state matches the specified ```updateState``` parameter.
      *
-     * @param updateState current update state.
-     * @return installed update metadata.
+     * Parameter updateState current update state.
+     * Returns: installed update metadata.
      */
     public func getUpdateMetadata(inUpdateState updateState: CodePushUpdateState) throws -> CodePushLocalPackage? {
         return try reactCore.getUpdateMetadata(inUpdateState: updateState)
@@ -150,10 +150,26 @@ public struct CodePush {
     /**
      * Synchronizes your app assets with the latest release to the configured deployment.
      *
-     * @param syncOptions sync options.
+     * Parameter syncOptions sync options.
      */
     public func sync(withOptions syncOptions: CodePushSyncOptions,
               callback completion: @escaping (Result<Bool>) -> Void){
         reactCore.sync(withOptions: syncOptions, callback: completion)
+    }
+    
+    /**
+     * Return the path to the directory that contains the current bundle
+     * Returns: directory of current bundle or nil
+     */
+    public func getCurrentPackagePath() throws -> URL? {
+        return try reactCore.getCurrentPackagePath()
+    }
+    
+    /**
+     * Return the path to the directory that contains the previous bundle
+     * Returns: directory of previous bundle or nil
+     */
+    public func getPreviousPackagePath() throws -> URL? {
+        return try reactCore.getPreviousPackagePath()
     }
 }

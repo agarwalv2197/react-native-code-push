@@ -15,8 +15,8 @@ class FileUtils {
     /**
      * Checks whether a file by the following path exists.
      *
-     * @param filePath path to be checked.
-     * @return <code>true</code> if exists, <code>false</code> otherwise.
+     * Parameter filePath path to be checked.
+     * Returns: ```true``` if exists, ```false``` otherwise.
      */
     func fileExists(atPath filePath: URL) -> Bool {
         return FileManager.default.fileExists(atPath: filePath.relativePath)
@@ -25,9 +25,9 @@ class FileUtils {
     /**
      * Appends file path with one more component.
      *
-     * @param basePath            path to be appended.
-     * @param appendPathComponent path component to be appended to the base path.
-     * @return new path.
+     * Parameter basePath            path to be appended.
+     * Parameter appendPathComponent path component to be appended to the base path.
+     * Returns: new path.
      */
     func appendPathComponent(atBasePath basePath: URL, withComponent appendPathComponent: String) -> URL {
         return basePath.appendingPathComponent(appendPathComponent)
@@ -36,8 +36,8 @@ class FileUtils {
     /**
      * Writes some content to a file, existing file will be overwritten.
      *
-     * @param content  content to be written to a file.
-     * @param filePath path to a file.
+     * Parameter content  content to be written to a file.
+     * Parameter filePath path to a file.
      */
     func writeToFile(withContent content: String, atPath filePath: URL) throws {
         try content.write(to: filePath, atomically: false, encoding: .utf8)
@@ -46,8 +46,8 @@ class FileUtils {
     /**
      * Reads the contents of file to a string.
      *
-     * @param filePath path to file to be read.
-     * @return string with contents of the file.
+     * Parameter filePath path to file to be read.
+     * Returns: string with contents of the file.
      */
     func readFileToString(atPath filePath: URL) throws -> String {
         return try String(contentsOf: filePath, encoding: .utf8)
@@ -56,9 +56,9 @@ class FileUtils {
     /**
      * Move a file to a destination
      *
-     * @param origin the original location of the file
-     * @param destination path of the file
-     * @throws if the file already exists at the destination or due to IO errors.
+     * Parameter origin the original location of the file
+     * Parameter destination path of the file
+     * Throws: if the file already exists at the destination or due to IO errors.
      */
     func moveFile(file origin: URL, toDestination destination: URL) throws {
         try FileManager.default.moveItem(at: origin, to: destination)
@@ -67,9 +67,9 @@ class FileUtils {
     /**
      * Creates a new directory if it doesn't already exist
      *
-     * @param filePath of directory
-     * @return true if the directory was created, false if not.
-     * @throws
+     * Parameter filePath of directory
+     * Returns: true if the directory was created, false if not.
+     * Throws:
      */
     func createDirectoryIfNotExists(path url: URL) throws {
         if (!fileExists(atPath: url)) {
@@ -80,8 +80,8 @@ class FileUtils {
     /**
      * Deletes directory located by the following path.
      *
-     * @param directoryPath path to directory to be deleted. Can't be <code>null</code>.
-     * @throws IOException read/write error occurred while accessing the file system.
+     * Parameter directoryPath path to directory to be deleted. Can't be ```null```.
+     * Throws: IOException read/write error occurred while accessing the file system.
      */
     func deleteDirectoryAtPath(path directoryPath: URL?) throws {
         if (directoryPath == nil) {
@@ -89,5 +89,15 @@ class FileUtils {
         } else {
             try FileManager.default.removeItem(atPath: directoryPath!.path)
         }
+    }
+    
+    func unzipDirectory(source sourcePath: URL, destination destPath: URL) throws {
+        
+//        let sourceData = try Data(contentsOf: sourcePath)
+//        let unzipped = sourceData.unzip()
+//        try unzipped?.write(to: destPath)
+        
+       // try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
+        //SSZipArchive.unzipFile(atPath: sourcePath.absoluteString, toDestination: destPath.absoluteString)
     }
 }

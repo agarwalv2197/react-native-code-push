@@ -48,10 +48,10 @@ class CodePushAcquisitionManager {
     /**
      * Sends a request to server for updates of the current package.
      *
-     * @param configuration  current application configuration.
-     * @param currentPackage instance of {@link CodePushLocalPackage}.
-     * @return {@link CodePushRemotePackage} or <code>null</code> if there is no update.
-     * @throws CodePushQueryUpdateException exception occurred during querying for update.
+     * Parameter configuration  current application configuration.
+     * Parameter currentPackage instance of {@link CodePushLocalPackage}.
+     * Returns: {@link CodePushRemotePackage} or ```nil``` if there is no update.
+     * Throws: CodePushQueryUpdateException exception occurred during querying for update.
      */
     func queryUpdate(withConfig configuration: CodePushConfiguration,
                      withPackage currentPackage: CodePushLocalPackage,

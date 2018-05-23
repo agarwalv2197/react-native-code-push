@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * HTTP tasks required for updates and syncing
+ */
 class ApiRequest {
     
     private let URL: URL
@@ -15,6 +18,11 @@ class ApiRequest {
         self.URL = url
     }
     
+    /**
+     * Performs a GET at the specified URL
+     * Parameter completion: the callback delegate
+     * Returns: the JSON response
+     */
     func checkForUpdate(completion: @escaping (Result<String>) -> Void) {
         let session = URLSession.shared
         let request = getRequest()
@@ -27,13 +35,17 @@ class ApiRequest {
                 guard let json = String(data: data, encoding: .utf8) else { throw QueryUpdateErrors.FailedJsonConversion }
                 return json
             })
-            
         }
         
         task.resume()
     }
     
-    func downloadUpdate(completion: @escaping (Result<String>) -> Void) {
+    /**
+     * Instantiates a downloadTask at the specified URL
+     * Parameter completion: the callback delegate
+     * Returns: the file path of the download
+     */
+    func downloadUpdate(completion: @escaping (Result<URL>) -> Void) {
         let session = URLSession.shared
         let request = getRequest()
         
@@ -41,16 +53,16 @@ class ApiRequest {
             session.invalidateAndCancel()
             completion (Result {
                 if let tempLocalUrl = tempLocalUrl, error == nil {
-                    return tempLocalUrl.absoluteString
+                  return tempLocalUrl
                 } else {
                     throw error!
                 }
             })
-            
         }
         
         task.resume()
     }
+    
     
     private func getRequest() -> URLRequest {
         var request = URLRequest(url: URL)

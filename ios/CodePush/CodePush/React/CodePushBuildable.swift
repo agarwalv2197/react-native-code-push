@@ -32,19 +32,19 @@ protocol CodePushBuildable {
     
     /**
      * App name for use when utilizing multiple CodePush instances to differentiate file locations.
-     * If not provided, defaults to CodePushConstants.CODE_PUSH_DEFAULT_APP_NAME.
+     * If not provided, defaults to CodePushConstants.CodePushDefaultAppName.
      */
     func setAppName(name appName: String)
     
     /**
      * Semantic version for app for use when getting updates.
-     * If not provided, defaults to <code>versionName</code> field from <code>build.gradle</code>.
+     * If not provided, defaults to ```versionString``` from the bundle
      */
     func setAppVersion(version appVersion: String)
     
     /**
      * Base directory for CodePush files.
-     * If not provided, defaults to /data/data/<package>/files.
+     * If not provided, defaults to documents directory
      */
     func setBaseDirectory(directory baseDirectory: URL)
     

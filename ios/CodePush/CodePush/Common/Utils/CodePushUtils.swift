@@ -20,9 +20,9 @@ class CodePushUtils {
     /**
      * Parses {@link JSONObject} from file.
      *
-     * @param filePath path to file.
-     * @return parsed {@link JSONObject} instance.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Parameter filePath path to file.
+     * Returns: parsed {@link JSONObject} instance.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getJsonObjectFromFile(atPath filePath: URL) throws -> Data {
         let contents = try fileUtils.readFileToString(atPath: filePath)
@@ -32,8 +32,8 @@ class CodePushUtils {
     /**
      * Converts {@link Object} instance to json string.
      *
-     * @param object {@link JSONObject} instance.
-     * @return the json string.
+     * Parameter object {@link JSONObject} instance.
+     * Returns: the json string.
      */
     func convertObjectToJsonString<T>(withObject object: T) throws -> String where T: Codable  {
         let encoder = JSONEncoder()
@@ -45,11 +45,10 @@ class CodePushUtils {
     /**
      * Gets information from json file and converts it to an object of specified type.
      *
-     * @param filePath path to file with json contents.
-     * @param classOfT the class of the desired type.
-     * @param <T>      the type of the desired object.
-     * @return object of type T.
-     * @throws CodePushMalformedDataException exception during parsing data.
+     * Parameter filePath path to file with json contents.
+     * Parameter <T>      the type of the desired object.
+     * Returns: object of type T.
+     * Throws: CodePushMalformedDataException exception during parsing data.
      */
     func getObjectFromJsonFile<T>(_ filePath: URL) throws -> T where T: Codable {
         let json = try getJsonObjectFromFile(atPath: filePath)
@@ -61,10 +60,10 @@ class CodePushUtils {
     /**
      * Saves object of specified type to a file as json string.
      *
-     * @param object   object to be saved.
-     * @param filePath path to file.
-     * @param <T>      the type of the desired object.
-     * @throws IOException read/write error occurred while accessing the system.
+     * Parameter object   object to be saved.
+     * Parameter filePath path to file.
+     * Parameter <T>      the type of the desired object.
+     * Throws: IOException read/write error occurred while accessing the system.
      */
     func writeObjectToJsonFile<T>(withObject object: T, atPath filePath: URL) throws where T: Codable {
         let jsonString = try convertObjectToJsonString(withObject: object)
@@ -74,9 +73,9 @@ class CodePushUtils {
     /**
      * Writes {@link JSONObject} to file.
      *
-     * @param json     {@link JSONObject} instance.
-     * @param filePath path to file.
-     * @throws IOException read/write error occurred while accessing the file system.
+     * Parameter json     {@link JSONObject} instance.
+     * Parameter filePath path to file.
+     * Throws: IOException read/write error occurred while accessing the file system.
      */
     func writeJsonToFile(withJson json: Data, atPath filePath: URL) throws {
         let jsonString = String(data: json, encoding: .utf8)
@@ -86,9 +85,9 @@ class CodePushUtils {
     /**
      * Converts {@link Object} instance to {@link JSONObject}.
      *
-     * @param object {@link JSONObject} instance.
-     * @return {@link JSONObject} instance.
-     * @throws JSONException error occurred during parsing a json object.
+     * Parameter object {@link JSONObject} instance.
+     * Returns: {@link JSONObject} instance.
+     * Throws: JSONException error occurred during parsing a json object.
      */
     func convertObjectToJsonObject<T>(withObject object: T) throws -> Data where T: Codable {
         let encoder = JSONEncoder()
@@ -97,14 +96,13 @@ class CodePushUtils {
         return data
     }
     
-    
     /**
      * Converts json string to specified class.
      *
-     * @param stringObject json string.
-     * @param classOfT     the class of T.
-     * @param <T>          the type of the desired object.
-     * @return instance of T.
+     * Parameter stringObject json string.
+     * Parameter classOfT     the class of T.
+     * Parameter <T>          the type of the desired object.
+     * Returns: instance of T.
      */
     func convertStringToObject<T>(withString json: String) throws -> T where T: Codable {
         let data = json.data(using: .utf8)
@@ -122,10 +120,9 @@ class CodePushUtils {
      * <li>iterates through {@link Map}&lt;String, Object&gt; instance and builds query string.</li>
      * </ul>
      *
-     * @param object      object.
-     * @param charsetName charset that will be used for url parts encoding. Recommended value: <code>"UTF-8"</code>
-     * @return query string.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Parameter object      object.
+     * Returns: an array of query items
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getQueryItems(fromObject object: CodePushUpdateRequest) -> [URLQueryItem] {
         

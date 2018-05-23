@@ -7,7 +7,6 @@ target 'CodePush' do
 
   # Pods for CodePush
 
-
   target 'CodePushTests' do
     inherit! :search_paths
     # Pods for testing

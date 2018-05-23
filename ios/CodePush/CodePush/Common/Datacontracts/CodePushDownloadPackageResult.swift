@@ -12,7 +12,7 @@ class CodePushDownloadPackageResult {
     /**
      * The file containing the update.
      */
-    var downloadFile: String
+    var downloadFile: URL
     
     /**
      * Whether the file is zipped.
@@ -22,10 +22,10 @@ class CodePushDownloadPackageResult {
     /**
      * Creates an instance of the class.
      *
-     * @param downloadFile the file containing the update.
-     * @param isZip        whether the file is zipped.
+     * Parameter downloadFile the file containing the update.
+     * Parameter isZip        whether the file is zipped.
      */
-    init(_ downloadFile: String, _ isZip: Bool) {
+    init(_ downloadFile: URL, _ isZip: Bool) {
         self.downloadFile = downloadFile
         self.isZip = isZip
     }

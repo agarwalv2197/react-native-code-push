@@ -48,9 +48,8 @@ class CodePushSettingsManager {
     /**
      * Creates an instance of {@link SettingsManager} with {@link Context} provided.
      *
-     * @param applicationContext current application context.
-     * @param codePushUtils      instance of {@link CodePushUtils} to work with.
-     * @param codePushConfiguration instance of {@link CodePushConfiguration} to work with.
+     * Parameter codePushUtils      instance of {@link CodePushUtils} to work with.
+     * Parameter codePushConfiguration instance of {@link CodePushConfiguration} to work with.
      */
     init(_ codePushUtils: CodePushUtils, _ configuration: CodePushConfiguration?) {
         self.codePushUtils = codePushUtils
@@ -62,8 +61,8 @@ class CodePushSettingsManager {
      * Gets an array with containing failed updates info arranged by time of the failure ascending.
      * Each item represents an instance of {@link CodePushPackage} that has failed to update.
      *
-     * @return an array of failed updates.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: an array of failed updates.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getFailedUpdates() throws -> [CodePushPackage] {
         let failedUpdatesString: String? = settings.string(forKey: getAppSpecificPrefix() + FAILED_UPDATES_KEY)
@@ -84,8 +83,8 @@ class CodePushSettingsManager {
     /**
      * Gets object with pending update info.
      *
-     * @return object with pending update info.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: object with pending update info.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getPendingUpdate() throws -> CodePushPendingUpdate? {
         let pendingUpdateString: String? = settings.string(forKey: getAppSpecificPrefix() + PENDING_UPDATE_KEY)
@@ -101,9 +100,9 @@ class CodePushSettingsManager {
     /**
      * Checks whether an update with the following hash has failed.
      *
-     * @param packageHash hash to check.
-     * @return <code>true</code> if there is a failed update with provided hash, <code>false</code> otherwise.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Parameter packageHash hash to check.
+     * Returns: ```true``` if there is a failed update with provided hash, ```false``` otherwise.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func existsFailedUpdate(withHash packageHash: String) throws -> Bool {
         let failedUpdates = try getFailedUpdates()
@@ -119,11 +118,11 @@ class CodePushSettingsManager {
     
     /**
      * Checks whether there is a pending update with the provided hash.
-     * Pass <code>null</code> to check if there is any pending update.
+     * Pass ```nil``` to check if there is any pending update.
      *
-     * @param packageHash expected package hash of the pending update.
-     * @return <code>true</code> if there is a pending update with the provided hash.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Parameter packageHash expected package hash of the pending update.
+     * Returns: ```true``` if there is a pending update with the provided hash.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func isPendingUpdate(withHash packageHash: String?) throws -> Bool {
         let pendingUpdate = try getPendingUpdate()
@@ -148,8 +147,8 @@ class CodePushSettingsManager {
     /**
      * Adds another failed update info to the list of failed updates.
      *
-     * @param failedPackage instance of failed {@link CodePushRemotePackage}.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Parameter failedPackage instance of failed {@link CodePushRemotePackage}.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func saveFailedUpdate(forPackage failedPackage: CodePushPackage) throws {
         var failedUpdates = try getFailedUpdates()
@@ -161,7 +160,7 @@ class CodePushSettingsManager {
     /**
      * Saves information about the pending update.
      *
-     * @param pendingUpdate instance of the {@link CodePushPendingUpdate}.
+     * Parameter pendingUpdate instance of the {@link CodePushPendingUpdate}.
      */
     func savePendingUpdate(forUpdate pendingUpdate: CodePushPendingUpdate) throws {
         let pendingUpdateString: String = try codePushUtils.convertObjectToJsonString(withObject: pendingUpdate)
@@ -171,7 +170,7 @@ class CodePushSettingsManager {
     /**
      * Returns app-specific prefix for preferences keys.
      *
-     * @return preference key prefix to get app specific preferences
+     * Returns: preference key prefix to get app specific preferences
      */
     private func getAppSpecificPrefix() -> String {
         

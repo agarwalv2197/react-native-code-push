@@ -9,7 +9,7 @@ import Foundation
 
 public class CodePushRemotePackage: CodePushPackage {
     
-    public var downloadURL: String?
+    public var downloadURL: URL?
     public var packageSize: Int64?
     public var updateAppVersion: Bool?
     
@@ -29,7 +29,7 @@ public class CodePushRemotePackage: CodePushPackage {
         let superdecoder = try container.superDecoder()
         try super.init(from: superdecoder)
         
-        self.downloadURL = try container.decode(String.self, forKey: .downloadURL)
+        self.downloadURL = try container.decode(URL.self, forKey: .downloadURL)
         self.packageSize = try container.decode(Int64.self, forKey: .packageSize)
         self.updateAppVersion = try container.decode(Bool.self, forKey: .updateAppVersion)
     }
@@ -47,15 +47,15 @@ public class CodePushRemotePackage: CodePushPackage {
     /**
      * Creates an instance of the class from the basic codepush package.
      *
-     * @param failedInstall    whether this update has been previously installed but was rolled back.
-     * @param packageSize      the size of the package.
-     * @param downloadUrl      url to access package on server.
-     * @param updateAppVersion whether the client should trigger a store update.
-     * @param codePushPackage  basic package containing the information.
-     * @return instance of the {@link CodePushRemotePackage}.
+     * Parameter failedInstall    whether this update has been previously installed but was rolled back.
+     * Parameter packageSize      the size of the package.
+     * Parameter downloadUrl      url to access package on server.
+     * Parameter updateAppVersion whether the client should trigger a store update.
+     * Parameter codePushPackage  basic package containing the information.
+     * Returns: instance of the {@link CodePushRemotePackage}.
      */
     static func createRemotePackage(fromFailedInstall failedInstall: Bool, size packageSize: Int64,
-                                    atUrl downloadURL: String, updateVersion updateAppVersion: Bool,
+                                    atUrl downloadURL: URL, updateVersion updateAppVersion: Bool,
                                     fromPackage package: CodePushPackage) -> CodePushRemotePackage {
         let remotePackage = CodePushRemotePackage()
         remotePackage.appVersion = package.appVersion
@@ -74,9 +74,9 @@ public class CodePushRemotePackage: CodePushPackage {
     /**
      * Creates instance of the class from the update response from server.
      *
-     * @param deploymentKey the deployment key that was used to originally download this update.
-     * @param updateInfo    update info response from server.
-     * @return instance of the {@link CodePushRemotePackage}.
+     * Parameter deploymentKey the deployment key that was used to originally download this update.
+     * Parameter updateInfo    update info response from server.
+     * Returns: instance of the {@link CodePushRemotePackage}.
      */
     static func createRemotePackage(withDeploymentKey deploymentKey: String,
                                     fromUpdateInfo updateInfo: CodePushUpdateResponseInfo) -> CodePushRemotePackage{
@@ -89,7 +89,7 @@ public class CodePushRemotePackage: CodePushPackage {
         remotePackage.label = updateInfo.label
         remotePackage.packageHash = updateInfo.packageHash
         remotePackage.packageSize = updateInfo.packageSize
-        remotePackage.downloadURL = updateInfo.downloadURL
+        remotePackage.downloadURL = URL(string: updateInfo.downloadURL!)
         remotePackage.updateAppVersion = updateInfo.updateAppVersion
         return remotePackage
     }
@@ -97,9 +97,9 @@ public class CodePushRemotePackage: CodePushPackage {
     /**
      * Creates a default package from the app version.
      *
-     * @param appVersion       current app version.
-     * @param updateAppVersion whether the client should trigger a store update.
-     * @return instance of the {@link CodePushRemotePackage}.
+     * Parameter appVersion       current app version.
+     * Parameter updateAppVersion whether the client should trigger a store update.
+     * Returns: instance of the {@link CodePushRemotePackage}.
      */
     static func createDefaultRemotePackage(withVersion appVersion: String,
                                            updateVersion updateAppVersion: Bool) -> CodePushRemotePackage {

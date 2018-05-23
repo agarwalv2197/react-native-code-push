@@ -11,7 +11,7 @@ public class CodePushLocalPackage: CodePushPackage {
     
     /**
      * Indicates whether this update is in a "pending" state.
-     * When <code>true</code>, that means the update has been downloaded and installed, but the app restart
+     * When ```true```, that means the update has been downloaded and installed, but the app restart
      * needed to apply it hasn't occurred yet, and therefore, its changes aren't currently visible to the end-user.
      */
     public var isPending: Bool?

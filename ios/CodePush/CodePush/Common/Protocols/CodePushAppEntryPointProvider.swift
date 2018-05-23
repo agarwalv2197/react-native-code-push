@@ -13,7 +13,7 @@ protocol CodePushAppEntryPointProvider {
     /**
      * Gets location of application entry point.
      *
-     * @return location of application entry point.
+     * Returns: location of application entry point.
      */
     func getAppEntryPoint() throws -> String
 }

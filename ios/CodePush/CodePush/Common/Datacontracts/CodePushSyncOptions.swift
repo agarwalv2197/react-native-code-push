@@ -41,7 +41,7 @@ public class CodePushSyncOptions: Codable {
     
     /**
      * Specifies whether to ignore failed updates.
-     * Defaults to <code>true</code>.
+     * Defaults to ```true```.
      */
     var ignoreFailedUpdates: Bool? = true
     
@@ -54,7 +54,7 @@ public class CodePushSyncOptions: Codable {
     /**
      * Creates default instance of sync options.
      *
-     * @param deploymentKey the deployment key you want to query for an update against.
+     * Parameter deploymentKey the deployment key you want to query for an update against.
      */
     init(_ deploymentKey: String) {
         self.deploymentKey = deploymentKey

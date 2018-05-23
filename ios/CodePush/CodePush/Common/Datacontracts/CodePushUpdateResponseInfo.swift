@@ -22,7 +22,7 @@ class CodePushUpdateResponseInfo: Codable {
     var description: String?
     
     /**
-     * Whether the package is available (<code>false</code> if it it disabled).
+     * Whether the package is available (```false``` if it it disabled).
      */
     var isAvailable: Bool?
     
@@ -60,7 +60,7 @@ class CodePushUpdateResponseInfo: Codable {
     var updateAppVersion: Bool?
     
     /**
-     * Set to <code>true</code> if the update directs to use the binary version of the application.
+     * Set to ```true``` if the update directs to use the binary version of the application.
      */
     var shouldRunBinaryVersion: Bool?
     

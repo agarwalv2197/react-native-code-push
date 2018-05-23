@@ -43,10 +43,10 @@ class CodePushUpdateRequest: Codable {
     /**
      * Creates an update request based on the current {@link CodePushLocalPackage}.
      *
-     * @param deploymentKey   the deployment key you want to query for an update against.
-     * @param codePushPackage currently installed local package.
-     * @param clientUniqueId  id of the device.
-     * @return instance of the {@link CodePushUpdateRequest}.
+     * Parameter deploymentKey   the deployment key you want to query for an update against.
+     * Parameter codePushPackage currently installed local package.
+     * Parameter clientUniqueId  id of the device.
+     * Returns: instance of the {@link CodePushUpdateRequest}.
      */
     static func createUpdateRequest(withKey deploymentKey: String,
                                     withLocalPackage codePushPackage: CodePushLocalPackage,

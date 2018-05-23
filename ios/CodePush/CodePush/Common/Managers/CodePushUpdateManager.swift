@@ -41,14 +41,19 @@ class CodePushUpdateManager {
     var codePushConfiguration: CodePushConfiguration?
     
     /**
+     * Byte signature designating a compressed folder
+     */
+    let ZipHeader = [0x50, 0x4b, 0x03, 0x04]
+    
+    /**
      * Creates instance of CodePushUpdateManager.
      *
-     * @param documentsDirectory  path for storing files.
-     * @param platformUtils       instance of {@link CodePushPlatformUtils} to work with.
-     * @param fileUtils           instance of {@link FileUtils} to work with.
-     * @param codePushUtils       instance of {@link CodePushUtils} to work with.
-     * @param codePushUpdateUtils instance of {@link CodePushUpdateUtils} to work with.
-     * @param codePushConfiguration instance of {@link CodePushConfiguration} to work with.
+     * Parameter documentsDirectory  path for storing files.
+     * Parameter platformUtils       instance of {@link CodePushPlatformUtils} to work with.
+     * Parameter fileUtils           instance of {@link FileUtils} to work with.
+     * Parameter codePushUtils       instance of {@link CodePushUtils} to work with.
+     * Parameter codePushUpdateUtils instance of {@link CodePushUpdateUtils} to work with.
+     * Parameter codePushConfiguration instance of {@link CodePushConfiguration} to work with.
      */
     init(_ documentsDirectory: URL, _ platformUtils: CodePushPlatformUtils, _ fileUtils: FileUtils,
          _ codePushUtils: CodePushUtils, _ codePushUpdateUtils: CodePushUpdateUtils,
@@ -64,7 +69,7 @@ class CodePushUpdateManager {
     /**
      * Gets path to json file containing information about the available packages.
      *
-     * @return path to json file containing information about the available packages.
+     * Returns: path to json file containing information about the available packages.
      */
     func getStatusFilePath() -> URL {
         return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: CodePushConstants.StatusFileName)
@@ -73,8 +78,8 @@ class CodePushUpdateManager {
     /**
      * Gets folder for the package by the package hash.
      *
-     * @param packageHash current package identifier (hash).
-     * @return path to package folder.
+     * Parameter packageHash current package identifier (hash).
+     * Returns: path to package folder.
      */
     func getPackageFolderPath(withHash packageHash: String) -> URL {
         return fileUtils.appendPathComponent(atBasePath: getCodePushPath(), withComponent: packageHash)
@@ -83,7 +88,7 @@ class CodePushUpdateManager {
     /**
      * Gets application-specific folder.
      *
-     * @return application-specific folder.
+     * Returns: application-specific folder.
      */
     private func getCodePushPath() -> URL {
         return fileUtils.appendPathComponent(atBasePath: self.documentsDirectory, withComponent: (codePushConfiguration?.appName)!)
@@ -92,8 +97,8 @@ class CodePushUpdateManager {
     /**
      * Gets current package json object.
      *
-     * @return current package json object.
-     * @throws CodePushGetPackageException exception occurred when obtaining a package.
+     * Returns: current package json object.
+     * Throws: CodePushGetPackageException exception occurred when obtaining a package.
      */
     func getCurrentPackage() -> CodePushLocalPackage? {
         do {
@@ -112,9 +117,9 @@ class CodePushUpdateManager {
     /**
      * Gets the identifier of the previous installed package (hash).
      *
-     * @return the identifier of the previous installed package.
-     * @throws IOException                    read/write error occurred while accessing the file system.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: the identifier of the previous installed package.
+     * Throws: IOException                    read/write error occurred while accessing the file system.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      **/
     func getPreviousPackageHash() throws -> String? {
         let info = try getCurrentPackageInfo()
@@ -124,13 +129,17 @@ class CodePushUpdateManager {
     /**
      * Gets previous installed package json object.
      *
-     * @return previous installed package json object.
-     * @throws CodePushGetPackageException exception occurred when obtaining a package.
+     * Returns: previous installed package json object.
+     * Throws: CodePushGetPackageException exception occurred when obtaining a package.
      */
     func getPreviousPackage() -> CodePushLocalPackage? {
         do {
             let packageHash = try getPreviousPackageHash()
-            return try getPackage(withHash: packageHash!)
+            if (packageHash != nil) {
+                return try getPackage(withHash: packageHash!)
+            } else {
+                return nil
+            }
         } catch {
             print(error)
             return nil
@@ -140,9 +149,9 @@ class CodePushUpdateManager {
     /**
      * Gets package object by its hash.
      *
-     * @param packageHash package identifier (hash).
-     * @return package object.
-     * @throws CodePushGetPackageException exception occurred when obtaining a package.
+     * Parameter packageHash package identifier (hash).
+     * Returns: package object.
+     * Throws: CodePushGetPackageException exception occurred when obtaining a package.
      */
     func getPackage(withHash packageHash: String) throws -> CodePushLocalPackage {
         let folderPath = getPackageFolderPath(withHash: packageHash)
@@ -157,9 +166,9 @@ class CodePushUpdateManager {
     /**
      * Gets the identifier of the current package (hash).
      *
-     * @return the identifier of the current package.
-     * @throws IOException                    read/write error occurred while accessing the file system.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: the identifier of the current package.
+     * Throws: IOException                    read/write error occurred while accessing the file system.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getCurrentPackageHash() throws -> String? {
         let info = try getCurrentPackageInfo()
@@ -169,9 +178,9 @@ class CodePushUpdateManager {
     /**
      * Gets metadata about the current update.
      *
-     * @return metadata about the current update.
-     * @throws IOException read/write error occurred while accessing the file system.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: metadata about the current update.
+     * Throws: IOException read/write error occurred while accessing the file system.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
     func getCurrentPackageInfo() throws -> CodePushPackageInfo {
         let statusFilePath = getStatusFilePath()
@@ -187,12 +196,28 @@ class CodePushUpdateManager {
     /**
      * Gets folder for storing current package files.
      *
-     * @return folder for storing current package files.
-     * @throws IOException                    read/write error occurred while accessing the file system.
-     * @throws CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     * Returns: folder for storing current package files.
+     * Throws: IOException                    read/write error occurred while accessing the file system.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
      */
-    func getCurrentPackageFolderPath() throws -> URL? {
+    func getCurrentPackagePath() throws -> URL? {
         let packageHash = try getCurrentPackageHash()
+        if (packageHash == nil) {
+            return nil
+        } else {
+            return getPackageFolderPath(withHash: packageHash!)
+        }
+    }
+    
+    /**
+     * Gets folder for storing current package files.
+     *
+     * Returns: folder for storing previous package files.
+     * Throws: IOException                    read/write error occurred while accessing the file system.
+     * Throws: CodePushMalformedDataException error thrown when actual data is broken (i .e. different from the expected).
+     */
+    func getPreviousPackagePath() throws -> URL? {
+        let packageHash = try getPreviousPackageHash()
         if (packageHash == nil) {
             return nil
         } else {
@@ -203,12 +228,12 @@ class CodePushUpdateManager {
     /**
      * Deletes the current package and installs the previous one.
      *
-     * @throws CodePushRollbackException exception occurred during package rollback.
+     * Throws: CodePushRollbackException exception occurred during package rollback.
      */
     func rollbackPackage() throws {
         do {
             let info = try getCurrentPackageInfo()
-            let currentPackageFolderPath = try getCurrentPackageFolderPath()
+            let currentPackageFolderPath = try getCurrentPackagePath()
             
             try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
             
@@ -224,8 +249,8 @@ class CodePushUpdateManager {
     /**
      * Updates file containing information about the available packages.
      *
-     * @param packageInfo new information.
-     * @throws IOException read/write error occurred while accessing the file system.
+     * Parameter packageInfo new information.
+     * Throws: IOException read/write error occurred while accessing the file system.
      */
     func updateCurrentPackageInfo(package packageInfo: CodePushPackageInfo) throws {
         try codePushUtils.writeObjectToJsonFile(withObject: packageInfo, atPath: getStatusFilePath())
@@ -234,18 +259,18 @@ class CodePushUpdateManager {
     /**
      * Downloads the update package.
      *
-     * @param packageHash            update package hash.
-     * @param downloadPackageRequest instance of {@link ApiHttpRequest} to download the update.
-     * @return downloaded package.
-     * @throws CodePushDownloadPackageException an exception occurred during package downloading.
+     * Parameter packageHash            update package hash.
+     * Parameter downloadPackageRequest instance of {@link ApiHttpRequest} to download the update.
+     * Returns: downloaded package.
+     * Throws: CodePushDownloadPackageException an exception occurred during package downloading.
      */
-    func downloadPackage(withHash packageHash: String, atUrl url: String,
+    func downloadPackage(withHash packageHash: String, atUrl url: URL,
                          callback completion: @escaping (Result<CodePushDownloadPackageResult>) -> Void) {
         let newUpdateFolderPath = getPackageFolderPath(withHash: packageHash)
         
         if (fileUtils.fileExists(atPath: newUpdateFolderPath)) {
             
-            /* This removes any stale data in <code>newPackageFolderPath</code> that could have been left
+            /* This removes any stale data in ```newPackageFolderPath``` that could have been left
              * uncleared due to a crash or error during the download or install process. */
             do {
                 try fileUtils.deleteDirectoryAtPath(path: newUpdateFolderPath)
@@ -254,12 +279,21 @@ class CodePushUpdateManager {
                 return
             }
         }
-        let resolvedUrl = URL(string: url)
-        let api = ApiRequest(resolvedUrl!)
+
+        let api = ApiRequest(url)
         api.downloadUpdate(completion: { result in
             completion( Result {
-                let temporaryPath = try result.resolve()
-                return CodePushDownloadPackageResult(temporaryPath, false)
+                var temporaryPath = try result.resolve()
+                let fileSignature = try Data(contentsOf: temporaryPath)[...(self.ZipHeader.count - 1)]
+                var isZip = true
+                for (i, element) in self.ZipHeader.enumerated() {
+                    if (element != fileSignature[i]) {
+                        isZip = false
+                        break
+                    }
+                }
+                
+                return CodePushDownloadPackageResult(temporaryPath, isZip)
             })
         })
     }
@@ -267,9 +301,9 @@ class CodePushUpdateManager {
     /**
      * Installs the new package.
      *
-     * @param packageHash         package hash to install.
-     * @param removePendingUpdate whether to remove pending updates data.
-     * @throws CodePushInstallException exception occurred during package installation.
+     * Parameter packageHash         package hash to install.
+     * Parameter removePendingUpdate whether to remove pending updates data.
+     * Throws: CodePushInstallException exception occurred during package installation.
      */
     func installPackage(packageHashToInstall packageHash: String?, removeCurrentUpdate removeCurrent: Bool) throws {
         do {
@@ -280,7 +314,7 @@ class CodePushUpdateManager {
                 return
             }
             if (removeCurrent) {
-                let currentPackageFolderPath = try getCurrentPackageFolderPath()
+                let currentPackageFolderPath = try getCurrentPackagePath()
                 if (currentPackageFolderPath != nil) {
                     try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
                 }

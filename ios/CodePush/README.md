@@ -5,7 +5,7 @@
 ### Cocoa Pods
 
 ``` swift
-     pod 'CodePush', :path => "path/to/codepushrepo" 
+     pod 'CodePush', :git => 'https://github.com/chmoulds/react-native-code-push.git', :branch => 'chrism/swift-imp' 
 ```
 
 ## Usage

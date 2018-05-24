@@ -68,6 +68,17 @@ class FileUtils {
     }
     
     /**
+     * Copy a file to a destination
+     *
+     * Parameter origin the original location of the file
+     * Parameter destination path of the file
+     * Throws: if the file already exists at the destination or due to IO errors.
+     */
+    func copyFile(file origin: URL, toDestination destination: URL) throws {
+        try FileManager.default.copyItem(at: origin, to: destination)
+    }
+    
+    /**
      * Creates a new directory if it doesn't already exist
      *
      * Parameter filePath of directory
@@ -82,12 +93,12 @@ class FileUtils {
     }
     
     /**
-     * Deletes directory located by the following path.
+     * Deletes file or directory located at the following path.
      *
      * Parameter directoryPath path to directory to be deleted. Can't be ```nil```.
      * Throws: IOException read/write error occurred while accessing the file system.
      */
-    func deleteDirectoryAtPath(path directoryPath: URL) throws {
+    func deleteEntityAtPath(path directoryPath: URL) throws {
         try FileManager.default.removeItem(atPath: directoryPath.path)
     }
     
@@ -97,10 +108,39 @@ class FileUtils {
      *
      * Parameter sourcePath: the path to the zipped.
      * Parameter destPath:  the parent directory where the unzipped folder will reside
-     * Throws: Error if any IO fails
+     * Throws: Error if fails to unzip the directory or delete the original archive
      */
     func unzipDirectory(source sourcePath: URL, destination destPath: URL) throws {
         try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
-        try deleteDirectoryAtPath(path: sourcePath)
+        try deleteEntityAtPath(path: sourcePath)
+    }
+    
+    /**
+     * Copies the contents of one directory to another. Copies all the contents recursively.
+     *
+     * Parameter sourceDir path to the directory to copy files from.
+     * Parameter destDir   path to the directory to copy files to.
+     * Throws Error read/write error occurred while accessing the file system.
+     */
+    func copyDirectoryContents(fromSource sourceDir: URL, toDest destDir: URL) throws {
+        try createDirectoryIfNotExists(path: destDir)
+        
+        let directoryContents = try FileManager.default.contentsOfDirectory(atPath: sourceDir.path)
+        
+        for item in directoryContents {
+            let fullPath = appendPathComponent(atBasePath: sourceDir, withComponent: item)
+            var isDir : ObjCBool = false
+            FileManager.default.fileExists(atPath: fullPath.path, isDirectory: &isDir)
+            if (isDir.boolValue) {
+                try self.copyDirectoryContents(fromSource: fullPath,
+                                               toDest: appendPathComponent(atBasePath: destDir, withComponent: item))
+            } else {
+                let destination = appendPathComponent(atBasePath: destDir, withComponent: item)
+                if (fileExists(atPath: destination)) {
+                    try deleteEntityAtPath(path: destination)
+                }
+                try copyFile(file: fullPath, toDestination: destination)
+            }
+        }
     }
 }

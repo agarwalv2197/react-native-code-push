@@ -57,8 +57,7 @@ class CodePushUtils {
      */
     func getObjectFromJsonFile<T>(_ filePath: URL) throws -> T where T: Codable {
         let json = try getJsonObjectFromFile(atPath: filePath)
-        let object = try decoder.decode(T.self, from: json)
-        return object
+        return try decoder.decode(T.self, from: json)
     }
     
     /**
@@ -94,8 +93,7 @@ class CodePushUtils {
      * Throws: Error if the encoder fails to encode the object.
      */
     func convertObjectToJsonObject<T>(withObject object: T) throws -> Data where T: Codable {
-        let data = try encoder.encode(object)
-        return data
+        return try encoder.encode(object)
     }
     
     /**
@@ -107,8 +105,7 @@ class CodePushUtils {
      */
     func convertStringToObject<T>(withString json: String) throws -> T where T: Codable {
         let data = json.data(using: .utf8)
-        let object = try decoder.decode(T.self, from: data!)
-        return object
+        return try decoder.decode(T.self, from: data!)
     }
     
     /**
@@ -120,7 +117,6 @@ class CodePushUtils {
     func getQueryItems(fromObject object: AnyObject) -> [URLQueryItem] {
         let mirror = Mirror(reflecting: object)
         return mirror.children.filter { field in
-            print(field.value)
             return field.value != nil
             guard let _: Any = field.value else {
                 return false
@@ -128,14 +124,6 @@ class CodePushUtils {
             return true
             }.map { child -> URLQueryItem in
                 return URLQueryItem(name: child.label!, value: child.value as? String)
-            }
-        
-        //        var items = [URLQueryItem]()
-        //
-        //        items.append(URLQueryItem(name: "appVersion", value: object.appVersion))
-        //        items.append(URLQueryItem(name: "clientUniqueId", value: object.clientUniqueId))
-        //        items.append(URLQueryItem(name: "deploymentKey", value: object.deploymentKey))
-        //        items.append(URLQueryItem(name: "packageHash", value: object.packageHash))
-        //        items.append(URLQueryItem(name: "label", value: object.label))
+        }
     }
 }

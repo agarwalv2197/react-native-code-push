@@ -111,6 +111,7 @@ public struct CodePush {
      * Asks the CodePush service whether the configured app deployment has an update available
      * using deploymentKey already set in constructor.
      *
+     * Parameter completion completion handler.
      * Returns: remote package info if there is an update, ```nil``` otherwise.
      */
     public func checkForUpdate(callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
@@ -122,6 +123,7 @@ public struct CodePush {
      * using specified deployment key.
      *
      * Parameter deploymentKey deployment key to use.
+     * Parameter completion completion handler.
      * Returns: remote package info if there is an update, ```nil``` otherwise.
      */
     public func checkForUpdate(withKey deploymentKey: String,
@@ -142,6 +144,7 @@ public struct CodePush {
     
     /**
      * Synchronizes your app assets with the latest release to the configured deployment using default sync options.
+     * Parameter completion completion handler.
      */
     public func sync(callback completion: @escaping (Result<Bool>) -> Void) {
         reactCore.sync(callback: completion)
@@ -151,6 +154,7 @@ public struct CodePush {
      * Synchronizes your app assets with the latest release to the configured deployment.
      *
      * Parameter syncOptions sync options.
+     * Parameter completion completion handler.
      */
     public func sync(withOptions syncOptions: CodePushSyncOptions,
               callback completion: @escaping (Result<Bool>) -> Void){

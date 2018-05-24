@@ -14,4 +14,5 @@ enum CodePushErrors : Error {
     case IOErrors(cause: Error)
     case InitializationError(cause: String)
     case NoHashValue(cause: String)
+    case MergeError(cause: String)
 }

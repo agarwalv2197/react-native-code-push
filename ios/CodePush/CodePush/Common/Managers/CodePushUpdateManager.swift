@@ -223,7 +223,7 @@ class CodePushUpdateManager {
             let info = try getCurrentPackageInfo()
             let currentPackageFolderPath = try getCurrentPackagePath()
             
-            try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
+            try fileUtils.deleteEntityAtPath(path: currentPackageFolderPath!)
             
             info.currentPackage = info.previousPackage
             info.previousPackage = nil
@@ -261,7 +261,7 @@ class CodePushUpdateManager {
             /* This removes any stale data in ```newPackageFolderPath``` that could have been left
              * uncleared due to a crash or error during the download or install process. */
             do {
-                try fileUtils.deleteDirectoryAtPath(path: newUpdateFolderPath)
+                try fileUtils.deleteEntityAtPath(path: newUpdateFolderPath)
             } catch {
                 completion(Result { throw CodePushPackageErrors.FailedDownload(cause: error) })
                 return
@@ -305,12 +305,12 @@ class CodePushUpdateManager {
             if (removeCurrent) {
                 let currentPackageFolderPath = try getCurrentPackagePath()
                 if (currentPackageFolderPath != nil) {
-                    try fileUtils.deleteDirectoryAtPath(path: currentPackageFolderPath!)
+                    try fileUtils.deleteEntityAtPath(path: currentPackageFolderPath!)
                 }
             } else {
                 let previousPackageHash = try getPreviousPackageHash()
                 if (previousPackageHash != nil && previousPackageHash != packageHash) {
-                    try fileUtils.deleteDirectoryAtPath(path: getPackageFolderPath(withHash: previousPackageHash!))
+                    try fileUtils.deleteEntityAtPath(path: getPackageFolderPath(withHash: previousPackageHash!))
                 }
                 info.previousPackage = info.currentPackage
             }
@@ -319,6 +319,50 @@ class CodePushUpdateManager {
         } catch {
             print(error)
             throw CodePushPackageErrors.FailedInstall(cause: error)
+        }
+    }
+    
+    /**
+     * Merges contents with the current update based on the manifest.
+     *
+     * Parameter newUpdateFolderPath        directory for new update.
+     * Parameter newUpdateMetadataPath      path to update metadata file for new update.
+     * Parameter expectedEntryPointFileName file name of the entry app point.
+     * Returns: actual new app entry point.
+     * Throws: Error if an exception occurred during merging.
+     */
+    func mergeDiff(newUpdate newUpdateFolderPath: URL, newMetadata newUpdateMetadataPath: URL,
+                   entryPoint expectedEntryPoint: String, withApp appName: String) throws -> String {
+        
+        let diffManifestFilePath = fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath, withComponent: CodePushConstants.DiffManifestFileName)
+        let unzippedPath = fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath, withComponent: CodePushConstants.UnzippedFolderName)
+        
+        /* If this is a diff, not full update, copy the new files to the package directory. */
+        let isDiffUpdate = fileUtils.fileExists(atPath: diffManifestFilePath)
+        
+        let newPackageFolder = fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath,
+                                                             withComponent: appName)
+        if (isDiffUpdate) {
+            let currentPackageFolderPath = try getCurrentPackagePath()
+            if (currentPackageFolderPath != nil) {
+                let currentPackageFolder = fileUtils.appendPathComponent(atBasePath: currentPackageFolderPath!,
+                                                                         withComponent: appName)
+                try codePushUpdateUtils.copyNecessaryFilesFromCurrentPackage(diffFile: diffManifestFilePath,
+                                                                             currentPackagePath: currentPackageFolder,
+                                                                             newPackagePath: newPackageFolder)
+            }
+            try fileUtils.deleteEntityAtPath(path: diffManifestFilePath)
+        }
+
+        // Copy the new package contents over
+        try fileUtils.copyDirectoryContents(fromSource: unzippedPath, toDest: newPackageFolder)
+        try fileUtils.deleteEntityAtPath(path: unzippedPath)
+        
+        let appEntryPoint = try codePushUpdateUtils.findEntryPointInUpdateContents(atOrigin: newUpdateFolderPath, targetFile: expectedEntryPoint)
+        if (appEntryPoint == nil) {
+            throw CodePushErrors.MergeError(cause: "Update is invalid - An entry point file named \"" + expectedEntryPoint + "\" could not be found within the downloaded contents. Please check that you are releasing your CodePush updates using the exact same JS entry point file name that was shipped with your app's binary.")
+        } else {
+            return appEntryPoint!.absoluteString
         }
     }
 }

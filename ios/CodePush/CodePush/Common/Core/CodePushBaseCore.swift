@@ -311,7 +311,7 @@ class CodePushBaseCore {
                                 completion ( Result {
                                     do {
                                         let downloadResult = try result.resolve()
-                                        
+                                        var appEntryPoint: String = ""
                                         // Create the directory if it doesn't exist
                                         let newUpdateFolderPath = self.managers.updateManager.getPackageFolderPath(withHash: updatePackage.packageHash!)
                                         try self.utilities.fileUtils.createDirectoryIfNotExists(path: newUpdateFolderPath)
@@ -329,11 +329,15 @@ class CodePushBaseCore {
                                             // Locate the newly unzipped folder and rename it
                                             let unzippedFolder = try FileManager.default.contentsOfDirectory(atPath: newUpdateFolderPath.path)[0]
                                             var resourceValues = URLResourceValues()
-                                            resourceValues.name = try self.getNativeConfiguration().appName
+                                            resourceValues.name = CodePushConstants.UnzippedFolderName
                                     
                                             var renamedDirectory = self.utilities.fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath, withComponent: unzippedFolder)
                                             try renamedDirectory.setResourceValues(resourceValues)
                                             
+                                            let appName = try self.getNativeConfiguration().appName
+                                            
+                                            appEntryPoint = try self.managers.updateManager.mergeDiff(newUpdate: newUpdateFolderPath, newMetadata: newUpdateMetadataPath,
+                                                                                                      entryPoint: self.appEntryPoint, withApp: appName!)
                                         } else {
                                             let newUpdateFilePath = self.utilities.fileUtils.appendPathComponent(atBasePath: newUpdateFolderPath,
                                                                                                                  withComponent: self.appEntryPoint)
@@ -342,7 +346,7 @@ class CodePushBaseCore {
                                         
                                         // Create the localpackage and write the metadata to app.json
                                         let newPackage = CodePushLocalPackage.createLocalPackage(wasFailedInstall: false, isFirstRun: false, isPending: true,
-                                                                                                 isDebugOnly: false, withEntryPoint: self.appEntryPoint,
+                                                                                                 isDebugOnly: false, withEntryPoint: appEntryPoint,
                                                                                                  fromPackage: updatePackage)
                                         try self.utilities.utils.writeObjectToJsonFile(withObject: newPackage, atPath: newUpdateMetadataPath)
                                         

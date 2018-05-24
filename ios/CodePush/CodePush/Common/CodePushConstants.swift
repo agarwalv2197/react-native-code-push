@@ -44,4 +44,13 @@ struct CodePushConstants {
      */
     static let ZipFileName = "download.zip"
     
+    /**
+     * File name for diff manifest that distributes with CodePush updates.
+     */
+    static let DiffManifestFileName = "hotcodepush.json"
+    
+    /**
+     * Folder name for unzipped CodePush update.
+     */
+    static let UnzippedFolderName = "unzipped"
 }

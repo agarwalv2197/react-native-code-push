@@ -26,7 +26,7 @@ protocol CodePushBuildable {
     func setAppEntryPoint(entryPoint appEntryPoint: String)
     
     /**
-     * The value of app secret from AppCenter portal to configure {@link Crashes} sdk.
+     * The value of app secret from AppCenter portal to configure Crashes sdk.
      */
     func setAppSecret(secret appSecret: String)
     

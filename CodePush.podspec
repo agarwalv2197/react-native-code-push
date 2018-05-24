@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.preserve_paths = '*.js'
   s.library        = 'z'
   s.source_files = "CodePush", "ios/CodePush/**/*.{h,m,swift}"
+  s.exclude_files = "Classes/Exclude", "ios/CodePush/CodePushTests/**/*{h,m,swift}"
   s.public_header_files = ['ios/CodePush/CodePush.h']
 
   # Note: Even though there are copy/pasted versions of some of these dependencies in the repo, 

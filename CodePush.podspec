@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.preserve_paths = '*.js'
   s.library        = 'z'
-  s.source_files = 'ios/CodePush/*.{h,m}'
+  s.source_files = 'ios/CodePush/*.{h,m,swift}'
   s.public_header_files = ['ios/CodePush/CodePush.h']
 
   # Note: Even though there are copy/pasted versions of some of these dependencies in the repo, 
@@ -24,4 +24,5 @@ Pod::Spec.new do |s|
   s.dependency 'SSZipArchive', '~> 2.1'
   s.dependency 'JWT', '~> 3.0.0-beta.7'
   s.dependency 'Base64', '~> 1.1'
+  s.dependency 'Zip', '~> 1.1'
 end

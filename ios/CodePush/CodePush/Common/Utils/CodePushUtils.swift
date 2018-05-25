@@ -8,21 +8,21 @@
 import Foundation
 
 class CodePushUtils {
-    
+
     static let sharedInstance = CodePushUtils()
-    
+
     var fileUtils: FileUtils
-    
+
     var encoder: JSONEncoder
     var decoder: JSONDecoder
-    
+
     private init() {
         self.fileUtils = FileUtils.sharedInstance
         self.encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         self.decoder = JSONDecoder()
     }
-    
+
     /**
      * Parses JSON from file.
      *
@@ -34,7 +34,7 @@ class CodePushUtils {
         let contents = try fileUtils.readFileToString(atPath: filePath)
         return contents.data(using: .utf8)!
     }
-    
+
     /**
      * Converts Object instance to JSON string.
      *
@@ -42,11 +42,11 @@ class CodePushUtils {
      * Returns: the json string.
      * Throws: Error if the encoder fails to encode the object
      */
-    func convertObjectToJsonString<T>(withObject object: T) throws -> String where T: Codable  {
+    func convertObjectToJsonString<T>(withObject object: T) throws -> String where T: Codable {
         let data = try encoder.encode(object)
         return String(data: data, encoding: .utf8)!
     }
-    
+
     /**
      * Gets information from json file and converts it to an object of specified type.
      *
@@ -59,7 +59,7 @@ class CodePushUtils {
         let json = try getJsonObjectFromFile(atPath: filePath)
         return try decoder.decode(T.self, from: json)
     }
-    
+
     /**
      * Saves object of specified type to a file as json string.
      *
@@ -72,7 +72,7 @@ class CodePushUtils {
         let jsonString = try convertObjectToJsonString(withObject: object)
         try fileUtils.writeToFile(withContent: jsonString, atPath: filePath)
     }
-    
+
     /**
      * Writes JSON to file.
      *
@@ -84,7 +84,7 @@ class CodePushUtils {
         let jsonString = String(data: json, encoding: .utf8)
         try fileUtils.writeToFile(withContent: jsonString!, atPath: filePath)
     }
-    
+
     /**
      * Converts Object instance to JSON.
      *
@@ -95,7 +95,7 @@ class CodePushUtils {
     func convertObjectToJsonObject<T>(withObject object: T) throws -> Data where T: Codable {
         return try encoder.encode(object)
     }
-    
+
     /**
      * Converts json string to specified class.
      *
@@ -107,7 +107,7 @@ class CodePushUtils {
         let data = json.data(using: .utf8)
         return try decoder.decode(T.self, from: data!)
     }
-    
+
     /**
      * Converts object to an array of query items
      *

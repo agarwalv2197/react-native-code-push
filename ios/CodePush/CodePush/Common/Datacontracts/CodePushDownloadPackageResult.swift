@@ -13,12 +13,12 @@ class CodePushDownloadPackageResult {
      * The file containing the update.
      */
     var downloadFile: URL
-    
+
     /**
      * Whether the file is zipped.
      */
     var isZip: Bool
-    
+
     /**
      * Creates an instance of the class.
      *

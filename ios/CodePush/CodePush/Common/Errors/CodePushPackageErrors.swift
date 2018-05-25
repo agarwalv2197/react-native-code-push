@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum CodePushPackageErrors: Error {    
-    case FailedRollback(cause: Error)
-    case FailedInstall(cause: Error)
-    case FailedDownload(cause: Error)
+enum CodePushPackageErrors: Error {
+    case failedRollback(cause: Error)
+    case failedInstall(cause: Error)
+    case failedDownload(cause: Error)
 }

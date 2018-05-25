@@ -12,30 +12,28 @@ public class CodePushRemotePackage: CodePushPackage {
     public var downloadURL: URL?
     public var packageSize: Int64?
     public var updateAppVersion: Bool?
-    
+
     override init() {
         super.init()
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case downloadURL,
         packageSize,
         updateAppVersion
     }
-    
-    required public init(from decoder: Decoder) throws {
 
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let superdecoder = try container.superDecoder()
         try super.init(from: superdecoder)
-        
+
         self.downloadURL = try container.decode(URL.self, forKey: .downloadURL)
         self.packageSize = try container.decode(Int64.self, forKey: .packageSize)
         self.updateAppVersion = try container.decode(Bool.self, forKey: .updateAppVersion)
     }
-    
+
     override public func encode(to encoder: Encoder) throws {
-        
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(downloadURL, forKey: .downloadURL)
         try container.encode(packageSize, forKey: .packageSize)
@@ -43,7 +41,7 @@ public class CodePushRemotePackage: CodePushPackage {
         let superdecoder = container.superEncoder()
         try super.encode(to: superdecoder)
     }
-    
+
     /**
      * Creates an instance of the class from the basic codepush package.
      *
@@ -70,7 +68,7 @@ public class CodePushRemotePackage: CodePushPackage {
         remotePackage.updateAppVersion = updateAppVersion
         return remotePackage
     }
-    
+
     /**
      * Creates instance of the class from the update response from server.
      *
@@ -79,7 +77,7 @@ public class CodePushRemotePackage: CodePushPackage {
      * Returns: instance of the ```CodePushRemotePackage```
      */
     static func createRemotePackage(withDeploymentKey deploymentKey: String,
-                                    fromUpdateInfo updateInfo: CodePushUpdateResponseInfo) -> CodePushRemotePackage{
+                                    fromUpdateInfo updateInfo: CodePushUpdateResponseInfo) -> CodePushRemotePackage {
         let remotePackage = CodePushRemotePackage()
         remotePackage.appVersion = updateInfo.appVersion
         remotePackage.deploymentKey = deploymentKey
@@ -93,7 +91,7 @@ public class CodePushRemotePackage: CodePushPackage {
         remotePackage.updateAppVersion = updateInfo.updateAppVersion
         return remotePackage
     }
-    
+
     /**
      * Creates a default package from the app version.
      *

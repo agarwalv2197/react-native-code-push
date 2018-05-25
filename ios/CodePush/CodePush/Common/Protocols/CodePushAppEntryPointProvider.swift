@@ -7,7 +7,9 @@
 
 import Foundation
 
-
+/**
+ * Protocol for providing information about application entry point.
+ */
 protocol CodePushAppEntryPointProvider {
     
     /**

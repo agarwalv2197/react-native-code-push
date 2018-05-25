@@ -7,39 +7,38 @@
 
 import Foundation
 
-
 class CodePushUpdateRequest: Codable {
     
     /**
      * Specifies the deployment key you want to query for an update against.
      */
     var deploymentKey: String?
-    
+
     /**
      * Specifies the current app version.
      */
     var appVersion: String?
-    
+
     /**
      * Specifies the current local package hash.
      */
     var packageHash: String?
-    
+
     /**
      * Whether to ignore the application version.
      */
     var isCompanion: Bool = false
-    
+
     /**
      * Specifies the current package label.
      */
     var label: String?
-    
+
     /**
      * Device id.
      */
     var clientUniqueId: String?
-    
+
     /**
      * Creates an update request based on the current {@link CodePushLocalPackage}.
      *
@@ -59,6 +58,6 @@ class CodePushUpdateRequest: Codable {
         codePushUpdateRequest.clientUniqueId = clientUniqueId
         return codePushUpdateRequest
     }
-    
+
     init() {}
 }

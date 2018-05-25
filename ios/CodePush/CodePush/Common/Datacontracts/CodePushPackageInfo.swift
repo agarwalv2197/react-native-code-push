@@ -7,10 +7,10 @@
 
 import Foundation
 
-class CodePushPackageInfo : Codable {
+class CodePushPackageInfo: Codable {
     
     var previousPackage: String?
     var currentPackage: String?
-    
+
     init() {}
 }

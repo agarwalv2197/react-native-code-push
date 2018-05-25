@@ -7,9 +7,8 @@
 
 import Foundation
 
-
 enum QueryUpdateErrors: Error {
-    case NoData
-    case FailedJsonConversion
-    case FailedToConstructUrl
+    case noData
+    case failedJsonConversion
+    case failedToConstructUrl
 }

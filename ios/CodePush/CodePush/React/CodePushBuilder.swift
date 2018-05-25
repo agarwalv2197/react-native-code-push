@@ -7,9 +7,11 @@
 
 import Foundation
 
-
+/**
+ * A builder for the ```CodePush``` struct.
+ */
 public class CodePushBuilder: CodePushBuildable {
-    
+
     private var deploymentKey: String = ""
     private var serverUrl: String = ""
     private var appEntryPoint: String = ""
@@ -17,7 +19,7 @@ public class CodePushBuilder: CodePushBuildable {
     private var appName: String = ""
     private var appVersion: String = ""
     private var baseDirectory: URL?
-    
+
     public func result() -> CodePush? {
         if isValid {
             do {
@@ -37,39 +39,39 @@ public class CodePushBuilder: CodePushBuildable {
             return nil
         }
     }
-    
+
     var isValid: Bool {
         return !deploymentKey.isEmpty
     }
-    
+
     public func setDeploymentKey(key deploymentKey: String) {
         self.deploymentKey = deploymentKey
     }
-    
+
     public func setServerUrl(url serverUrl: String) {
         self.serverUrl = serverUrl
     }
-    
+
     public func setAppEntryPoint(entryPoint appEntryPoint: String) {
         self.appEntryPoint = appEntryPoint
     }
-    
+
     public func setAppSecret(secret appSecret: String) {
         self.appSecret = appSecret
     }
-    
+
     public func setAppName(name appName: String) {
         self.appName = appName
     }
-    
+
     public func setAppVersion(version appVersion: String) {
         self.appVersion = appVersion
     }
-    
+
     public func setBaseDirectory(directory baseDirectory: URL) {
         self.baseDirectory = baseDirectory
     }
-    
+
     public init() {}
 }
 
@@ -82,11 +84,11 @@ public struct CodePush {
     var appVersion: String?
     var baseDirectory: URL?
     var reactCore: CodePushReactNativeCore
-    
+
     init(_ deploymentKey: String, _ serverUrl: String, _ appEntryPoint: String,
          _ appSecret: String, _ appName: String, _ appVersion: String,
          _ baseDirectory: URL?) throws {
-        
+
         self.deploymentKey = deploymentKey
         self.serverUrl = serverUrl
         self.appEntryPoint = appEntryPoint
@@ -94,10 +96,12 @@ public struct CodePush {
         self.appName = appName
         self.appVersion = appVersion
         self.baseDirectory = baseDirectory
-        self.reactCore = try CodePushReactNativeCore(deploymentKey, serverUrl, appSecret, appName, appVersion, baseDirectory,
-                                                     CodePushReactAppEntryPointProvider(appEntryPoint), ReactPlatformUtils.sharedInstance)
+        self.reactCore = try CodePushReactNativeCore(deploymentKey, serverUrl, appSecret,
+                                                     appName, appVersion, baseDirectory,
+                                                     CodePushReactAppEntryPointProvider(appEntryPoint),
+                                                     ReactPlatformUtils.sharedInstance)
     }
-    
+
     /**
      * Gets native CodePush configuration.
      *
@@ -106,7 +110,7 @@ public struct CodePush {
     public func getConfiguration() throws -> CodePushConfiguration? {
         return try self.reactCore.getNativeConfiguration()
     }
-    
+
     /**
      * Asks the CodePush service whether the configured app deployment has an update available
      * using deploymentKey already set in constructor.
@@ -117,7 +121,7 @@ public struct CodePush {
     public func checkForUpdate(callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         reactCore.checkForUpdate(callback: completion)
     }
-    
+
     /**
      * Asks the CodePush service whether the configured app deployment has an update available
      * using specified deployment key.
@@ -127,10 +131,10 @@ public struct CodePush {
      * Returns: remote package info if there is an update, ```nil``` otherwise.
      */
     public func checkForUpdate(withKey deploymentKey: String,
-                        callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
+                               callback completion: @escaping (Result<CodePushRemotePackage?>) -> Void) {
         reactCore.checkForUpdate(withKey: deploymentKey, callback: completion)
     }
-    
+
     /**
      * Retrieves the metadata for an installed update (e.g. description, mandatory)
      * whose state matches the specified ```updateState``` parameter.
@@ -141,7 +145,7 @@ public struct CodePush {
     public func getUpdateMetadata(inUpdateState updateState: CodePushUpdateState) throws -> CodePushLocalPackage? {
         return try reactCore.getUpdateMetadata(inUpdateState: updateState)
     }
-    
+
     /**
      * Synchronizes your app assets with the latest release to the configured deployment using default sync options.
      * Parameter completion completion handler.
@@ -149,18 +153,18 @@ public struct CodePush {
     public func sync(callback completion: @escaping (Result<Bool>) -> Void) {
         reactCore.sync(callback: completion)
     }
-    
+
     /**
      * Synchronizes your app assets with the latest release to the configured deployment.
      *
      * Parameter syncOptions sync options.
      * Parameter completion completion handler.
      */
-    public func sync(withOptions syncOptions: CodePushSyncOptions,
-              callback completion: @escaping (Result<Bool>) -> Void){
-        reactCore.sync(withOptions: syncOptions, callback: completion)
-    }
-    
+//    public func sync(withOptions syncOptions: CodePushSyncOptions,
+//              callback completion: @escaping (Result<Bool>) -> Void){
+//        reactCore.sync(withOptions: syncOptions, callback: completion)
+//    }
+
     /**
      * Return the path to the directory that contains the current bundle
      * Returns: directory of current bundle or nil
@@ -168,7 +172,7 @@ public struct CodePush {
     public func getCurrentPackagePath() throws -> URL? {
         return try reactCore.getCurrentPackagePath()
     }
-    
+
     /**
      * Return the path to the directory that contains the previous bundle
      * Returns: directory of previous bundle or nil

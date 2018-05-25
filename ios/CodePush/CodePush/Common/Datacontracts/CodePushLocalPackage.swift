@@ -8,60 +8,53 @@
 import Foundation
 
 public class CodePushLocalPackage: CodePushPackage {
-    
+
     /**
      * Indicates whether this update is in a "pending" state.
      * When ```true```, that means the update has been downloaded and installed, but the app restart
      * needed to apply it hasn't occurred yet, and therefore, its changes aren't currently visible to the end-user.
      */
     public var isPending: Bool?
-    
+
     /**
      * The path to the application entry point (e.g. android.js.bundle for RN, index.html for Cordova).
      */
     public var appEntryPoint: String?
-    
+
     /**
      * Indicates whether this is the first time the update has been run after being installed.
      */
     public var isFirstRun: Bool?
-    
-    /**
-     * Whether this package is intended for debug mode.
-     */
-    public var isDebugOnly: Bool?
-    
-    
+
     private enum CodingKeys: String, CodingKey {
         case isPending,
         appEntryPoint,
-        isFirstRun,
-        isDebugOnly
+        isFirstRun
     }
-    
+
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let superdecoder = try container.superDecoder()
         try super.init(from: superdecoder)
-        
+
         self.isPending = try container.decode(Bool.self, forKey: .isPending)
         self.appEntryPoint = try container.decode(String.self, forKey: .appEntryPoint)
         self.isFirstRun = try container.decode(Bool.self, forKey: .isFirstRun)
-        self.isDebugOnly = try container.decode(Bool.self, forKey: .isDebugOnly)
     }
-    
+
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(isPending, forKey: .isPending)
         try container.encode(appEntryPoint, forKey: .appEntryPoint)
         try container.encode(isFirstRun, forKey: .isFirstRun)
-        try container.encode(isDebugOnly, forKey: .isDebugOnly)
         let superdecoder = container.superEncoder()
         try super.encode(to: superdecoder)
     }
-    
-    static func createLocalPackage(wasFailedInstall failedInstall: Bool, isFirstRun firstRun: Bool,
-                                   isPending pending: Bool, isDebugOnly isDebug: Bool, withEntryPoint entryPoint: String,
+
+    static func createLocalPackage(wasFailedInstall failedInstall: Bool,
+                                   isFirstRun firstRun: Bool,
+                                   isPending pending: Bool,
+                                   withEntryPoint entryPoint: String,
                                    fromPackage package: CodePushPackage) -> CodePushLocalPackage {
         let localPackage = CodePushLocalPackage()
         localPackage.appVersion = package.appVersion
@@ -69,7 +62,6 @@ public class CodePushLocalPackage: CodePushPackage {
         localPackage.description = package.description
         localPackage.failedInstall = failedInstall
         localPackage.isMandatory = package.isMandatory
-        localPackage.isDebugOnly = isDebug
         localPackage.label = package.label
         localPackage.packageHash = package.packageHash
         localPackage.isPending = pending
@@ -77,7 +69,7 @@ public class CodePushLocalPackage: CodePushPackage {
         localPackage.appEntryPoint = entryPoint
         return localPackage
     }
-    
+
     static func createEmptyPackageForUpdateQuery(withVersion appVersion: String?) -> CodePushLocalPackage {
         let localPackage = CodePushLocalPackage()
         localPackage.appVersion = appVersion
@@ -87,7 +79,7 @@ public class CodePushLocalPackage: CodePushPackage {
         localPackage.isFirstRun = false
         return localPackage
     }
-    
+
     override init() {
         super.init()
     }

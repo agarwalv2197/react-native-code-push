@@ -7,7 +7,7 @@ target 'CodePush' do
 
   # Pods for CodePush
   source 'https://github.com/CocoaPods/Specs.git'
-  pod 'Zip', '~> 1.1'
+  pod "SSZipArchive"
 
   target 'CodePushTests' do
     inherit! :search_paths

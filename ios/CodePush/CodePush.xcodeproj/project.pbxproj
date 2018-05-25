@@ -14,8 +14,8 @@
 		2E39E8EC20ABC3120034376C /* CodePushSyncOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */; };
 		2E39E8EE20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */; };
 		2E39E8EF20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */; };
-		2E958E9520B5ECB200D5AF01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2E958E9420B5ECB200D5AF01 /* README.md */; };
-		2E958E9620B5ECB200D5AF01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2E958E9420B5ECB200D5AF01 /* README.md */; };
+		2E4501AB20B76A0D00DFB8B1 /* CodePushDiffManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4501AA20B76A0C00DFB8B1 /* CodePushDiffManifest.swift */; };
+		2E4501AC20B76A0D00DFB8B1 /* CodePushDiffManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4501AA20B76A0C00DFB8B1 /* CodePushDiffManifest.swift */; };
 		2EC7B24B20A9DA11004EC0F3 /* CodePush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC7B24120A9DA11004EC0F3 /* CodePush.framework */; };
 		2EC7B25220A9DA11004EC0F3 /* CodePush.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B24420A9DA11004EC0F3 /* CodePush.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EC7B26420A9DFD2004EC0F3 /* CodePushUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B26320A9DFD2004EC0F3 /* CodePushUpdateManager.swift */; };
@@ -107,7 +107,7 @@
 		2E39E8E820ABBC150034376C /* CodePushErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushErrors.swift; sourceTree = "<group>"; };
 		2E39E8EB20ABC3120034376C /* CodePushSyncOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushSyncOptions.swift; sourceTree = "<group>"; };
 		2E39E8ED20ABC54C0034376C /* CodePushCheckFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePushCheckFrequency.swift; sourceTree = "<group>"; };
-		2E958E9420B5ECB200D5AF01 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2E4501AA20B76A0C00DFB8B1 /* CodePushDiffManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodePushDiffManifest.swift; sourceTree = "<group>"; };
 		2EC7B24120A9DA11004EC0F3 /* CodePush.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CodePush.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC7B24420A9DA11004EC0F3 /* CodePush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePush.h; sourceTree = "<group>"; };
 		2EC7B24520A9DA11004EC0F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -212,7 +212,6 @@
 				2EC7B25B20A9DC94004EC0F3 /* Common */,
 				2EC7B24420A9DA11004EC0F3 /* CodePush.h */,
 				2EC7B24520A9DA11004EC0F3 /* Info.plist */,
-				2E958E9420B5ECB200D5AF01 /* README.md */,
 			);
 			path = CodePush;
 			sourceTree = "<group>";
@@ -319,6 +318,7 @@
 		2EC7B26F20A9E7A9004EC0F3 /* Datacontracts */ = {
 			isa = PBXGroup;
 			children = (
+				2E4501AA20B76A0C00DFB8B1 /* CodePushDiffManifest.swift */,
 				2EC7B27020A9E7C7004EC0F3 /* CodePushPackage.swift */,
 				2EC7B27320A9E8AC004EC0F3 /* CodePushRemotePackage.swift */,
 				2EC7B27620A9EC46004EC0F3 /* CodePushLocalPackage.swift */,
@@ -453,7 +453,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E958E9520B5ECB200D5AF01 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +460,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E958E9620B5ECB200D5AF01 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,11 +509,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CodePushTests/Pods-CodePushTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -541,6 +539,7 @@
 				2EC7B26A20A9E1F4004EC0F3 /* CodePushAcquisitionManager.swift in Sources */,
 				2ECEC23720AE39BA00715406 /* CodePushReactAppEntryPointProvider.swift in Sources */,
 				2EC7B29C20AA348B004EC0F3 /* CodePushManagers.swift in Sources */,
+				2E4501AB20B76A0D00DFB8B1 /* CodePushDiffManifest.swift in Sources */,
 				2ECEC24020AF442C00715406 /* CodePushBuilder.swift in Sources */,
 				2ECEC24320AF794300715406 /* CodePushBuildable.swift in Sources */,
 				2EC7B27720A9EC46004EC0F3 /* CodePushLocalPackage.swift in Sources */,
@@ -580,6 +579,7 @@
 				2EC7B28D20AA3040004EC0F3 /* CodePushUtilities.swift in Sources */,
 				2EC7B26E20A9E6AC004EC0F3 /* CodePushConfiguration.swift in Sources */,
 				2EC7B27220A9E7C7004EC0F3 /* CodePushPackage.swift in Sources */,
+				2E4501AC20B76A0D00DFB8B1 /* CodePushDiffManifest.swift in Sources */,
 				2EC7B2A620AA3B4B004EC0F3 /* CodePushUpdateRequest.swift in Sources */,
 				2ED4161420AB33B9007B9C6C /* ApiRequest.swift in Sources */,
 				2E39E8EF20ABC54C0034376C /* CodePushCheckFrequency.swift in Sources */,
@@ -758,6 +758,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = CodePush/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -785,6 +786,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = CodePush/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

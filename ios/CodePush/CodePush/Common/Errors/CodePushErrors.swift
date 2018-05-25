@@ -7,12 +7,14 @@
 
 import Foundation
 
-
-enum CodePushErrors : Error {
-    case CodePushAPI(cause: Error)
-    case InvalidParam(cause: String)
-    case IOErrors(cause: Error)
-    case InitializationError(cause: String)
-    case NoHashValue(cause: String)
-    case MergeError(cause: String)
+enum CodePushErrors: Error {
+    case invalidParam(cause: String)
+    case initialization(cause: String)
+    case noHashValue(cause: String)
+    case merge(cause: String)
+    case unzip(cause: Error)
+    case checkForUpdate(cause: Error)
+    case sync(cause: Error)
+    case download(cause: Error)
+    case install(cause: String)
 }

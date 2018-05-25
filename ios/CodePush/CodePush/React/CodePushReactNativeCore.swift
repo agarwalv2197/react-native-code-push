@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 class CodePushReactNativeCore: CodePushBaseCore {
-    
+
     /**
      * Default file name for javascript bundle.
      */
-    static let DEFAULT_JS_BUNDLE_NAME = "index.android.bundle"
-    
+    static let DefaultJSBundleName = "index.android.bundle"
+
     init(_ deploymentKey: String,
          _ serverUrl: String,
          _ appSecret: String,
@@ -23,7 +22,7 @@ class CodePushReactNativeCore: CodePushBaseCore {
          _ baseDirectory: URL?,
          _ appEntryPointProvider: CodePushReactAppEntryPointProvider,
          _ platformUtils: ReactPlatformUtils) throws {
-        try super.init(deploymentKey,
-                   appSecret, false, baseDirectory, serverUrl, appName, appVersion, appEntryPointProvider, platformUtils)
+        try super.init(deploymentKey, appSecret, false, baseDirectory, serverUrl, appName,
+                       appVersion, appEntryPointProvider, platformUtils)
     }
 }

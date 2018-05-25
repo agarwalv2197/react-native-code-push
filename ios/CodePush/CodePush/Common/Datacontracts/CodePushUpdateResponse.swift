@@ -7,10 +7,10 @@
 
 import Foundation
 
-class CodePushUpdateResponse : Codable {
+class CodePushUpdateResponse: Codable {
     
     var updateInfo: CodePushUpdateResponseInfo
-    
+
     init(_ updateInfo: CodePushUpdateResponseInfo) {
         self.updateInfo = updateInfo
     }

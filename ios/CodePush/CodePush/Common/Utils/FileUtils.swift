@@ -6,13 +6,13 @@
 //
 
 import Foundation
-import Zip
+import SSZipArchive
 
 class FileUtils {
-    
+
     static let sharedInstance = FileUtils()
     private init() {}
-    
+
     /**
      * Checks whether a file by the following path exists.
      *
@@ -22,7 +22,7 @@ class FileUtils {
     func fileExists(atPath filePath: URL) -> Bool {
         return FileManager.default.fileExists(atPath: filePath.relativePath)
     }
-    
+
     /**
      * Appends file path with one more component.
      *
@@ -33,7 +33,7 @@ class FileUtils {
     func appendPathComponent(atBasePath basePath: URL, withComponent appendPathComponent: String) -> URL {
         return basePath.appendingPathComponent(appendPathComponent)
     }
-    
+
     /**
      * Writes some content to a file, existing file will be overwritten.
      *
@@ -44,7 +44,7 @@ class FileUtils {
     func writeToFile(withContent content: String, atPath filePath: URL) throws {
         try content.write(to: filePath, atomically: false, encoding: .utf8)
     }
-    
+
     /**
      * Reads the contents of file to a string.
      *
@@ -55,7 +55,7 @@ class FileUtils {
     func readFileToString(atPath filePath: URL) throws -> String {
         return try String(contentsOf: filePath, encoding: .utf8)
     }
-    
+
     /**
      * Move a file to a destination
      *
@@ -66,7 +66,7 @@ class FileUtils {
     func moveFile(file origin: URL, toDestination destination: URL) throws {
         try FileManager.default.moveItem(at: origin, to: destination)
     }
-    
+
     /**
      * Copy a file to a destination
      *
@@ -77,7 +77,7 @@ class FileUtils {
     func copyFile(file origin: URL, toDestination destination: URL) throws {
         try FileManager.default.copyItem(at: origin, to: destination)
     }
-    
+
     /**
      * Creates a new directory if it doesn't already exist
      *
@@ -86,12 +86,12 @@ class FileUtils {
      * Throws: IO Errors
      */
     func createDirectoryIfNotExists(path url: URL) throws {
-        if (!fileExists(atPath: url)) {
+        if !fileExists(atPath: url) {
             try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true,
                                                     attributes: nil)
         }
     }
-    
+
     /**
      * Deletes file or directory located at the following path.
      *
@@ -101,7 +101,7 @@ class FileUtils {
     func deleteEntityAtPath(path directoryPath: URL) throws {
         try FileManager.default.removeItem(atPath: directoryPath.path)
     }
-    
+
     /**
      * Unzips the directory to the specified path,
      * and deletes the original archive.
@@ -111,10 +111,11 @@ class FileUtils {
      * Throws: Error if fails to unzip the directory or delete the original archive
      */
     func unzipDirectory(source sourcePath: URL, destination destPath: URL) throws {
-        try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
+        SSZipArchive.unzipFile(atPath: sourcePath.path, toDestination: destPath.path)
+        //try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
         try deleteEntityAtPath(path: sourcePath)
     }
-    
+
     /**
      * Copies the contents of one directory to another. Copies all the contents recursively.
      *
@@ -124,19 +125,20 @@ class FileUtils {
      */
     func copyDirectoryContents(fromSource sourceDir: URL, toDest destDir: URL) throws {
         try createDirectoryIfNotExists(path: destDir)
-        
+
         let directoryContents = try FileManager.default.contentsOfDirectory(atPath: sourceDir.path)
-        
+
         for item in directoryContents {
             let fullPath = appendPathComponent(atBasePath: sourceDir, withComponent: item)
-            var isDir : ObjCBool = false
+            var isDir: ObjCBool = false
             FileManager.default.fileExists(atPath: fullPath.path, isDirectory: &isDir)
-            if (isDir.boolValue) {
+            if isDir.boolValue {
                 try self.copyDirectoryContents(fromSource: fullPath,
-                                               toDest: appendPathComponent(atBasePath: destDir, withComponent: item))
+                                               toDest: appendPathComponent(atBasePath: destDir,
+                                                                           withComponent: item))
             } else {
                 let destination = appendPathComponent(atBasePath: destDir, withComponent: item)
-                if (fileExists(atPath: destination)) {
+                if fileExists(atPath: destination) {
                     try deleteEntityAtPath(path: destination)
                 }
                 try copyFile(file: fullPath, toDestination: destination)

@@ -12,7 +12,7 @@ import Foundation
  * It can be implemented via platform-specific singleton.
  */
 protocol CodePushPlatformUtils {
-    
+
     /**
      * Checks whether the specified package is latest.
      *
@@ -21,14 +21,14 @@ protocol CodePushPlatformUtils {
      * Returns: ```true``` if package is latest.
      */
     func isPackageLatest(_ packageMetadata: CodePushLocalPackage, _ currentAppVersion: String) -> Bool
-    
+
     /**
      * Gets binary version apk build time.
      *
      * Returns: time in ms.
      */
     func getBinaryResourcesModifiedTime() -> Int64
-    
+
     /**
      * Clears debug cache files.
      *

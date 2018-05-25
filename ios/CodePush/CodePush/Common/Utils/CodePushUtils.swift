@@ -116,14 +116,14 @@ class CodePushUtils {
      */
     func getQueryItems(fromObject object: AnyObject) -> [URLQueryItem] {
         let mirror = Mirror(reflecting: object)
-        return mirror.children.filter { field in
-            return field.value != nil
-            guard let _: Any = field.value else {
+        return mirror.children.filter { field in        
+            if case Optional<Any>.some(_) = field.value {
+                return true
+            } else {
                 return false
             }
-            return true
-            }.map { child -> URLQueryItem in
-                return URLQueryItem(name: child.label!, value: child.value as? String)
+        }.map { child -> URLQueryItem in
+            return URLQueryItem(name: child.label!, value: child.value as? String)
         }
     }
 }

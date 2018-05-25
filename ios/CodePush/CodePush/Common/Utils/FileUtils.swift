@@ -112,7 +112,6 @@ class FileUtils {
      */
     func unzipDirectory(source sourcePath: URL, destination destPath: URL) throws {
         SSZipArchive.unzipFile(atPath: sourcePath.path, toDestination: destPath.path)
-        //try Zip.unzipFile(sourcePath, destination: destPath, overwrite: true, password: nil)
         try deleteEntityAtPath(path: sourcePath)
     }
 

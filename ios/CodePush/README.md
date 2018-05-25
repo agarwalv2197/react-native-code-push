@@ -17,14 +17,14 @@ codePushBuilder.setAppName(name: appName)
 codePushBuilder.setAppVersion(version: version)
 let codePush = codePushBuilder.result()
 
-if (codePush != nil) {
+if codePush != nil {
 
     // Try checking for an update
     codePush!.checkForUpdate(callback: { result in
         do {
             let remotePackage = try result.resolve()
-            if (remotePackage != nil) {
-                print(String(format: "Remote Package available at %@", (remotePackage!.downloadURL?.absoluteString)!))
+            if remotePackage != nil {
+                print(String(format: "Update available at %@", (remotePackage!.downloadURL?.absoluteString)!))
             } else {
                 print("Already up to date!")
             }
@@ -38,7 +38,7 @@ if (codePush != nil) {
     codePush!.sync(callback: { result in
         do {
             let didSync = try result.resolve()
-            if (didSync) {
+            if didSync {
                 print("Synced!") 
             } else {
                 print("You're up to date. Nothing to sync.")

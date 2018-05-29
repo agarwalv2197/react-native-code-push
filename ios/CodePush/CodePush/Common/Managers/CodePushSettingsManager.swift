@@ -7,7 +7,9 @@
 
 import Foundation
 
-
+/**
+ * Manager responsible for saving and retrieving settings in UserDefaults
+ */
 class CodePushSettingsManager {
     
     /**

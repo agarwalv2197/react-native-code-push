@@ -6,6 +6,9 @@
 
 import Foundation
 
+/**
+ * Represents the diff file that will be present on diff updates
+ */
 class CodePushDiffManifest: Codable {
 
     /**

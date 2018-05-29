@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /**
  * Manager responsible for update read/write actions.
  */

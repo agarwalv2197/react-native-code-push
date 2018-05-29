@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Object to encapsulate the result of an aysnchronous function
+ */
 public enum Result<T> {
     case success(T)
     case failure(Error)

@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Contains synchronization options.
+ */
 public class CodePushSyncOptions: Codable {
     
     /**

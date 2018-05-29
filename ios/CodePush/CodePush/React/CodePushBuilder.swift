@@ -12,14 +12,47 @@ import Foundation
  */
 public class CodePushBuilder: CodePushBuildable {
 
+    /**
+     * Deployment key for checking for updates.
+     */
     private var deploymentKey: String = ""
+    
+    /**
+     * CodePush server URL.
+     */
     private var serverUrl: String = ""
+    
+    /**
+     * Entry point for application.
+     */
     private var appEntryPoint: String = ""
+    
+    /**
+     * App secret used to configure the AppCentre CrashSDK
+     */
     private var appSecret: String = ""
+    
+    /**
+     * Current app name.
+     */
     private var appName: String = ""
+    
+    /**
+     * Semantic version for app for use when getting updates.
+     * If not provided, defaults to ```CFBundleShortVersionString``` field from the application bundle
+     */
     private var appVersion: String = ""
+    
+    /**
+     * Base directory for CodePush files.
+     * If not provided, defaults to the devices documents directory
+     */
     private var baseDirectory: URL?
 
+    /**
+     * Attempt to build an instance of CodePush
+     * Returns: An instance of CodePush or ```nil```
+     */
     public func result() -> CodePush? {
         if isValid {
             do {
@@ -40,6 +73,10 @@ public class CodePushBuilder: CodePushBuildable {
         }
     }
 
+    /**
+     * Gatekeeper that prevents the construction of CodePush if the
+     * required fields are not populated.
+     */
     var isValid: Bool {
         return !deploymentKey.isEmpty
     }
@@ -75,6 +112,9 @@ public class CodePushBuilder: CodePushBuildable {
     public init() {}
 }
 
+/**
+ * A Struct exposing the CodePush API to users.
+ */
 public struct CodePush {
     var deploymentKey: String
     var serverUrl: String?

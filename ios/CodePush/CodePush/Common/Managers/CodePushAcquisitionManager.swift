@@ -7,7 +7,9 @@
 
 import Foundation
 
-
+/**
+ * Manager responsible for interacting with the CodePush Server
+ */
 class CodePushAcquisitionManager {
     
     /**

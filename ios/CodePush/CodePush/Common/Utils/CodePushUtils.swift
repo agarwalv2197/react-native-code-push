@@ -7,13 +7,29 @@
 
 import Foundation
 
+/**
+ * Common utils for each platform.
+ */
 class CodePushUtils {
 
+    /**
+     * Returns the CodePushUtils Singleton
+     */
     static let sharedInstance = CodePushUtils()
 
+    /**
+     * Instance of fileUtils to work with
+     */
     var fileUtils: FileUtils
 
+    /**
+     * Encoder used to encode objects to JSON
+     */
     var encoder: JSONEncoder
+    
+    /**
+     * Decoder used to convert JSON to objects
+     */
     var decoder: JSONDecoder
 
     private init() {

@@ -12,8 +12,19 @@ import Foundation
  */
 class CodePushUpdateUtils {
     
+    /**
+     * Returns the CodePushUpdateUtils Singleton
+     */
     static let sharedInstance = CodePushUpdateUtils()
+    
+    /**
+     * Instance of fileUtils to work with
+     */
     let fileUtils: FileUtils
+    
+    /**
+     * Instance of codePushUtils to work with
+     */
     let codePushUtils: CodePushUtils
 
     private init() {

@@ -7,10 +7,21 @@
 
 import Foundation
 
+/**
+ * React-specific implementation of ```CodePushAppEntryPointProvider```.
+ */
 class CodePushReactAppEntryPointProvider: CodePushAppEntryPointProvider {
 
+    /**
+     * Path to the application entry point.
+     */
     var appEntryPoint: String
 
+    /**
+     * Creates an instance of ```CodePushReactAppEntryPointProvider```.
+     *
+     * Parameter appEntryPoint path to the application entry point.
+     */
     init(_ appEntryPoint: String) {
         self.appEntryPoint = appEntryPoint
     }

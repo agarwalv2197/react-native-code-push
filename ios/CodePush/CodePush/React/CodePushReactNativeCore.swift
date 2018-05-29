@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * React-specific instance of ```CodePushBaseCore```.
+ */
 class CodePushReactNativeCore: CodePushBaseCore {
 
     /**

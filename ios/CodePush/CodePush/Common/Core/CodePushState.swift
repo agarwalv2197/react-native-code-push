@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Encapsulates state of ```CodePushBaseCore```.
+ */
 class CodePushState {
 
     /**

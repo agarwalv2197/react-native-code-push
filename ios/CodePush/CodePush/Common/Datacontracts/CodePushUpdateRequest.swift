@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * A request class for querying for updates.
+ */
 class CodePushUpdateRequest: Codable {
     
     /**

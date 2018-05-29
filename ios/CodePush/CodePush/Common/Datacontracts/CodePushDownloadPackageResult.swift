@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Class representing the downloaded update package.
+ */
 class CodePushDownloadPackageResult {
     
     /**

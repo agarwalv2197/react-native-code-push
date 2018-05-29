@@ -7,16 +7,54 @@
 
 import Foundation
 
+/**
+ * Base core for CodePush.
+ */
 class CodePushBaseCore {
     
+    /**
+     * Deployment key for checking for updates.
+     */
     var deploymentKey: String
+    
+    /**
+     * CodePush base directory.
+     */
     var baseDirectory: URL
+    
+    /**
+     * CodePush server URL.
+     */
     var serverUrl: String
+    
+    /**
+     * Current app name.
+     */
     var appName: String
+    
+    /**
+     * Current app version.
+     */
     var appVersion: String
+    
+    /**
+     * Current state of CodePush update.
+     */
     var state: CodePushState
+    
+    /**
+     * Various utilities.
+     */
     var utilities: CodePushUtilities
+    
+    /**
+     * Used managers.
+     */
     var managers: CodePushManagers
+    
+    /**
+     * Entry point for application.
+     */
     var appEntryPoint: String
 
     /**
@@ -169,6 +207,10 @@ class CodePushBaseCore {
         return config
     }
 
+    /**
+     * Retrieves the app version from the Bundle
+     * Returns: The Short Version String from the application bundle
+    */
     private func getAppVersion() throws -> String {
         guard let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
             else { throw CodePushErrors.initialization(cause: "Failed to retrieve version from Bundle") }

@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Represents the downloaded package.
+ */
 public class CodePushLocalPackage: CodePushPackage {
 
     /**

@@ -7,7 +7,9 @@
 
 import Foundation
 
-
+/**
+ * Update info from the server.
+ */
 class CodePushUpdateResponseInfo: Codable {
     
     /**

@@ -8,8 +8,14 @@
 import Foundation
 import SSZipArchive
 
+/**
+ * Class containing support methods simplifying work with files.
+ */
 class FileUtils {
 
+    /**
+     * Returns the FileUtils Singleton
+     */
     static let sharedInstance = FileUtils()
     private init() {}
 

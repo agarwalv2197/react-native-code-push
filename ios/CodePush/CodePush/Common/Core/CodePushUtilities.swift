@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ * Encapsulates utilities that ```CodePushBaseCore``` is using.
+ */
 class CodePushUtilities {
 
     /**
@@ -29,6 +32,9 @@ class CodePushUtilities {
      */
     var platformUtils: CodePushPlatformUtils
 
+    /**
+     * Creates instance of CodePushUtilities
+     */
     init(_ utils: CodePushUtils, _ fileUtils: FileUtils, _ updateUtils: CodePushUpdateUtils,
          _ platformUtils: CodePushPlatformUtils) {
         self.utils = utils

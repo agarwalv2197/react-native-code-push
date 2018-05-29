@@ -7,10 +7,24 @@
 
 import Foundation
 
+/**
+ * Represents information about a remote package (on server).
+ */
 public class CodePushRemotePackage: CodePushPackage {
     
+    /**
+     * Url to access package on server.
+     */
     public var downloadURL: URL?
+    
+    /**
+     * Size of the package.
+     */
     public var packageSize: Int64?
+    
+    /**
+     * Whether the client should trigger a store update.
+     */
     public var updateAppVersion: Bool?
 
     override init() {

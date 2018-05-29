@@ -7,7 +7,9 @@
 
 import Foundation
 
-
+/**
+ * Contains info about pending update.
+ */
 class CodePushPendingUpdate: Codable {
     
     /**

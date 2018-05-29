@@ -7,6 +7,10 @@
 
 import Foundation
 
+/**
+ * Basic package class. Contains all the basic information about the update package.
+ * Extended by ```CodePushRemotePackage and ```CodePushLocalPackage```.
+ */
 public class CodePushPackage: Codable {
 
     /**

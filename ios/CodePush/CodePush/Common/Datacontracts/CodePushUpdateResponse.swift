@@ -7,8 +7,14 @@
 
 import Foundation
 
+/**
+ * A response class containing info about the update.
+ */
 class CodePushUpdateResponse: Codable {
     
+    /**
+     * Information about the existing update.
+     */
     var updateInfo: CodePushUpdateResponseInfo
 
     init(_ updateInfo: CodePushUpdateResponseInfo) {

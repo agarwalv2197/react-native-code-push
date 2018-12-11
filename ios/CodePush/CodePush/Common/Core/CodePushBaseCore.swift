@@ -239,8 +239,18 @@ class CodePushBaseCore {
         configuration.deploymentKey = !deploymentKey.isEmpty ? deploymentKey : configuration.deploymentKey
         do {
             let localPackage = try getUpdateMetadata(inUpdateState: .latest)
-            let queryPackage = localPackage != nil ? localPackage :
-                CodePushLocalPackage.createEmptyPackageForUpdateQuery(withVersion: configuration.appVersion)
+            var newUpdateVersion = configuration.appVersion
+            if newUpdateVersion == nil {
+                if localPackage == nil {
+                    completion(Result {return nil})
+                }
+                else {
+                    newUpdateVersion = localPackage?.appVersion
+                }
+            }
+            let isUpgradeOrFirstInstall:Bool = isUpgrade(existingVersion: localPackage?.appVersion, newVersion: newUpdateVersion)
+
+            let queryPackage = isUpgradeOrFirstInstall ? CodePushLocalPackage.createEmptyPackageForUpdateQuery(withVersion: newUpdateVersion) : localPackage
 
             CodePushAcquisitionManager(utilities.utils, utilities.fileUtils)
                 .queryUpdate(withConfig: configuration, withPackage: queryPackage!,
@@ -257,6 +267,14 @@ class CodePushBaseCore {
         } catch {
             completion (Result { throw CodePushErrors.checkForUpdate(cause: error) })
         }
+    }
+
+    func isUpgrade(existingVersion: String?, newVersion: String?) -> Bool
+    {
+        guard existingVersion != nil else{
+            return true
+        }
+        return newVersion!.compare(existingVersion!) == .orderedDescending
     }
 
     /**

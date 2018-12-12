@@ -79,8 +79,13 @@ class CodePushAcquisitionManager {
                 let result: CodePushUpdateResponse = try self.codePushUtils.convertStringToObject(withString: json)
                 let updateInfo = result.updateInfo
                 if (updateInfo.updateAppVersion)! {
-                    return CodePushRemotePackage.createDefaultRemotePackage(withVersion: updateInfo.appVersion!,
-                                                                            updateVersion: updateInfo.updateAppVersion!)
+                    if !(updateInfo.downloadURL ?? "").isEmpty && !(updateInfo.packageHash ?? "").isEmpty {
+                        return CodePushRemotePackage.createDefaultRemotePackage(withVersion: updateInfo.appVersion!,
+                                                                                updateVersion: updateInfo.updateAppVersion!)
+                    }
+                    else {
+                        return nil
+                    }
                 } else if !updateInfo.isAvailable! {
                     return nil
                 }
